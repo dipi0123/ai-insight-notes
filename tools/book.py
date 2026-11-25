@@ -33,7 +33,7 @@ STATUSES = ("계획", "초고", "검토완료", "확정")
 LEVELS = ("L1", "L2", "L3", "L4", "L5")
 
 # 집필 규칙 §4: 학습 방법·성능 고도화 부의 장은 「구조와의 연결」 절을 둔다.
-STRUCTURE_LINK_PARTS = {10, 11, 12, 13}
+STRUCTURE_LINK_PARTS = {8, 9, 10, 12}
 STRUCTURE_LINK_HEADING = "## 구조와의 연결"
 # 집필 규칙 §4: 「직접 만들기:」「프로젝트:」 장의 필수 절.
 BUILD_PREFIXES = ("직접 만들기:", "프로젝트:")

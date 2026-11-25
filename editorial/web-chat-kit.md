@@ -33,12 +33,12 @@ ChatGPT·Gemini·Grok·Claude.ai 같은 웹 채팅에서 이 책 작업을 할 �
 ```text
 === 반영 블록 ===
 작성 AI: Grok
-대상 장: 5.2 정밀도·재현율·F1 (book/part05-evaluation/05-02-precision-recall-f1.md)
+대상 장: 3.7 혼동행렬·정밀도·재현율·F1 (book/part03-ml-basics/03-07-precision-recall-f1.md)
 대상 절: ## 3. F1 점수 — 새 절
 본문:
 (책 본문 그대로. 해라체, 강조 상자, 수식, 인용 키 포함)
 용어집 추가:
-| F1 점수 | F1 score | 평가 | 정밀도와 재현율의 조화평균 | 5.2 |
+| F1 점수 | F1 score | 평가 | 정밀도와 재현율의 조화평균 | 3.7 |
 참고문헌 추가:
 - **@키** · 저자. 「제목」. 학회·저널, 연도. URL
 미확인:

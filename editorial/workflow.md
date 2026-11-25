@@ -22,7 +22,7 @@
 3. **위치를 찾는다.** [curriculum](curriculum.md)의 「이 장의 질문」 칸을 보고 맞는 장을 고른다. 이미 다룬 내용이면 그 절을 보강하고, 없으면 새 절을 만든다. 맞는 장이 없으면 반영하지 말고 위치(어느 부의 몇 번째 장, 또는 기존 장의 새 절)를 제안해 사용자 결정을 받는다(ED-12).
 4. **쓴다.** 대화 답을 그대로 옮기지 않는다. 질문-답 형식을 책의 설명 흐름으로 다시 쓰고, 대상 장의 수준과 선수 장을 지킨다. 장 파일이 없으면 [템플릿](templates/chapter.md)으로 만들고 상태를 초고로 바꾼다. 출처를 확인하지 못한 부분은 넣지 않고 [미확인 목록](open-questions.md)에 둔다.
 5. **맞춘다.** 새 용어는 [용어집](../book/appendix/glossary.md)에, 새 문헌은 [참고문헌](../book/appendix/references.md)에 넣는다. curriculum 상태를 고친다. `python3 tools/book.py toc`와 `python3 tools/book.py check`를 통과시킨다.
-6. **알린다.** 답 끝에 바꾼 곳을 적는다. 예: 「책 반영: 5.2 §3 'F1' 새 절, 용어집 2개 추가, 미확인 1건」.
+6. **알린다.** 답 끝에 바꾼 곳을 적는다. 예: 「책 반영: 3.7 §3 'F1' 새 절, 용어집 2개 추가, 미확인 1건」.
 
 ## 2. 장 집필
 사용자가 장 하나를 통째로 쓰라고 할 때의 절차다.
@@ -35,7 +35,7 @@
 
 ## 3. 교차 검토
 - 검토는 그 장의 집필 AI가 아닌 AI가 한다(ED-08).
-- 검토 결과는 [검토 템플릿](templates/review.md)으로 `workbench/reviews/<장번호>_<검토AI>.md`에 쓴다. 예: `workbench/reviews/5.2_gemini.md`.
+- 검토 결과는 [검토 템플릿](templates/review.md)으로 `workbench/reviews/<장번호>_<검토AI>.md`에 쓴다. 예: `workbench/reviews/3.7_gemini.md`.
 - 검토 항목:
 
 | 항목 | 확인할 것 |
