@@ -1,0 +1,7 @@
+.DS_Store
+__pycache__/
+*.pyc
+
+# 공개 저장소: inbox에는 다른 프로젝트 세션의 원문이 섞이므로 올리지 않는다
+workbench/inbox/*
+!workbench/inbox/.gitkeep
