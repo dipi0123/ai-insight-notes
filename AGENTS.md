@@ -31,14 +31,15 @@
 3. [editorial/workflow.md](editorial/workflow.md) — 질문 응답·반영·검토·확정 절차
 4. [editorial/style-guide.md](editorial/style-guide.md) — 문체·표기·장 구조. 책을 고치기 전에 반드시 읽는다
 5. [editorial/decisions.md](editorial/decisions.md) — 편집 결정과 미정 항목
-6. 작업할 장과 그 선수 장, [용어집](book/appendix/glossary.md), [참고문헌](book/appendix/references.md)
+6. 이어받을 작업이 있으면 `workbench/progress/`의 진행 기록과 `git log`([작업 절차 §9](editorial/workflow.md#9-긴-작업의-진행-기록))
+7. 작업할 장과 그 선수 장, [용어집](book/appendix/glossary.md), [참고문헌](book/appendix/references.md)
 
 ## 폴더
 | 폴더 | 담는 것 | 성격 |
 |---|---|---|
 | `book/` | 책 본문(부·장), 부록(용어집·참고문헌), 그림, 예제 코드(`book/code/`) | 최종 산출물. 확정된 지식과 실행되는 코드만 |
 | `editorial/` | 편찬 계획, 집필 규칙, 작업 절차, 편집 결정, 미확인 목록, 템플릿 | 편집실. 현재 유효한 것만 |
-| `workbench/` | 웹 채팅·다른 세션에서 가져온 답, 큰 초안, 교차 검토 의견 | 임시. 책에 반영하면 지운다 |
+| `workbench/` | 웹 채팅·다른 세션에서 가져온 답, 큰 초안, 교차 검토 의견, 긴 작업의 진행 기록 | 임시. 책에 반영하거나 작업이 끝나면 지운다 |
 | `tools/` | 검사·목차 생성·사이트 원고 생성 스크립트, 사이트 설정(`tools/site/`) | 도구 |
 
 ## 핵심 원칙
@@ -57,7 +58,8 @@
 
 ## 여러 AI가 함께 일하는 규칙
 - 규칙은 이 파일 하나다. 도구 전용 파일(`CLAUDE.md`·`GEMINI.md` 등)에 규칙을 추가하지 않는다. 규칙을 바꿔야 하면 사용자 승인을 받아 이 파일과 decisions.md를 고친다.
-- **프로젝트 지식은 저장소 파일에만 둔다(ED-03).** 결정·용어·진행 상태를 도구의 개인 메모리(Claude 메모리, ChatGPT 메모리, Gemini 저장 정보 등)에 두지 않는다. 다른 AI가 볼 수 없다.
+- **프로젝트 지식은 저장소 파일에만 둔다(ED-03).** 결정·용어·진행 상태를 도구의 개인 메모리(Claude 메모리, ChatGPT 메모리, Gemini 저장 정보 등)에 두지 않는다. 다른 AI가 볼 수 없다. 사용자가 준 교정과 작업 방식도 모든 AI가 따라야 하므로 이 파일이나 해당 editorial 문서에 적는다.
+- **긴 작업은 진행 기록으로 넘긴다(ED-18).** 한 세션에 끝나지 않는 작업은 `workbench/progress/<주제>.md` 하나에 현재 상태와 다음 단계를 적어 두고, 끝나면 결론만 옮기고 지운다([작업 절차 §9](editorial/workflow.md#9-긴-작업의-진행-기록)).
 - 저장소 파일을 열지 못하는 웹 채팅 AI는 [웹 채팅 키트](editorial/web-chat-kit.md)로 일한다. 그 결과는 `workbench/inbox/`에 저장된 뒤, 저장소를 여는 AI가 사실을 다시 확인해서 반영한다.
 - 작업 시작 전 `git status`로 다른 AI가 남긴 커밋되지 않은 변경이 있는지 본다. 같은 장을 두 AI가 동시에 고치지 않는다. 남의 미완료 변경은 덮어쓰지 말고 사용자에게 묻는다.
 - 장의 검토는 그 장을 집필한 AI와 **다른 AI**가 한다. 확정은 사용자만 한다(ED-08).

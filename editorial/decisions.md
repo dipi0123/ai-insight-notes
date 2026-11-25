@@ -7,7 +7,7 @@
 |---|---|---|
 | ED-01 | 최종 산출물은 `book/`의 책 하나다. 확정된 기술 지식만 담고 대화·경위·작업 이력은 담지 않는다. 이력은 git이 맡는다. | [AGENTS.md](../AGENTS.md) |
 | ED-02 | 모든 AI 공통 규칙의 정본은 `AGENTS.md`다. `CLAUDE.md`·`GEMINI.md`는 AGENTS.md를 불러오는 입구이며 규칙을 따로 두지 않는다. | [AGENTS.md](../AGENTS.md) |
-| ED-03 | 프로젝트 지식(결정·용어·진행 상태)은 저장소 파일에만 둔다. AI 도구의 개인 메모리에 두지 않는다. | [AGENTS.md](../AGENTS.md) |
+| ED-03 | 프로젝트 지식(결정·용어·진행 상태)과 사용자가 준 교정·작업 방식은 저장소 파일에만 둔다. AI 도구의 개인 메모리에 두지 않는다. 한 AI의 메모리에만 있으면 다른 AI는 모른다. Claude Code의 자동 메모리는 프로젝트 설정(`.claude/settings.json`)으로 꺼 둔다. | [AGENTS.md](../AGENTS.md) |
 | ED-14 | 책의 예제 코드는 최종 산출물의 일부로 `book/code/`에 두고, 그대로 실행되어야 한다. 본문에 적는 실행 결과는 실제로 돌린 값만 쓴다. | [style-guide §6](style-guide.md#6-수식코드그림표) |
 | ED-04 | 책의 정본 형식은 Markdown이다. 수식은 LaTeX(`$`), 그림은 Mermaid 또는 `book/figures/`의 SVG로 둔다. 웹 사이트(ED-16)·HTML 페이지·아티팩트는 이 Markdown에서 만든 파생물이며, 파생물을 따로 고치지 않는다. | [style-guide §6](style-guide.md#6-수식코드그림표) |
 | ED-15 | 책 이름은 저장소 이름과 같은 「AI Insight Notes」(`ai-insight-notes`)다. | [book/README.md](../book/README.md) |
@@ -30,6 +30,7 @@
 | ED-08 | 장 상태는 계획 → 초고 → 검토완료 → 확정이다. 검토는 집필 AI와 다른 AI가, 확정은 사용자가 한다. | [workflow §0](workflow.md#0-장-상태) |
 | ED-09 | 질문에 답한 뒤, 책에 들어갈 지식은 같은 작업에서 책에 반영한다. 사용자가 「반영 보류」라고 하면 반영하지 않는다. | [workflow §1](workflow.md#1-질문-응답과-책-반영) |
 | ED-12 | 부·장의 신설·삭제·순서·제목 변경과 편집 결정 변경은 사용자가 정한다. AI는 제안만 한다. 장 안의 절 구성은 AI가 정한다. | [workflow §7](workflow.md#7-구성-변경) |
+| ED-18 | 한 세션에 끝나지 않거나 다른 AI에게 넘기는 작업은 `workbench/progress/`의 진행 기록 파일 하나로 넘긴다. 작업이 끝나면 오래 쓸 결론만 정본 문서로 옮기고 파일은 지운다. | [workflow §9](workflow.md#9-긴-작업의-진행-기록) |
 
 ## 미정
 사용자가 정할 질문만 한 줄로 둔다. 정해지면 위 표로 옮기고 여기서 지운다.
