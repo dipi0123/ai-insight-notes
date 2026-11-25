@@ -75,3 +75,12 @@
 1. AI가 무엇을 왜 바꿀지 제안한다.
 2. 사용자가 승인하면 curriculum을 고치고, 파일을 옮기거나 이름을 바꾸고, 그 장을 가리키는 링크를 모두 고친다.
 3. `toc`와 `check`를 통과시킨다.
+
+## 8. 웹 사이트
+책의 최종 형태는 웹 사이트다(ED-16). 사이트는 `book/`의 Markdown에서 만들고, 사이트만 따로 고치지 않는다(ED-04). 도구와 배포는 ED-17을 따른다.
+
+- **펴내기.** `main`에 push하면 GitHub Actions([.github/workflows/site.yml](../.github/workflows/site.yml))가 검사를 돌리고, 통과하면 사이트를 다시 만들어 GitHub Pages에 올린다. 검사에 실패하면 사이트는 바뀌지 않는다.
+- **목차.** 사이트 왼쪽 목차는 curriculum에서 만든다. 파일이 있는 장(초고 이상)만 실리고, 계획 상태의 장은 실리지 않는다.
+- **바뀌는 것.** `[@키]` 인용은 참고문헌 항목 링크가 되고, 책 밖(예제 코드 파일, editorial 등)을 가리키는 링크는 GitHub 주소가 된다.
+- **설정.** 사이트 이름·테마·Markdown 확장은 [tools/site/config.toml](../tools/site/config.toml)에서 고친다. 생성기 버전은 [tools/site/requirements.txt](../tools/site/requirements.txt)에 고정한다.
+- **로컬에서 미리 보기.** 처음 한 번 `python3 -m venv .venv && .venv/bin/pip install -r tools/site/requirements.txt`로 생성기를 설치한다. 그다음 `python3 tools/book.py site`로 원고(`build/site-src/`)와 설정(`build/zensical.toml`)을 만들고 `.venv/bin/zensical serve -f build/zensical.toml`로 띄운다. `build/`와 `.venv/`는 git에 올리지 않는다.

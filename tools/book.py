@@ -1,18 +1,25 @@
 #!/usr/bin/env python3
-"""AI Insight Notes 책 도구 — 검사, 목차 생성, 상태 요약.
+"""AI Insight Notes 책 도구 — 검사, 목차 생성, 상태 요약, 웹 사이트 원고 생성.
 
 사용법:
   python3 tools/book.py check    규칙 검사(예제 코드 문법 포함). 오류가 있으면 종료 코드 1
   python3 tools/book.py toc      editorial/curriculum.md로 book/README.md 목차를 다시 만든다
   python3 tools/book.py status   장별 진행 상태를 요약한다
+  python3 tools/book.py site     검사를 통과하면 웹 사이트용 원고(build/site-src)와
+                                 설정(build/zensical.toml)을 만든다. 그다음
+                                 zensical build -f build/zensical.toml 로 사이트를 만든다
 
 표준 라이브러리만 쓴다. 규칙의 정본은 AGENTS.md와 editorial/ 문서이고,
 이 스크립트는 그중 기계로 확인할 수 있는 것만 확인한다.
 """
 from __future__ import annotations
 
+import json
+import os
 import re
+import shutil
 import sys
+import tomllib
 import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
@@ -39,8 +46,21 @@ STRUCTURE_LINK_HEADING = "## 구조와의 연결"
 BUILD_PREFIXES = ("직접 만들기:", "프로젝트:")
 BUILD_HEADINGS = ("## 만들 것", "## 준비물", "## 실행 결과", "## 바꿔 보기")
 
-# 링크 검사에서 뺄 경로(저장소 기준 앞부분). 템플릿은 자리표시 링크를 담고, 작업대는 임시 재료다.
-LINK_SKIP = ("workbench/", "editorial/templates/", ".git/", "node_modules/")
+# 링크 검사에서 뺄 경로(저장소 기준 앞부분). 템플릿은 자리표시 링크를 담고, 작업대는 임시 재료이고,
+# build/는 site 명령이 만든 산출물이다.
+LINK_SKIP = ("workbench/", "editorial/templates/", "build/", "node_modules/")
+# 저장소를 훑을 때 들어가지 않는 폴더. 점으로 시작하는 폴더(.git·.venv 등)도 들어가지 않는다.
+WALK_SKIP_DIRS = {"build", "node_modules", "__pycache__"}
+
+# 웹 사이트(ED-16). 설정의 정본은 tools/site/config.toml이고, 목차는 curriculum에서 만든다.
+SITE_TOOLS = ROOT / "tools" / "site"
+SITE_CONFIG = SITE_TOOLS / "config.toml"
+SITE_ASSETS = SITE_TOOLS / "assets"
+BUILD = ROOT / "build"
+SITE_SRC = BUILD / "site-src"
+SITE_BUILD_CONFIG = BUILD / "zensical.toml"
+SITE_BRANCH = "main"
+SITE_GENERATED = ("nav", "docs_dir", "site_dir")
 
 # book/ 안에서 쓰면 안 되는 표현. 확실한 신호만 둔다(오탐을 피하려고 일반 단어는 넣지 않는다).
 FORBIDDEN = [
@@ -314,12 +334,15 @@ def anchors_of(path: Path) -> set[str]:
 
 def markdown_files() -> list[Path]:
     files = []
-    for path in sorted(ROOT.rglob("*.md")):
-        r = rel(path)
-        if any(r.startswith(s) for s in LINK_SKIP) or any(part.startswith(".") for part in Path(r).parts):
-            continue
-        files.append(path)
-    return files
+    for dirpath, dirnames, filenames in os.walk(ROOT):
+        dirnames[:] = [d for d in dirnames if not d.startswith(".") and d not in WALK_SKIP_DIRS]
+        for name in filenames:
+            if not name.endswith(".md"):
+                continue
+            path = Path(dirpath) / name
+            if not any(rel(path).startswith(s) for s in LINK_SKIP):
+                files.append(path)
+    return sorted(files)
 
 
 def check_links(rep: Report) -> None:
@@ -450,6 +473,170 @@ def cmd_toc() -> int:
     return 0
 
 
+# ---------------------------------------------------------------- 웹 사이트
+
+def toml_key(key: str) -> str:
+    return key if re.fullmatch(r"[A-Za-z0-9_-]+", key) else json.dumps(key, ensure_ascii=False)
+
+
+def toml_value(value) -> str:
+    """사이트 설정에 필요한 만큼만 TOML로 쓴다. 표는 한 줄짜리 인라인 표로 쓴다."""
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    if isinstance(value, (int, float)):
+        return repr(value)
+    if isinstance(value, str):
+        return json.dumps(value, ensure_ascii=False)
+    if isinstance(value, list):
+        return "[" + ", ".join(toml_value(v) for v in value) + "]"
+    if isinstance(value, dict):
+        return "{ " + ", ".join(f"{toml_key(k)} = {toml_value(v)}" for k, v in value.items()) + " }"
+    raise TypeError(f"TOML로 쓸 수 없는 값: {value!r}")
+
+
+def toml_dump(config: dict) -> str:
+    out = [f"# tools/book.py site가 만든 파일이다. 고치지 말고 {rel(SITE_CONFIG)} 파일과 curriculum을 고친다."]
+    for table, items in config.items():
+        out.append(f"[{toml_key(table)}]")
+        out += [f"{toml_key(k)} = {toml_value(v)}" for k, v in items.items()]
+    return "\n".join(out) + "\n"
+
+
+def title_of(path: Path) -> str:
+    for line in read(path).splitlines():
+        if line.startswith("# "):
+            return line[2:].strip()
+    return path.stem
+
+
+def site_nav(parts: list[Part]) -> list:
+    """사이트 목차: 처음 → 실린 장이 있는 부 → 부록. 계획 상태의 장은 넣지 않는다."""
+    nav: list = [{"처음": "index.md"}]
+    for part in parts:
+        items = [
+            {f"{ch.num} {ch.title}": Path(ch.path).relative_to("book").as_posix()}
+            for ch in part.chapters
+            if ch.status != "계획" and (ROOT / ch.path).exists()
+        ]
+        if items:
+            nav.append({f"{part.num}부. {part.title}": items})
+    appendix = [
+        {title_of(p): p.relative_to(BOOK).as_posix()}
+        for p in sorted((BOOK / "appendix").glob("*.md"), key=lambda p: p.name)
+    ]
+    if (CODE / "README.md").exists():
+        appendix.append({title_of(CODE / "README.md"): "code/index.md"})
+    if appendix:
+        nav.append({"부록": appendix})
+    return nav
+
+
+def in_dir(path: Path, folder: Path) -> bool:
+    return path == folder or folder in path.parents
+
+
+def site_link(target: str, src: Path, repo_url: str) -> str:
+    """책 안의 Markdown 링크는 그대로(README.md는 index.md로) 두고, 사이트에 실리지 않는 곳
+    (책 밖, 예제 코드 파일·폴더)을 가리키는 링크는 GitHub 주소로 바꾼다."""
+    if "://" in target or target.startswith(("mailto:", "#")):
+        return target
+    path_part, sharp, anchor = target.partition("#")
+    dest = (src.parent / unquote(path_part)).resolve()
+    if in_dir(dest, BOOK) and dest.suffix == ".md":
+        if dest.name == "README.md" and path_part.endswith("README.md"):
+            path_part = path_part[: -len("README.md")] + "index.md"
+        return path_part + sharp + anchor
+    if in_dir(dest, BOOK) and not in_dir(dest, CODE) and dest.is_file():
+        return target
+    kind = "tree" if dest.is_dir() else "blob"
+    return f"{repo_url.rstrip('/')}/{kind}/{SITE_BRANCH}/{rel(dest)}" + sharp + anchor
+
+
+def site_prose(text: str, src: Path, repo_url: str, ref_rel: str) -> str:
+    """코드가 아닌 글 조각에서 링크를 고치고 [@키] 인용을 참고문헌 링크로 바꾼다."""
+    text = LINK_RE.sub(
+        lambda m: m.group(0).replace(m.group(1), site_link(m.group(1), src, repo_url), 1), text
+    )
+
+    def cite(m: re.Match) -> str:
+        keys = [k.strip().lstrip("@").strip() for k in m.group(1).split(";")]
+        return "\\[" + "; ".join(f"[{k}]({ref_rel}#ref-{k})" for k in keys if k) + "\\]"
+
+    return CITE_RE.sub(cite, text)
+
+
+def site_markdown(text: str, src: Path, repo_url: str) -> str:
+    ref_rel = Path(os.path.relpath(REFERENCES, src.parent)).as_posix()
+    prose = dict(prose_lines(text))
+    out = []
+    for i, line in enumerate(text.splitlines(), 1):
+        if i in prose:
+            ref = REF_ENTRY_RE.match(line) if src == REFERENCES else None
+            if ref:
+                # 인용 링크(#ref-키)가 닿을 자리를 항목 앞에 만든다.
+                line = f'- <span id="ref-{ref.group(1)}"></span>' + line[2:]
+            elif re.match(r"^\s*<details>\s*$", line):
+                # GitHub처럼 접힌 답 안의 Markdown도 그려지게 한다(md_in_html).
+                line = line.replace("<details>", '<details markdown="1">')
+            else:
+                pieces, last = [], 0
+                for m in INLINE_CODE_RE.finditer(line):
+                    pieces.append(site_prose(line[last:m.start()], src, repo_url, ref_rel))
+                    pieces.append(m.group(0))
+                    last = m.end()
+                pieces.append(site_prose(line[last:], src, repo_url, ref_rel))
+                line = "".join(pieces)
+        out.append(line)
+    return "\n".join(out) + "\n"
+
+
+def cmd_site() -> int:
+    rep = Report()
+    parts = run_checks(rep)
+    if rep.errors:
+        print_report(rep)
+        print("검사 오류 때문에 사이트 원고를 만들지 않았다.")
+        return 1
+    config = tomllib.loads(SITE_CONFIG.read_text(encoding="utf-8"))
+    project = config.get("project", {})
+    for key in SITE_GENERATED:
+        if key in project:
+            print(f"{rel(SITE_CONFIG)}: {key}는 쓰지 않는다 — site 명령이 채운다")
+            return 1
+    repo_url = project.get("repo_url")
+    if not repo_url:
+        print(f"{rel(SITE_CONFIG)}: repo_url이 없다 — 책 밖을 가리키는 링크를 바꿀 수 없다")
+        return 1
+
+    if SITE_SRC.exists():
+        shutil.rmtree(SITE_SRC)
+    for path in sorted(BOOK.rglob("*")):
+        if path.is_dir() or path.name.startswith(".") or "__pycache__" in path.parts:
+            continue
+        if in_dir(path, CODE) and path.suffix != ".md":
+            continue  # 예제 코드 파일은 GitHub에서 본다(링크는 site_link가 바꾼다)
+        target = path.relative_to(BOOK)
+        if path.name == "README.md":
+            target = target.with_name("index.md")
+        dest = SITE_SRC / target
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        if path.suffix == ".md":
+            dest.write_text(site_markdown(read(path), path, repo_url), encoding="utf-8")
+        else:
+            shutil.copy2(path, dest)
+    if SITE_ASSETS.exists():
+        shutil.copytree(SITE_ASSETS, SITE_SRC, dirs_exist_ok=True)
+
+    config["project"] = {**project, "docs_dir": SITE_SRC.name, "site_dir": "site", "nav": site_nav(parts)}
+    SITE_BUILD_CONFIG.write_text(toml_dump(config), encoding="utf-8")
+    zensical = ROOT / ".venv" / "bin" / "zensical"
+    cmd = rel(zensical) if zensical.exists() else "zensical"
+    print(f"{rel(SITE_SRC)}/와 {rel(SITE_BUILD_CONFIG)}을 만들었다.")
+    print(f"  사이트 만들기: {cmd} build -f {rel(SITE_BUILD_CONFIG)}   (결과: {rel(BUILD)}/site/)")
+    print(f"  미리 보기:     {cmd} serve -f {rel(SITE_BUILD_CONFIG)}")
+    return 0
+
+
 # ---------------------------------------------------------------- 명령
 
 def print_report(rep: Report) -> None:
@@ -459,8 +646,7 @@ def print_report(rep: Report) -> None:
         print(f"오류  {e}")
 
 
-def cmd_check() -> int:
-    rep = Report()
+def run_checks(rep: Report) -> list[Part]:
     parts = parse_curriculum(rep)
     chapters = check_curriculum(parts, rep)
     check_chapter_files(chapters, rep)
@@ -469,6 +655,12 @@ def cmd_check() -> int:
     check_citations(rep)
     check_code(rep)
     check_toc(parts, rep)
+    return parts
+
+
+def cmd_check() -> int:
+    rep = Report()
+    parts = run_checks(rep)
     print_report(rep)
     total = sum(len(p.chapters) for p in parts)
     print(f"검사 끝: 장 {total}개, 오류 {len(rep.errors)}건, 경고 {len(rep.warnings)}건")
@@ -498,7 +690,7 @@ def cmd_status() -> int:
 
 
 def main(argv: list[str]) -> int:
-    commands = {"check": cmd_check, "toc": cmd_toc, "status": cmd_status}
+    commands = {"check": cmd_check, "toc": cmd_toc, "status": cmd_status, "site": cmd_site}
     if len(argv) != 2 or argv[1] not in commands:
         print(__doc__)
         return 2

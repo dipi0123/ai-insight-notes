@@ -9,7 +9,10 @@
 | ED-02 | 모든 AI 공통 규칙의 정본은 `AGENTS.md`다. `CLAUDE.md`·`GEMINI.md`는 AGENTS.md를 불러오는 입구이며 규칙을 따로 두지 않는다. | [AGENTS.md](../AGENTS.md) |
 | ED-03 | 프로젝트 지식(결정·용어·진행 상태)은 저장소 파일에만 둔다. AI 도구의 개인 메모리에 두지 않는다. | [AGENTS.md](../AGENTS.md) |
 | ED-14 | 책의 예제 코드는 최종 산출물의 일부로 `book/code/`에 두고, 그대로 실행되어야 한다. 본문에 적는 실행 결과는 실제로 돌린 값만 쓴다. | [style-guide §6](style-guide.md#6-수식코드그림표) |
-| ED-04 | 책의 정본 형식은 Markdown이다. 수식은 LaTeX(`$`), 그림은 Mermaid 또는 `book/figures/`의 SVG로 둔다. HTML 페이지·아티팩트는 Markdown에서 파생한 보조물이다. | [style-guide §6](style-guide.md#6-수식코드그림표) |
+| ED-04 | 책의 정본 형식은 Markdown이다. 수식은 LaTeX(`$`), 그림은 Mermaid 또는 `book/figures/`의 SVG로 둔다. 웹 사이트(ED-16)·HTML 페이지·아티팩트는 이 Markdown에서 만든 파생물이며, 파생물을 따로 고치지 않는다. | [style-guide §6](style-guide.md#6-수식코드그림표) |
+| ED-15 | 책 이름은 저장소 이름과 같은 「AI Insight Notes」(`ai-insight-notes`)다. | [book/README.md](../book/README.md) |
+| ED-16 | 책의 최종 형태는 웹 사이트다. 독자는 브라우저에서 읽는다. 사이트는 `book/`의 Markdown에서 생성하며, 사이트에만 있는 내용을 두지 않는다. | [AGENTS.md](../AGENTS.md#이-프로젝트) |
+| ED-17 | 웹 사이트는 Zensical로 만들고 GitHub Pages로 펴낸다. 사이트 설정의 정본은 `tools/site/config.toml`이고, 사이트 목차는 `tools/book.py site`가 curriculum에서 만든다. 생성기에 맞춘 원고 변환(인용 링크 등)은 `tools/book.py`에 두어 생성기를 바꿔도 원고는 그대로 쓴다. | [workflow §8](workflow.md#8-웹-사이트) |
 
 ## 형식과 문체
 | ID | 결정 | 정본 문서 |
@@ -33,5 +36,3 @@
 
 | ID | 질문 |
 |---|---|
-| Q-01 | 책 제목을 무엇으로 할까(지금은 프로젝트 이름 「AI Insight Notes」를 쓴다)? |
-| Q-02 | 책을 정적 사이트(mdBook·MkDocs 등)로 묶어 브라우저에서 읽을까, Markdown 뷰어(VS Code·Obsidian·GitHub)로 읽을까? |

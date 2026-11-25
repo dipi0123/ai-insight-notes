@@ -2,7 +2,7 @@
 
 AI 모델을 입문부터 전문가 수준까지 공부하며 한 권의 책으로 엮는 독립 프로젝트다. 소프트웨어 개발자가 이 책만 공부하면 AI 전체를 이해하고 경량 언어 모델이나 CV 모델을 직접 설계·구축할 수 있게 하는 것이 목표다. AI 기초 용어와 산업 기술의 구분에서 시작해, 모델이 어떤 구조로 동작하는지, 사전학습·파인튜닝·SFT·강화 학습 같은 학습 방법이 왜 그런 구조 위에서 가능한지, 성능을 어떻게 끌어올리는지, 직접 설계하고 만드는 법까지 배운다. 질문하고, 답을 듣고, 확정된 지식만 책에 쌓는다. 여러 AI(Claude·GPT·Gemini·Grok 등)를 섞어 써도 같은 규칙으로 일하도록 규칙을 한 곳([AGENTS.md](AGENTS.md))에 모았다.
 
-- 책(최종 산출물): [book/README.md](book/README.md)
+- 책(최종 산출물): [book/README.md](book/README.md). 최종 형태는 이 Markdown에서 만드는 웹 사이트다(ED-16): https://dipi0123.github.io/ai-insight-notes/
 - 편찬 계획과 진행 상태: [editorial/curriculum.md](editorial/curriculum.md)
 - AI 작업 규칙: [AGENTS.md](AGENTS.md)
 
@@ -26,7 +26,9 @@ editorial/           편집실 — 책을 만드는 규칙과 계획
   web-chat-kit.md    웹 채팅 AI용 첨부 목록·시작 프롬프트
   templates/         장·검토 템플릿
 workbench/           작업대 — 반영 전 재료 (임시)
-tools/book.py        검사·목차 생성·상태 요약
+tools/book.py        검사·목차 생성·상태 요약·사이트 원고 생성
+tools/site/          웹 사이트 설정(config.toml)·생성기 버전·스크립트
+.github/workflows/   main에 push하면 사이트를 만들어 펴낸다
 ```
 
 ## AI별 시작 방법
@@ -53,4 +55,15 @@ tools/book.py        검사·목차 생성·상태 요약
 ```bash
 python3 tools/book.py toc
 python3 tools/book.py check
+```
+
+## 웹 사이트
+`main`에 push하면 GitHub Actions가 사이트를 다시 만든다. 로컬에서 미리 보려면([작업 절차 §8](editorial/workflow.md#8-웹-사이트)):
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install -r tools/site/requirements.txt
+```
+
+```bash
+python3 tools/book.py site && .venv/bin/zensical serve -f build/zensical.toml
 ```

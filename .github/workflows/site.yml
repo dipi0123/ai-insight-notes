@@ -1,0 +1,39 @@
+# 책 웹 사이트(ED-16)를 만들어 GitHub Pages로 펴낸다.
+# main에 push하면 검사를 통과한 경우에만 사이트를 다시 만든다.
+name: 사이트
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/configure-pages@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: 3.x
+      - run: pip install -r tools/site/requirements.txt
+      # 검사(check)를 통과해야 원고를 만든다. 실패하면 사이트를 바꾸지 않는다.
+      - run: python3 tools/book.py site
+      - run: zensical build -f build/zensical.toml --clean --strict
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: build/site
+      - uses: actions/deploy-pages@v5
+        id: deployment

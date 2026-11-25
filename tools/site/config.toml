@@ -1,0 +1,74 @@
+# 웹 사이트(ED-16) 설정의 정본이다.
+# `python3 tools/book.py site`가 이 설정에 목차(nav)와 경로(docs_dir·site_dir)를 더해
+# build/zensical.toml을 만든다. nav·docs_dir·site_dir는 여기에 쓰지 않는다(목차의 정본은 curriculum).
+# repo_url은 책 밖(예제 코드 파일 등)을 가리키는 링크를 GitHub 주소로 바꿀 때도 쓴다.
+
+[project]
+site_name = "AI Insight Notes"
+site_description = "AI 모델, 입문에서 전문가까지"
+site_url = "https://dipi0123.github.io/ai-insight-notes/"
+repo_url = "https://github.com/dipi0123/ai-insight-notes"
+repo_name = "dipi0123/ai-insight-notes"
+
+extra_javascript = [
+  "javascripts/mathjax.js",
+  "https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js",
+]
+
+[project.theme]
+language = "ko"
+features = [
+  "content.code.copy",
+  "content.footnote.tooltips",
+  "content.tooltips",
+  "navigation.footer",
+  "navigation.indexes",
+  "navigation.instant",
+  "navigation.instant.prefetch",
+  "navigation.path",
+  "navigation.sections",
+  "navigation.top",
+  "navigation.tracking",
+  "search.highlight",
+  "toc.follow",
+]
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme)"
+toggle.icon = "lucide/sun-moon"
+toggle.name = "밝은 화면으로"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+toggle.icon = "lucide/sun"
+toggle.name = "어두운 화면으로"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+toggle.icon = "lucide/moon"
+toggle.name = "시스템 설정 따르기"
+
+[project.markdown_extensions]
+abbr = {}
+admonition = {}
+attr_list = {}
+def_list = {}
+footnotes = {}
+md_in_html = {}
+tables = {}
+# 제목 앵커를 GitHub 방식(한글 유지, 소문자, 공백은 하이픈)으로 만들어 책 안의 #앵커 링크가 그대로 맞게 한다.
+toc.permalink = true
+toc.slugify = { object = "pymdownx.slugs.slugify", kwds = { case = "lower" } }
+pymdownx.arithmatex.generic = true
+pymdownx.betterem = {}
+pymdownx.details = {}
+pymdownx.highlight.anchor_linenums = true
+pymdownx.highlight.line_spans = "__span"
+pymdownx.highlight.pygments_lang_class = true
+pymdownx.inlinehilite = {}
+pymdownx.superfences.custom_fences = [
+  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" },
+]
+pymdownx.tasklist.custom_checkbox = true
