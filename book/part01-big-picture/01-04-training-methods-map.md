@@ -1,6 +1,6 @@
 # 1.4 학습 방법 지도: pre-training에서 reinforcement learning까지
 
-> **수준** L1 · **선수** 1.3 모델의 한살이: 데이터에서 서비스까지 · **이 장의 질문** 학습 방법의 이름은 어떤 기준으로 나뉘나? pre-training·fine-tuning·SFT·RLHF·distillation은 각각 학습의 어느 단계에서 무엇을 정답으로 삼나? reinforcement learning과 preference learning은 어떤 관계인가? 대화형 AI는 어떤 학습 단계를 거쳐 만들어지나?
+> **수준** L1 · **선수** [1.3 모델의 한살이: 데이터에서 서비스까지](01-03-model-lifecycle.md) · **이 장의 질문** 학습 방법의 이름은 어떤 기준으로 나뉘나? pre-training·fine-tuning·SFT·RLHF·distillation은 각각 학습의 어느 단계에서 무엇을 정답으로 삼나? reinforcement learning과 preference learning은 어떤 관계인가? 대화형 AI는 어떤 학습 단계를 거쳐 만들어지나?
 
 ## 한눈에
 

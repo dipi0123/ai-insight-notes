@@ -17,18 +17,23 @@
 | artificial intelligence | AI | 인공지능 | 분야 | 사람의 지능이 필요하다고 여기는 일을 컴퓨터가 하게 만드는 분야 전체 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md) |
 | attention | — | — | 구조 | 입력의 각 위치가 다른 위치를 얼마나 참고할지 계산해 정보를 모으는 계산. Transformer의 핵심이다 | [1.2](../part01-big-picture/01-02-naming-axes.md), 5.5 |
 | autoregressive model | — | 자기회귀 모델 | 방식 | 앞에서 만든 출력을 보고 다음 조각을 하나씩 이어 붙여 출력을 만드는 모델 | [1.2](../part01-big-picture/01-02-naming-axes.md), 7.2 |
+| backpropagation | — | 역전파 | 수학 | 출력에서 거꾸로 거슬러 가며 weight마다 loss를 줄이려면 어느 쪽으로 고쳐야 하는지 계산하는 방법 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 4.3 |
 | base model | — | 베이스 모델 | 규모·활용 | pre-training만 하고 지시를 따르도록 더 학습하지 않은 language model을 흔히 부르는 이름 | [1.2](../part01-big-picture/01-02-naming-axes.md), 9.3 |
 | bounding box | box | 경계 상자 | 과제 | 사진 속 물체를 둘러싼 사각형. object detection이 물체의 위치로 출력한다 | [1.2](../part01-big-picture/01-02-naming-axes.md), 6.5 |
+| checkpoint | — | 체크포인트 | 시스템 | 학습 중간이나 끝에 모델의 parameter 값을 저장한 것 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 4.10 |
 | class | — | 클래스 | 과제 | 모델이 구별하는 부류 하나. 예: cat, dog | [1.2](../part01-big-picture/01-02-naming-axes.md) |
 | classifier | — | 분류기 | 과제 | classification task를 푸는 모델 | [1.2](../part01-big-picture/01-02-naming-axes.md), 6.2 |
 | cluster | — | 군집 | 데이터 | 서로 비슷한 데이터끼리 모인 묶음 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 3.9 |
 | CNN | convolutional neural network | 합성곱 신경망 | 구조 | 작은 창을 입력 위로 옮겨 가며 같은 계산을 되풀이하는 layer를 쌓은 neural network. 이미지에 오래 써 온 구조다 | [1.2](../part01-big-picture/01-02-naming-axes.md), 5.1 |
 | computer vision | CV | 컴퓨터 비전 | 분야 | 이미지와 영상을 다루는 AI 분야 | [1.2](../part01-big-picture/01-02-naming-axes.md) |
+| concept drift | — | — | 데이터 | 입력과 정답의 관계가 시간이 지나며 바뀌는 것. 모델의 예측이 점점 틀리게 된다 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 13.6 |
 | confidence score | — | 신뢰도 점수 | 과제 | 모델이 자기 예측을 얼마나 확신하는지 나타낸 점수. object detection에서는 box마다 붙는다 | [1.2](../part01-big-picture/01-02-naming-axes.md), 6.5 |
 | continual learning | lifelong learning | 연속 학습 | 학습과정 | task나 데이터가 바뀌어 가는 동안 이어서 배우는 방식. 앞서 배운 것을 잊는 문제가 따라온다 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 3.10, 9.5 |
 | continual pre-training | — | 추가 사전학습 | 학습과정 | pre-trained model을 특정 분야 데이터로 pre-training과 같은 방식으로 더 학습하는 것 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 8.5 |
 | contrastive learning | — | 대조 학습 | 학습신호 | 맞는 짝과 틀린 짝을 가려내도록 배우는 학습. 예: 어느 설명 글이 어느 사진의 것인지 맞히기 | [1.2](../part01-big-picture/01-02-naming-axes.md), 8.3, 11.1 |
 | curriculum learning | — | 커리큘럼 학습 | 학습과정 | 쉬운 데이터부터 어려운 데이터 순으로 배우게 짜는 방식 | [1.4](../part01-big-picture/01-04-training-methods-map.md) |
+| data cleaning | — | 데이터 정제 | 데이터 | 모은 데이터에서 부정확하거나 지저분한 기록을 걸러 내는 일 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 8.4 |
+| dataset | — | 데이터셋 | 데이터 | 학습이나 평가에 쓰려고 모아 둔 데이터 묶음 | [1.3](../part01-big-picture/01-03-model-lifecycle.md) |
 | deep learning | — | 딥러닝 | 분야 | 여러 layer를 쌓은 neural network로 feature까지 데이터에서 배우는 machine learning의 한 갈래 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md) |
 | demonstration | — | 시범 답 | 데이터 | 사람이 직접 써서 보여 주는 바람직한 답. SFT의 학습 데이터가 된다 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 9.3 |
 | detection model | — | 검출 모델 | 과제 | 사진 속 물체마다 위치와 종류를 출력하는 모델 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 6.5 |
@@ -36,13 +41,16 @@
 | diffusion model | — | 확산 모델 | 방식 | 데이터에 noise를 더해 가는 과정을 거꾸로 되돌리도록 배워, noise에서 시작해 데이터를 만드는 generative model | [1.2](../part01-big-picture/01-02-naming-axes.md), 11.5 |
 | distillation | knowledge distillation | 증류 | 학습과정 | 큰 teacher 모델의 출력을 작은 student 모델이 따라 하게 해서 배우는 방법 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 9.6 |
 | distribution | — | 분포 | 수학 | 값들이 어떻게 퍼져 있는지, 또는 각 값이 나올 가능성이 얼마인지 나타낸 것 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 2.3 |
+| distribution shift | — | 분포 변화 | 데이터 | 학습 데이터와 실제 입력의 distribution이 다른 것. 모델 성능이 떨어지는 흔한 원인이다 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 13.6 |
 | DPO | direct preference optimization | — | 학습과정 | reward model과 reinforcement learning 과정 없이 preference pair에서 바로 모델을 최적화하는 post-training 방법 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 10.5 |
 | environment | — | 환경 | 학습신호 | reinforcement learning에서 모델의 action을 받아 그 결과와 reward를 돌려주는 바깥 세계. 예: 게임 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 10.1 |
 | experience | — | 경험 | 데이터 | Mitchell의 학습 정의에서 프로그램이 배우는 재료. 데이터나 연습 시행이 해당한다 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md) |
 | expert system | — | 전문가 시스템 | 시스템 | 전문가의 지식을 「만약 ~이면 ~이다」 규칙으로 적어 넣어 판단하게 하는 프로그램 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md) |
 | feature | — | 특징 | 데이터 | 모델이 판단에 쓰는, 입력에서 뽑은 정보 조각. 고전 machine learning에서는 사람이 고르고 deep learning에서는 학습이 만든다 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md) |
+| feature engineering | — | 특징 공학 | 학습과정 | 모델에 넣을 feature를 사람이 뽑고 고르는 일. deep learning에서는 학습이 대신한다 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 3.9 |
 | federated learning | — | 연합 학습 | 학습과정 | 데이터를 한곳에 모으지 않고 여러 기기에서 학습한 결과만 모으는 방식 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 3.10 |
 | fine-tuning | — | 파인튜닝 | 학습과정 | pre-trained model을 특정 task나 형식에 맞춰 더 학습하는 것. 이 책은 label 데이터로 하는 supervised 추가 학습이라는 좁은 뜻으로 쓴다 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 9.1 |
+| forward pass | — | 순전파 | 수학 | 입력에서 출력 쪽으로 모델의 계산을 한 번 따라가는 것. inference는 forward pass만 한다 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 4.2 |
 | foundation model | — | 파운데이션 모델 | 규모·활용 | 넓은 데이터로 대규모 학습해 여러 task에 맞춰 고쳐 쓸 수 있는 모델 | [1.2](../part01-big-picture/01-02-naming-axes.md), 1.6 |
 | freezing | — | 층 고정 | 학습과정 | 일부 layer의 weight를 고정해 학습하지 않는 것. 보통 앞쪽 layer를 고정하고 뒤쪽만 학습한다 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 9.1 |
 | full fine-tuning | — | 전체 파인튜닝 | 학습과정 | pre-trained model의 모든 weight를 고치는 fine-tuning | [1.4](../part01-big-picture/01-04-training-methods-map.md), 9.1 |
@@ -52,17 +60,19 @@
 | image classification | — | 이미지 분류 | 과제 | 사진 전체에 class 하나를 매기는 task | [1.2](../part01-big-picture/01-02-naming-axes.md), 6.2 |
 | image-text-to-text | — | — | 과제 | 이미지와 글을 받아 글을 내는 task. VLM이 하는 task다 | [1.2](../part01-big-picture/01-02-naming-axes.md), 11.2 |
 | in-context learning | — | — | 학습과정 | weight를 바꾸지 않고 prompt에 넣은 설명과 예시만으로 원하는 동작을 끌어내는 것 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 9.2 |
+| inference | — | 추론 | 시스템 | 학습된 모델의 weight를 고정한 채 새 입력의 출력을 계산하는 일 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 7.2, 13.2 |
 | instance segmentation | — | 인스턴스 분할 | 과제 | 물체마다 그 물체에 속한 픽셀 묶음(mask)과 class를 출력하는 task | [1.2](../part01-big-picture/01-02-naming-axes.md), 6.7 |
 | instruction tuning | — | — | 학습과정 | 지시를 따르도록 「지시 → 좋은 답」 데이터로 더 학습하는 것 | [1.2](../part01-big-picture/01-02-naming-axes.md), 9.3 |
 | knowledge base | — | 지식 베이스 | 분야 | 세상에 관한 지식을 형식 언어의 문장으로 적어 두고 논리 규칙으로 추론하게 하는 AI 방식 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md) |
-| label | — | 라벨 | 데이터 | 입력마다 붙인 정답. 예: 사진에 붙인 「고양이」 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md), [1.4](../part01-big-picture/01-04-training-methods-map.md), 6.9 |
+| label | — | 라벨 | 데이터 | 입력마다 붙인 정답. 예: 사진에 붙인 「고양이」 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md), [1.3](../part01-big-picture/01-03-model-lifecycle.md), [1.4](../part01-big-picture/01-04-training-methods-map.md), 6.9 |
+| labeling | annotation | 라벨링 | 데이터 | 데이터마다 label을 붙이는 일 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 6.9 |
 | language model | LM | 언어 모델 | 과제 | 글에서 다음 token이 나올 확률을 계산하는 모델. 이 확률로 글을 이어 쓴다 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md), [1.2](../part01-big-picture/01-02-naming-axes.md), [1.4](../part01-big-picture/01-04-training-methods-map.md), 7.2 |
 | layer | — | 층 | 구조 | neural network를 이루는 계산 단위 하나. 입력을 변환한 결과를 다음 layer로 넘긴다 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md), [1.2](../part01-big-picture/01-02-naming-axes.md), [1.4](../part01-big-picture/01-04-training-methods-map.md), 4.2 |
 | learning to rank | — | 순위 학습 | 과제 | 여러 항목의 순서를 맞히도록 배우는 학습. 검색 결과 정렬에 쓴다 | [1.4](../part01-big-picture/01-04-training-methods-map.md) |
 | LLM | large language model | 대규모 언어 모델 | 규모·활용 | parameter가 아주 많은 language model. 몇 개부터 large인지 정한 공식 기준은 없다 | [1.2](../part01-big-picture/01-02-naming-axes.md), 7.2 |
 | logistic regression | — | 로지스틱 회귀 | 구조 | feature에 weight를 곱해 더한 값으로 두 부류 중 한쪽일 확률을 계산하는 고전 machine learning 모델 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md), 3.9 |
 | LoRA | low-rank adaptation | — | 학습과정 | 원래 weight는 고정하고, 작은 matrix 두 개의 곱으로 나타낸 변화량만 학습하는 PEFT 방법 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 9.4 |
-| loss | — | 손실 | 수학 | 모델의 출력이 정답과 얼마나 다른지 나타낸 값. 학습은 이 값을 줄이는 방향으로 weight를 고친다 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 3.1, 4.4 |
+| loss | — | 손실 | 수학 | 모델의 출력이 정답과 얼마나 다른지 나타낸 값. 학습은 이 값을 줄이는 방향으로 weight를 고친다 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), [1.4](../part01-big-picture/01-04-training-methods-map.md), 3.1, 4.4 |
 | machine learning | ML | 머신러닝 | 분야 | 동작 규칙을 사람이 짜 넣지 않고 데이터에서 배우게 하는 AI의 방법 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md) |
 | mask | — | 마스크 | 과제 | 사진에서 한 물체나 한 class에 속한 픽셀을 표시한 것. segmentation이 출력한다 | [1.2](../part01-big-picture/01-02-naming-axes.md), 6.7 |
 | modality | — | 모달리티 | 분야 | 글·이미지·음성·영상 같은 데이터의 종류 | [1.2](../part01-big-picture/01-02-naming-axes.md), 11.7 |
@@ -73,7 +83,9 @@
 | next-token prediction | — | 다음 토큰 예측 | 학습신호 | 앞의 token들을 보고 다음 token을 맞히는 학습 목표. language model pre-training의 기본 방식이다 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 8.2 |
 | noise | — | 잡음 | 데이터 | 데이터에 섞인 무작위 값. diffusion model은 noise를 더하고 걷어 내며 배운다 | [1.2](../part01-big-picture/01-02-naming-axes.md), 11.5 |
 | object detection | — | 객체 검출 | 과제 | 사진 속 물체마다 위치(bounding box)·class·confidence score를 출력하는 task | [1.2](../part01-big-picture/01-02-naming-axes.md), 6.5 |
+| offline inference | static inference | 오프라인 추론 | 시스템 | 미리 한꺼번에 예측을 계산해 저장해 두고, 요청이 오면 저장한 결과를 꺼내 주는 방식 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 13.2 |
 | offline learning | — | 오프라인 학습 | 학습과정 | 미리 모아 둔 데이터로만 학습하는 방식 | [1.4](../part01-big-picture/01-04-training-methods-map.md) |
+| online inference | dynamic inference | 온라인 추론 | 시스템 | 요청이 올 때마다 그 자리에서 모델을 돌려 결과를 돌려주는 방식 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 13.2 |
 | online learning | — | 온라인 학습 | 학습과정 | 학습하는 동안 새 데이터를 받거나 스스로 만들며 배우는 방식 | [1.4](../part01-big-picture/01-04-training-methods-map.md) |
 | panoptic segmentation | — | 파놉틱 분할 | 과제 | 모든 픽셀에 class를 매기고, 셀 수 있는 물체의 픽셀에는 물체 번호까지 매기는 task | [1.2](../part01-big-picture/01-02-naming-axes.md), 6.7 |
 | parameter | — | 파라미터 | 구조 | 모델 안에서 학습으로 정해지는 숫자를 통틀어 부르는 말. weight가 대부분을 차지한다 | [1.2](../part01-big-picture/01-02-naming-axes.md), 3.1 |
@@ -96,6 +108,7 @@
 | reinforcement learning | RL | 강화 학습 | 학습신호 | 정답 대신 action의 결과에 대한 reward를 받아, reward가 커지도록 policy를 고치는 학습 틀 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 10.1 |
 | representation | — | 표현 | 구조 | 모델 안에서 입력을 나타내는 숫자 배열. 학습이 잘 되면 비슷한 입력은 비슷한 representation을 갖는다 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md), [1.4](../part01-big-picture/01-04-training-methods-map.md), 8.1 |
 | representation learning | — | 표현 학습 | 분야 | feature를 사람이 고르지 않고 데이터에서 배우게 하는 machine learning | [1.1](../part01-big-picture/01-01-ai-ml-dl.md), 8.1 |
+| retraining | — | 재학습 | 학습과정 | 새로 모은 데이터를 더해 모델을 다시 학습하는 것. 배포 뒤 성능이 떨어지면 한다 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 13.6 |
 | reward | — | 보상 | 학습신호 | reinforcement learning에서 action의 결과에 매기는 점수 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 10.1 |
 | reward model | — | 보상 모델 | 학습과정 | 답이 얼마나 좋은지 점수를 매기도록 학습한 모델. RLHF에서 preference 데이터로 학습해 reward를 만든다 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 10.4 |
 | RLHF | reinforcement learning from human feedback | — | 학습과정 | 사람의 preference 비교로 reward model을 학습하고, 그 점수를 reward로 reinforcement learning하는 방법 | [1.2](../part01-big-picture/01-02-naming-axes.md), [1.4](../part01-big-picture/01-04-training-methods-map.md), 10.4 |
@@ -104,12 +117,14 @@
 | self-supervised learning | — | 자기지도 학습 | 학습신호 | 데이터의 일부를 가리고 맞히게 해서 데이터 스스로 정답을 만드는 학습 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 3.3 |
 | semantic segmentation | — | 의미론적 분할 | 과제 | 픽셀마다 class를 매기는 task. 같은 class의 물체끼리는 구별하지 않는다 | [1.2](../part01-big-picture/01-02-naming-axes.md), 6.7 |
 | semi-supervised learning | — | 준지도 학습 | 학습신호 | label이 있는 일부 데이터와 label이 없는 데이터를 함께 쓰는 학습 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 3.10 |
+| serving | — | 서빙 | 시스템 | 학습한 모델이 online inference나 offline inference로 예측을 내놓을 수 있게 만드는 일 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 13.2 |
 | SFT | supervised fine-tuning | 지도 파인튜닝 | 학습과정 | 「지시 → 좋은 답」 쌍을 따라 하게 하는 supervised learning 방식의 fine-tuning | [1.2](../part01-big-picture/01-02-naming-axes.md), [1.4](../part01-big-picture/01-04-training-methods-map.md), 9.3 |
 | speech | — | 음성 | 분야 | 말소리를 다루는 AI 분야 | [1.2](../part01-big-picture/01-02-naming-axes.md), 11.7 |
 | speech recognition model | — | 음성 인식 모델 | 과제 | 말소리를 받아 글로 옮기는 모델 | [1.2](../part01-big-picture/01-02-naming-axes.md), 11.7 |
 | supervised learning | — | 지도 학습 | 학습신호 | 입력마다 붙은 정답(label)과 비교하며 배우는 학습 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 3.3 |
 | synthetic data | — | 합성 데이터 | 데이터 | 실제로 모은 것이 아니라 모델이나 프로그램으로 만들어 낸 학습 데이터 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 12.4 |
 | task | — | 과제 | 과제 | 모델이 풀도록 정한 문제의 종류와 그 출력 형식 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md), [1.2](../part01-big-picture/01-02-naming-axes.md), [1.4](../part01-big-picture/01-04-training-methods-map.md) |
+| test set | — | 테스트 세트 | 평가 | 학습에 쓰지 않고 마지막 평가를 위해 남겨 둔 데이터 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 3.4 |
 | text classification | — | 텍스트 분류 | 과제 | 글 전체에 class 하나를 매기는 task. 예: 스팸 판별 | [1.2](../part01-big-picture/01-02-naming-axes.md) |
 | text generation | — | 텍스트 생성 | 과제 | 글을 받아 이어지는 글을 만드는 task | [1.2](../part01-big-picture/01-02-naming-axes.md), 7.2 |
 | text-to-image | — | — | 과제 | 글을 받아 이미지를 만드는 task | [1.2](../part01-big-picture/01-02-naming-axes.md), 11.5 |
@@ -122,4 +137,4 @@
 | verifier | — | 검증기 | 시스템 | 답이 맞는지 자동으로 확인하는 프로그램이나 모델 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 10.7 |
 | ViT | Vision Transformer | — | 구조 | 이미지를 patch로 잘라 token처럼 늘어놓고 Transformer에 넣는 구조 | [1.2](../part01-big-picture/01-02-naming-axes.md), 6.3 |
 | VLM | vision-language model | 비전-언어 모델 | 분야 | 이미지와 글을 함께 다루는 모델. 범위가 문헌마다 다르다 | [1.2](../part01-big-picture/01-02-naming-axes.md), 11.2 |
-| weight | — | 가중치 | 구조 | 학습으로 정해지는 모델 내부의 숫자. 학습은 weight를 고치는 일이다 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md), [1.2](../part01-big-picture/01-02-naming-axes.md), [1.4](../part01-big-picture/01-04-training-methods-map.md), 4.2 |
+| weight | — | 가중치 | 구조 | 학습으로 정해지는 모델 내부의 숫자. 학습은 weight를 고치는 일이다 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md), [1.2](../part01-big-picture/01-02-naming-axes.md), [1.3](../part01-big-picture/01-03-model-lifecycle.md), [1.4](../part01-big-picture/01-04-training-methods-map.md), 4.2 |
