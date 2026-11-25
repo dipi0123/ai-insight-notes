@@ -17,7 +17,7 @@
 | ED-06 | 파일·폴더 경로는 영문 소문자·숫자·하이픈으로, 제목과 본문은 한국어로 쓴다. | [style-guide §9](style-guide.md#9-파일과-경로) |
 | ED-07 | 장마다 수준(L1 입문 ~ L5 전문가)과 선수 장을 둔다. | [curriculum](curriculum.md) |
 | ED-10 | 참고문헌은 `book/appendix/references.md` 한 곳에 두고 본문은 `[@키]`로 인용한다. URL이나 DOI가 없는 문헌은 싣지 않는다. | [style-guide §7](style-guide.md#7-인용과-출처) |
-| ED-11 | 특정 프로젝트(ClaimVision 등)의 상황은 일반화한 「현업 사례」로만 쓴다. 내부 결정 번호·경로·비공개 데이터는 싣지 않는다. | [style-guide §8](style-guide.md#8-현업-사례) |
+| ED-11 | 사용자가 하는 다른 프로젝트의 상황은 일반화한 「현업 사례」로만 쓴다. 내부 결정 번호·경로·비공개 데이터는 싣지 않는다. | [style-guide §8](style-guide.md#8-현업-사례) |
 
 ## 절차
 | ID | 결정 | 정본 문서 |
