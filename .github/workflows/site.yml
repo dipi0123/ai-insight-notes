@@ -16,11 +16,10 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+# 만들기와 펴내기를 두 job으로 나눈다. 한 job 안에서 올린 직후 펴내면
+# 사이트 묶음(artifact)이 아직 등록되지 않아 펴내기가 실패할 때가 있다.
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/configure-pages@v6
@@ -35,5 +34,13 @@ jobs:
       - uses: actions/upload-pages-artifact@v5
         with:
           path: build/site
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/deploy-pages@v5
         id: deployment
