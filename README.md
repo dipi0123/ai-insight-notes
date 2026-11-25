@@ -24,9 +24,10 @@ editorial/           편집실 — 책을 만드는 규칙과 계획
   decisions.md       편집 결정 대장(ED-xx)과 미정 항목
   open-questions.md  확인이 필요한 주장·문헌
   web-chat-kit.md    웹 채팅 AI용 첨부 목록·시작 프롬프트
-  templates/         장·검토 템플릿
-workbench/           작업대 — 반영 전 재료 (임시)
-tools/book.py        검사·목차 생성·상태 요약·사이트 원고 생성
+  templates/         장·검토·근거 대장 템플릿
+workbench/           작업대 — 반영 전 재료, 진행 기록, 근거 대장 (임시)
+tools/book.py        검사·목차 생성·상태 요약·사이트 원고 생성·하네스용 명령
+tools/harness/       책 전체 집필 하네스 — 출처 내려받기·근거 대장 도구, 역할 카드
 tools/site/          웹 사이트 설정(config.toml)·생성기 버전·스크립트
 .github/workflows/   main에 push하면 사이트를 만들어 펴낸다
 ```
@@ -46,6 +47,7 @@ tools/site/          웹 사이트 설정(config.toml)·생성기 버전·스크
 | 「F1은 공식 용어야?」 | 대화로 답하고, 책에 들어갈 내용은 해당 장에 반영한 뒤 바꾼 곳을 알린다 |
 | 「반영 보류. ○○가 뭐야?」 | 답만 한다 |
 | 「3.7장 써 줘」 | 장 전체를 집필한다([작업 절차 §2](editorial/workflow.md#2-장-집필)) |
+| 「3부 써 줘」 | 부 구성안을 먼저 받고 패스로 나눠 집필·자체 점검·통합한다([작업 절차 §10](editorial/workflow.md#10-책-전체-집필)) |
 | 「3.7장 교차 검토해 줘」 | 집필하지 않은 AI가 검토한다([작업 절차 §3](editorial/workflow.md#3-교차-검토)) |
 | 「inbox 반영해 줘」 | `workbench/inbox/`의 재료를 확인해서 책에 반영한다([작업 절차 §5](editorial/workflow.md#5-웹-채팅다른-세션-결과-들여오기)) |
 | 「3.7장 확정」 | 장 상태를 확정으로 바꾼다 |
