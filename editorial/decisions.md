@@ -8,11 +8,13 @@
 | ED-01 | 최종 산출물은 `book/`의 책 하나다. 확정된 기술 지식만 담고 대화·경위·작업 이력은 담지 않는다. 이력은 git이 맡는다. | [AGENTS.md](../AGENTS.md) |
 | ED-02 | 모든 AI 공통 규칙의 정본은 `AGENTS.md`다. `CLAUDE.md`·`GEMINI.md`는 AGENTS.md를 불러오는 입구이며 규칙을 따로 두지 않는다. | [AGENTS.md](../AGENTS.md) |
 | ED-03 | 프로젝트 지식(결정·용어·진행 상태)은 저장소 파일에만 둔다. AI 도구의 개인 메모리에 두지 않는다. | [AGENTS.md](../AGENTS.md) |
+| ED-14 | 책의 예제 코드는 최종 산출물의 일부로 `book/code/`에 두고, 그대로 실행되어야 한다. 본문에 적는 실행 결과는 실제로 돌린 값만 쓴다. | [style-guide §6](style-guide.md#6-수식코드그림표) |
 | ED-04 | 책의 정본 형식은 Markdown이다. 수식은 LaTeX(`$`), 그림은 Mermaid 또는 `book/figures/`의 SVG로 둔다. HTML 페이지·아티팩트는 Markdown에서 파생한 보조물이다. | [style-guide §6](style-guide.md#6-수식코드그림표) |
 
 ## 형식과 문체
 | ID | 결정 | 정본 문서 |
 |---|---|---|
+| ED-13 | 독자는 소프트웨어 개발 경험은 있지만 AI는 처음인 개발자다. 소프트웨어 기초는 설명하지 않는다. 책의 도달점은 독자가 경량 언어 모델이나 CV 모델을 직접 설계·구축하는 것이다. | [AGENTS.md](../AGENTS.md#이-프로젝트) |
 | ED-05 | 책 본문은 해라체(「~다」), 사용자와의 대화 답변은 합니다체로 쓴다. | [style-guide §2·§3](style-guide.md#3-책-본문-문체) |
 | ED-06 | 파일·폴더 경로는 영문 소문자·숫자·하이픈으로, 제목과 본문은 한국어로 쓴다. | [style-guide §9](style-guide.md#9-파일과-경로) |
 | ED-07 | 장마다 수준(L1 입문 ~ L5 전문가)과 선수 장을 둔다. | [curriculum](curriculum.md) |

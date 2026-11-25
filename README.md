@@ -1,6 +1,6 @@
 # AI Insight Notes
 
-AI 모델을 입문부터 전문가 수준까지 공부하며 한 권의 책으로 엮는 프로젝트다. 질문하고, 답을 듣고, 확정된 지식만 책에 쌓는다. 여러 AI(Claude·GPT·Gemini·Grok 등)를 섞어 써도 같은 규칙으로 일하도록 규칙을 한 곳([AGENTS.md](AGENTS.md))에 모았다.
+AI 모델을 입문부터 전문가 수준까지 공부하며 한 권의 책으로 엮는 독립 프로젝트다. 소프트웨어 개발자가 이 책만 공부하면 AI 전체를 이해하고 경량 언어 모델이나 CV 모델을 직접 설계·구축할 수 있게 하는 것이 목표다. AI 기초 용어와 산업 기술의 구분에서 시작해, 모델이 어떤 구조로 동작하는지, 사전학습·파인튜닝·SFT·강화 학습 같은 학습 방법이 왜 그런 구조 위에서 가능한지, 성능을 어떻게 끌어올리는지, 직접 설계하고 만드는 법까지 배운다. 질문하고, 답을 듣고, 확정된 지식만 책에 쌓는다. 여러 AI(Claude·GPT·Gemini·Grok 등)를 섞어 써도 같은 규칙으로 일하도록 규칙을 한 곳([AGENTS.md](AGENTS.md))에 모았다.
 
 - 책(최종 산출물): [book/README.md](book/README.md)
 - 편찬 계획과 진행 상태: [editorial/curriculum.md](editorial/curriculum.md)
@@ -16,6 +16,7 @@ book/                최종 산출물 — 책
   partNN-…/          부 폴더, 그 안에 NN-MM-….md 장 파일
   appendix/          용어집·참고문헌
   figures/           그림(SVG 등)
+  code/              「직접 만들기」 장의 실행되는 예제 코드
 editorial/           편집실 — 책을 만드는 규칙과 계획
   curriculum.md      부·장 구성, 수준, 선수 장, 장별 상태 (정본)
   style-guide.md     집필 규칙

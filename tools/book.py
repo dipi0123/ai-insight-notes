@@ -2,7 +2,7 @@
 """AI Insight Notes 책 도구 — 검사, 목차 생성, 상태 요약.
 
 사용법:
-  python3 tools/book.py check    규칙 검사. 오류가 있으면 종료 코드 1
+  python3 tools/book.py check    규칙 검사(예제 코드 문법 포함). 오류가 있으면 종료 코드 1
   python3 tools/book.py toc      editorial/curriculum.md로 book/README.md 목차를 다시 만든다
   python3 tools/book.py status   장별 진행 상태를 요약한다
 
@@ -27,8 +27,17 @@ REFERENCES = BOOK / "appendix" / "references.md"
 TOC_START = "<!-- TOC:START -->"
 TOC_END = "<!-- TOC:END -->"
 
+CODE = BOOK / "code"
+
 STATUSES = ("계획", "초고", "검토완료", "확정")
 LEVELS = ("L1", "L2", "L3", "L4", "L5")
+
+# 집필 규칙 §4: 학습 방법·성능 고도화 부의 장은 「구조와의 연결」 절을 둔다.
+STRUCTURE_LINK_PARTS = {10, 11, 12, 13}
+STRUCTURE_LINK_HEADING = "## 구조와의 연결"
+# 집필 규칙 §4: 「직접 만들기:」「프로젝트:」 장의 필수 절.
+BUILD_PREFIXES = ("직접 만들기:", "프로젝트:")
+BUILD_HEADINGS = ("## 만들 것", "## 준비물", "## 실행 결과", "## 바꿔 보기")
 
 # 링크 검사에서 뺄 경로(저장소 기준 앞부분). 템플릿은 자리표시 링크를 담고, 작업대는 임시 재료다.
 LINK_SKIP = ("workbench/", "editorial/templates/", ".git/", "node_modules/")
@@ -246,6 +255,13 @@ def check_chapter_files(chapters: dict[str, Chapter], rep: Report) -> None:
         required = ["## 한눈에"]
         if ch.status in ("검토완료", "확정"):
             required += ["## 정리", "## 확인 문제"]
+            is_build = ch.title.startswith(BUILD_PREFIXES)
+            if is_build:
+                required += list(BUILD_HEADINGS)
+                if ch.title.startswith("프로젝트:"):
+                    required.append("## 설계 결정")
+            elif ch.part in STRUCTURE_LINK_PARTS:
+                required.append(STRUCTURE_LINK_HEADING)
         for h in required:
             if h not in headings:
                 rep.error(ch.path, f"'{h}' 절이 없다(상태 {ch.status})")
@@ -360,6 +376,21 @@ def check_citations(rep: Report) -> None:
             rep.warn(f"{rel(REFERENCES)}:{i}", f"@{key}를 인용하는 장이 없다")
 
 
+# ---------------------------------------------------------------- 예제 코드
+
+def check_code(rep: Report) -> None:
+    """book/code/의 Python 파일이 문법 오류 없이 컴파일되는지 본다(실행은 하지 않는다)."""
+    if not CODE.exists():
+        return
+    for path in sorted(CODE.rglob("*.py")):
+        if "__pycache__" in path.parts:
+            continue
+        try:
+            compile(path.read_text(encoding="utf-8"), str(path), "exec")
+        except SyntaxError as e:
+            rep.error(f"{rel(path)}:{e.lineno}", f"Python 문법 오류 — {e.msg}")
+
+
 # ---------------------------------------------------------------- 목차
 
 def build_toc(parts: list[Part]) -> str:
@@ -436,6 +467,7 @@ def cmd_check() -> int:
     check_forbidden(rep)
     check_links(rep)
     check_citations(rep)
+    check_code(rep)
     check_toc(parts, rep)
     print_report(rep)
     total = sum(len(p.chapters) for p in parts)
