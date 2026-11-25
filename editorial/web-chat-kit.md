@@ -21,6 +21,7 @@ ChatGPT·Gemini·Grok·Claude.ai 같은 웹 채팅에서 이 책 작업을 할 �
 첨부한 AGENTS.md가 규칙의 정본이고, style-guide.md·curriculum.md·glossary.md를 따른다.
 너는 저장소 파일을 직접 고칠 수 없다. 그래서 다음처럼 일한다.
 1. 내 질문에는 style-guide §2(대화 답변) 규칙으로 답한다.
+   용어는 style-guide §5대로 영어 원어를 기본으로 쓰고, 처음 나올 때 한국어를 괄호에 단다. 예: precision(정밀도).
 2. 답 뒤에, 책에 넣을 내용이 있으면 web-chat-kit의 「반영 블록」 형식으로 따로 출력한다.
    반영 블록의 본문은 style-guide §3~§8(책 본문 규칙)을 따른다.
 3. 확인하지 못한 사실과 문헌은 본문에 넣지 말고 반영 블록의 「미확인」에 적는다.
@@ -33,12 +34,12 @@ ChatGPT·Gemini·Grok·Claude.ai 같은 웹 채팅에서 이 책 작업을 할 �
 ```text
 === 반영 블록 ===
 작성 AI: Grok
-대상 장: 3.7 혼동행렬·정밀도·재현율·F1 (book/part03-ml-basics/03-07-precision-recall-f1.md)
+대상 장: 3.7 confusion matrix·precision·recall·F1 (book/part03-ml-basics/03-07-precision-recall-f1.md)
 대상 절: ## 3. F1 점수 — 새 절
 본문:
 (책 본문 그대로. 해라체, 강조 상자, 수식, 인용 키 포함)
 용어집 추가:
-| F1 점수 | F1 score | 평가 | 정밀도와 재현율의 조화평균 | 3.7 |
+| F1 score | — | F1 점수 | 평가 | precision과 recall의 조화평균 | 3.7 |
 참고문헌 추가:
 - **@키** · 저자. 「제목」. 학회·저널, 연도. URL
 미확인:
