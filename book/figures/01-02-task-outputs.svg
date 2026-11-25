@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 450" font-family="system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">같은 사진에 대한 네 가지 task의 출력</title>
+  <desc id="d">고양이 두 마리가 있는 같은 사진에 대해 image classification은 cat 하나를, object detection은 고양이마다 box와 점수를, semantic segmentation은 픽셀마다 class를, instance segmentation은 고양이마다 따로 mask를 출력한다.</desc>
+  <rect width="480" height="450" fill="#ffffff"/>
+  <defs>
+    <g id="scene">
+      <rect x="0" y="0" width="200" height="90" fill="#cfe6fb"/>
+      <rect x="0" y="90" width="200" height="50" fill="#bfe0ad"/>
+    </g>
+    <g id="catA">
+      <ellipse cx="60" cy="102" rx="30" ry="18"/>
+      <circle cx="84" cy="82" r="12"/>
+      <polygon points="76,74 79,62 85,72"/>
+      <polygon points="86,72 92,62 94,76"/>
+    </g>
+    <g id="catB">
+      <ellipse cx="140" cy="108" rx="26" ry="15"/>
+      <circle cx="118" cy="92" r="11"/>
+      <polygon points="110,86 111,74 118,82"/>
+      <polygon points="120,82 126,73 127,87"/>
+    </g>
+  </defs>
+
+  <!-- 1. image classification -->
+  <g transform="translate(20,10)">
+    <text x="0" y="16" font-size="13" font-weight="700" fill="#1f2937">image classification</text>
+    <g transform="translate(0,26)">
+      <use href="#scene"/>
+      <use href="#catA" fill="#7b7b7b"/>
+      <use href="#catB" fill="#7b7b7b"/>
+      <rect x="0" y="0" width="200" height="140" fill="none" stroke="#9ca3af"/>
+    </g>
+    <text x="0" y="186" font-size="12" fill="#374151">출력: 사진 전체에 class 하나</text>
+    <text x="0" y="202" font-size="12" font-weight="700" fill="#111827">→ cat</text>
+  </g>
+
+  <!-- 2. object detection -->
+  <g transform="translate(260,10)">
+    <text x="0" y="16" font-size="13" font-weight="700" fill="#1f2937">object detection</text>
+    <g transform="translate(0,26)">
+      <use href="#scene"/>
+      <use href="#catA" fill="#7b7b7b"/>
+      <use href="#catB" fill="#7b7b7b"/>
+      <rect x="28" y="60" width="68" height="62" fill="none" stroke="#dc2626" stroke-width="2"/>
+      <rect x="28" y="48" width="58" height="12" fill="#dc2626"/>
+      <text x="31" y="57" font-size="9" fill="#ffffff">cat 0.95</text>
+      <rect x="104" y="71" width="64" height="54" fill="none" stroke="#2563eb" stroke-width="2"/>
+      <rect x="110" y="125" width="58" height="12" fill="#2563eb"/>
+      <text x="113" y="134" font-size="9" fill="#ffffff">cat 0.88</text>
+      <rect x="0" y="0" width="200" height="140" fill="none" stroke="#9ca3af"/>
+    </g>
+    <text x="0" y="186" font-size="12" fill="#374151">출력: 물체마다 box·class·점수</text>
+    <text x="0" y="202" font-size="12" font-weight="700" fill="#111827">→ 고양이 두 마리를 따로 찾는다</text>
+  </g>
+
+  <!-- 3. semantic segmentation -->
+  <g transform="translate(20,240)">
+    <text x="0" y="16" font-size="13" font-weight="700" fill="#1f2937">semantic segmentation</text>
+    <g transform="translate(0,26)">
+      <rect x="0" y="0" width="200" height="90" fill="#60a5fa"/>
+      <rect x="0" y="90" width="200" height="50" fill="#4ade80"/>
+      <use href="#catA" fill="#f59e0b"/>
+      <use href="#catB" fill="#f59e0b"/>
+      <rect x="0" y="0" width="200" height="140" fill="none" stroke="#9ca3af"/>
+    </g>
+    <text x="0" y="186" font-size="12" fill="#374151">출력: 픽셀마다 class (sky·ground·cat)</text>
+    <text x="0" y="202" font-size="12" font-weight="700" fill="#111827">→ 두 고양이를 구별하지 않는다</text>
+  </g>
+
+  <!-- 4. instance segmentation -->
+  <g transform="translate(260,240)">
+    <text x="0" y="16" font-size="13" font-weight="700" fill="#1f2937">instance segmentation</text>
+    <g transform="translate(0,26)">
+      <rect x="0" y="0" width="200" height="140" fill="#e5e7eb"/>
+      <use href="#catA" fill="#f59e0b"/>
+      <use href="#catB" fill="#a855f7"/>
+      <rect x="0" y="0" width="200" height="140" fill="none" stroke="#9ca3af"/>
+    </g>
+    <text x="0" y="186" font-size="12" fill="#374151">출력: 물체마다 mask와 class</text>
+    <text x="0" y="202" font-size="12" font-weight="700" fill="#111827">→ cat #1, cat #2를 따로 칠한다</text>
+  </g>
+</svg>

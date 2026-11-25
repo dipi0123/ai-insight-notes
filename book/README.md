@@ -60,7 +60,7 @@
 ### 1부. 큰 그림 — AI 용어와 기술 지도
 
 - [1.1 AI·machine learning·deep learning](part01-big-picture/01-01-ai-ml-dl.md) · L1
-- 1.2 모델 이름을 읽는 여섯 개의 축 · L1
+- [1.2 모델 이름을 읽는 여섯 개의 축](part01-big-picture/01-02-naming-axes.md) · L1
 - 1.3 모델의 한살이: 데이터에서 서비스까지 · L1
 - [1.4 학습 방법 지도: pre-training에서 reinforcement learning까지](part01-big-picture/01-04-training-methods-map.md) · L1
 - 1.5 대표 모델 지도 · L1
