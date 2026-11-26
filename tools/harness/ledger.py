@@ -8,8 +8,8 @@
       새 문장은 빈 행으로 더하고, 사라진 문장의 행은 지우며 그 목록을 보인다(바뀐 문장은 판정을 다시 받는다).
   python3 -I tools/harness/ledger.py validate 1.5 [--stage 폴더] [--final]
       대장을 검사한다. --final은 자체 점검을 마친 뒤의 요건(모든 문장의 판정이 일치)까지 본다.
-  python3 -I tools/harness/ledger.py verdicts 1.5 점검.json ... [--judge 판정.json]
-      자체 점검 렌즈의 문장별 판정을 대장의 판정 칸에 모은다.
+  python3 -I tools/harness/ledger.py verdicts 1.5 점검.json ... [--judge 판정.json ...]
+      자체 점검 렌즈의 문장별 판정을 대장의 판정 칸에 모은다. 회차가 여럿이면 모든 회차의 점검과 판정을 함께 준다.
   python3 -I tools/harness/ledger.py export 1.5 [--stage 폴더]
       검사를 통과한 대장을 workbench/evidence/1.5.md로 내보낸다(통합 패스만).
 
@@ -21,6 +21,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -118,10 +119,22 @@ def check_sources(num: str, data: dict, errors: list[str]) -> set[str]:
     log = fetch.log_entries()
     good = set()
     for key, info in data.get("sources", {}).items():
-        if key not in keys:
-            errors.append(f"출처 @{key}가 참고문헌에도 변경분(references_add)에도 없다")
+        entry = info.get("entry", "")
+        if entry:
+            m = book.REF_ENTRY_RE.match(entry)
+            if not m or m.group(1) != key:
+                errors.append(f"출처 @{key}: entry는 참고문헌 형식(style-guide §7) 한 줄이고 키가 @{key}여야 한다")
+        elif key not in keys:
+            errors.append(f"출처 @{key}가 참고문헌에도 변경분(references_add)에도 없다 — "
+                          "본문에서 인용하지 않는 근거 문헌이면 sources의 그 키에 entry로 둔다")
         sid = info.get("source_id", "")
-        probs = fetch.verify(sid, log) if sid else [f"@{key}: source_id가 없다"]
+        parts = info.get("parts") or {}
+        probs = [] if sid else [f"@{key}: source_id가 없다"]
+        for one in ([sid] if sid else []) + list(parts):
+            probs += fetch.verify(one, log)
+        for one, scope in parts.items():
+            if not scope:
+                errors.append(f"출처 @{key}: parts의 {one}에 scope를 적는다")
         if probs:
             errors += [f"출처 @{key}: {p}" for p in probs]
         else:
@@ -143,9 +156,13 @@ def check_ref(where: str, r: dict, data: dict, good_sources: set[str], errors: l
         errors.append(f"{where}: 닻(anchor)이 없다")
     elif len(anchor.split()) > fetch.ANCHOR_MAX_WORDS:
         errors.append(f"{where}: 닻은 15단어 미만이다")
-    elif key in good_sources:
-        if not fetch.find_anchor(data["sources"][key]["source_id"], anchor)["found"]:
-            errors.append(f"{where}: 닻 '{anchor}'이 출처 본문에 없다")
+    info = data["sources"][key]
+    sid = r.get("source_id") or info.get("source_id", "")
+    if r.get("source_id") and sid != info.get("source_id") and sid not in (info.get("parts") or {}):
+        errors.append(f"{where}: source_id '{sid}'가 @{key}의 source_id·parts에 없다")
+    elif anchor and len(anchor.split()) <= fetch.ANCHOR_MAX_WORDS and key in good_sources:
+        if not fetch.find_anchor(sid, anchor)["found"]:
+            errors.append(f"{where}: 닻 '{anchor}'이 출처 본문에 없다({sid})")
 
 
 def cmd_facts(args) -> int:
@@ -221,8 +238,19 @@ def validate(num: str, stage: str | None, final: bool) -> tuple[list[str], list[
         verdict = e.get("verdict", "")
         if verdict not in VERDICTS:
             errors.append(f"{sid}: 판정 '{verdict}'는 {VERDICTS[1:]} 중 하나가 아니다")
-        if final and kind != "연결" and verdict not in ("일치", "해당 없음"):
+        if final and (verdict in ("불일치", "미확인") if kind == "연결" else verdict not in ("일치", "해당 없음")):
             errors.append(f"{sid} ({text_of[sid]['line']}행): 판정이 '{verdict or '없음'}'이다 — 자체 점검을 마친 장은 모두 일치여야 한다")
+    cited_all = set()
+    for u in units:
+        for m in book.CITE_RE.finditer(u["text"]):
+            cited_all |= {p.strip().lstrip("@").strip() for p in m.group(1).split(";") if p.strip()}
+    delta_path = book.default_delta(ch.num)
+    if delta_path:
+        for line in json.loads(delta_path.read_text(encoding="utf-8")).get("references_add", []):
+            m = book.REF_ENTRY_RE.match(line)
+            if m and m.group(1) not in cited_all:
+                errors.append(f"변경분 references_add의 @{m.group(1)}를 이 장이 인용하지 않는다 — 참고문헌에는 본문이 "
+                              "인용하는 문헌만 넣는다. 근거로만 쓰면 references_add에서 빼고 sources의 entry로 둔다")
     if data.get("chapter_hash") != book.chapter_hash(units):
         warnings.append("대장의 장 해시가 지금 장과 다르다 — sync를 다시 돌린다")
     stats = {"sentences": len(units), "kinds": counts}
@@ -242,45 +270,85 @@ def cmd_validate(args) -> int:
 
 # ---------------------------------------------------------------- verdicts
 
+def round_of(path: Path, data: dict) -> int:
+    r = data.get("round")
+    if isinstance(r, int):
+        return r
+    m = re.search(r"(?:^|-)r(\d+)[-.]", path.name)
+    return int(m.group(1)) if m else 1
+
+
 def cmd_verdicts(args) -> int:
+    """회차가 여럿이면 문장마다 렌즈별로 가장 늦은 회차의 판정과 지적만 쓴다(고친 문장은 번호가 바뀌어 새로 점검받는다).
+    지적은 (회차, 렌즈/번호)로 가린다. 차단 지적이 열려 있으면 불일치, 판정이 미확인이면 미확인이다.
+    권고 지적은 판정을 바꾸지 않는다(수정 패스가 고칠 의무가 없다).
+    연결 문장은 맡은 렌즈가 없어 판정 칸이 비지만, 어느 렌즈든 차단·미확인 지적이 열려 있으면 그것을 적는다."""
     data = load_ledger(args.chapter)
-    judge = {}
-    if args.judge:
-        for d in json.loads(Path(args.judge).read_text(encoding="utf-8")).get("decisions", []):
-            judge[d.get("finding")] = d.get("decision")
-    per: dict[str, dict[str, str]] = {}
-    open_: dict[str, list[str]] = {}      # 기각되지 않은 지적(채택·미확인·아직 판정 없음)
-    rejected: dict[str, list[str]] = {}   # 판정이 기각한 지적
+    judge: dict[tuple[int, str], str] = {}
+    for jp in args.judge or []:
+        jd = json.loads(Path(jp).read_text(encoding="utf-8"))
+        r = round_of(Path(jp), jd)
+        for d in jd.get("decisions", []):
+            judge[(r, d.get("finding"))] = d.get("decision")
+    checks = []
     for path in args.checks:
         c = json.loads(Path(path).read_text(encoding="utf-8"))
+        checks.append((round_of(Path(path), c), path, c))
+    last = max(r for r, _, _ in checks)
+    # (문장, 렌즈) → 회차 → {"verdict": …, "findings": [(키, 심각도)]}
+    seen: dict[tuple[str, str], dict[int, dict]] = {}
+    for r, path, c in checks:
         lens = c.get("lens", "")
-        if c.get("chapter_hash") and c["chapter_hash"] != data.get("chapter_hash"):
+        if r == last and c.get("chapter_hash") and c["chapter_hash"] != data.get("chapter_hash"):
             print(f"오류  {path}: 다른 판의 장을 점검한 결과다(장 해시가 다르다)")
             return 1
         for sid, v in c.get("verdicts", {}).items():
-            per.setdefault(sid, {})[lens] = v
+            seen.setdefault((sid, lens), {}).setdefault(r, {"verdict": "", "findings": []})["verdict"] = v
         for f in c.get("findings", []):
-            fid = f"{lens}/{f.get('id')}"
-            bucket = rejected if judge.get(fid) == "기각" else open_
-            bucket.setdefault(f.get("sentence", ""), []).append(fid)
+            slot = seen.setdefault((f.get("sentence", ""), lens), {}).setdefault(r, {"verdict": "", "findings": []})
+            slot["findings"].append(((r, f"{lens}/{f.get('id')}"), f.get("severity", "차단")))
+    lenses = {lens for (_, lens) in seen}
     changed = 0
     for sid, e in data.get("sentences", {}).items():
-        lens = LENS_FOR.get(e.get("kind", ""))
-        if lens is None:
+        kind = e.get("kind", "")
+        own = LENS_FOR.get(kind)
+        if own is None and kind != "연결":
             continue
-        v = per.get(sid, {}).get(lens, "")
-        if any(judge.get(fid) == "미확인" for fid in open_.get(sid, [])):
+        v = ""
+        rounds = seen.get((sid, own), {}) if own else {}
+        for r in sorted(rounds, reverse=True):
+            if rounds[r]["verdict"]:
+                v = rounds[r]["verdict"]
+                break
+        open_block, open_unres, rejected = [], [], []
+        for lens in lenses:
+            rounds = seen.get((sid, lens), {})
+            if not rounds:
+                continue
+            for key, sev in rounds[max(rounds)]["findings"]:
+                dec = judge.get(key)
+                if dec == "기각":
+                    rejected.append(key)
+                elif dec == "미확인":
+                    open_unres.append(key)
+                elif sev != "권고":
+                    open_block.append(key)
+        if open_unres:
             v = "미확인"
-        elif open_.get(sid):
+        elif open_block:
             v = "불일치"
-        elif v == "불일치" and rejected.get(sid):
+        elif v == "불일치" and rejected:
             v = "일치"
+        elif own is None:
+            v = ""
         if e.get("verdict") != v:
             e["verdict"] = v
             changed += 1
     save_ledger(args.chapter, data)
-    left = sum(1 for e in data["sentences"].values() if e.get("kind") in LENS_FOR and e.get("verdict") not in ("일치", "해당 없음"))
-    print(f"verdicts {args.chapter}: 판정 {changed}곳 바꿈, 일치가 아닌 문장 {left}개")
+    left = sum(1 for e in data["sentences"].values()
+               if (e.get("kind") in LENS_FOR and e.get("verdict") not in ("일치", "해당 없음"))
+               or (e.get("kind") == "연결" and e.get("verdict") in ("불일치", "미확인")))
+    print(f"verdicts {args.chapter}: 회차 {sorted({r for r, _, _ in checks})}, 판정 {changed}곳 바꿈, 일치가 아닌 문장 {left}개")
     return 0
 
 
@@ -307,9 +375,10 @@ def cmd_export(args) -> int:
            "([작업 절차 §10.5](../../editorial/workflow.md#105-자체-점검과-교차-검토)).", "",
            "## 출처", "| 키 | 읽은 판 | 받은 날 | 범위 | 원본 sha256 |", "|---|---|---|---|---|"]
     for key, info in sorted(data.get("sources", {}).items(), key=lambda kv: kv[0].casefold()):
-        rec = fetch.load_record(info["source_id"])
-        out.append(f"| @{key} | {cell(rec.get('final_url'))} | {cell(rec.get('fetched_at', '')[:10])} | "
-                   f"{cell(info.get('scope'))} | {rec.get('sha256', '')[:12]} |")
+        for sid, scope in [(info["source_id"], info.get("scope"))] + list((info.get("parts") or {}).items()):
+            rec = fetch.load_record(sid)
+            out.append(f"| @{key} | {cell(rec.get('final_url'))} | {cell(rec.get('fetched_at', '')[:10])} | "
+                       f"{cell(scope)} | {rec.get('sha256', '')[:12]} |")
     k = stats["kinds"]
     out += ["", "## 문장",
             f"문장 {stats['sentences']}개 — " + ", ".join(f"{n} {k[n]}" for n in KINDS) +
@@ -323,7 +392,8 @@ def cmd_export(args) -> int:
             continue
         refs = e.get("refs") or [{}]
         for r in refs:
-            basis = f"@{r['key']}" if r.get("key") else (e.get("path") or "—")
+            basis = (f"@{r['key']}" + (f" ({r['source_id']})" if r.get("source_id") else "")) if r.get("key") \
+                else (e.get("path") or "—")
             out.append(f"| {u['id']} · {line_of[u['id']]}행 | {e.get('kind')} | {cell(basis)} | {cell(r.get('loc'))} | "
                        f"{cell(r.get('anchor'))} | {cell(r.get('conditions'))} | {cell(e.get('verdict'))} |")
     out += ["", "## 교차 검토 우선 목록"] + ([f"- {x}" for x in data.get("cross_review_priority", [])] or ["- 없음"])
@@ -351,7 +421,7 @@ def main(argv: list[str]) -> int:
     p = sub.add_parser("verdicts")
     p.add_argument("chapter")
     p.add_argument("checks", nargs="+")
-    p.add_argument("--judge")
+    p.add_argument("--judge", nargs="*", default=[])
     p = sub.add_parser("export")
     p.add_argument("chapter")
     p.add_argument("--stage")

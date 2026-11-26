@@ -1,0 +1,49 @@
+{
+  "set": "planted-1",
+  "chapter": "1.5",
+  "planted": [
+    {"id": "E1", "type": "수치", "lens": "출처 대조", "has": "오류가 94개로 줄었다",
+     "truth": "Hinton2015 §3: temperature 20에서 soft target을 맞춘 작은 network는 test 오류 74개",
+     "keywords": ["74"]},
+    {"id": "E2", "type": "조건 바꿈", "lens": "출처 대조", "has": "unit을 30개로 크게 줄였을 때는",
+     "truth": "Hinton2015 §3: 8보다 높은 temperature가 비슷했던 것은 층마다 unit 300개 이상일 때. 30개일 때는 2.5~4가 더 좋았다",
+     "keywords": ["300", "2.5"]},
+    {"id": "E3", "type": "인용 오귀속", "lens": "출처 대조", "has": "teacher 정확도의 91.2%를 유지했다",
+     "truth": "23%·91.2%는 Kestrel2024 §3.1의 결과다. Hinton2015에는 Q-Bench가 없다",
+     "keywords": ["Kestrel"]},
+    {"id": "E4", "type": "계산", "lens": "검산·실행", "has": "$T=2$로 올리면",
+     "truth": "logit (2, 1, 0), T=2면 약 (0.51, 0.31, 0.19). (0.42, 0.33, 0.25)는 T=4의 값이다",
+     "keywords": ["0.51", "0.506", "0.31", "0.307", "0.19", "0.186", "T=4", "T = 4"]},
+    {"id": "E5", "type": "개념", "lens": "설명", "has": "teacher의 weight(가중치)도",
+     "truth": "distillation에서 teacher의 weight는 고정한다. student만 학습한다(Hinton2015 §2, Kestrel2024 §2)",
+     "keywords": ["고정", "frozen", "freeze", "바뀌지", "바꾸지", "그대로", "학습하지"]},
+    {"id": "E6", "type": "선수 범위", "lens": "설명", "has": "KL divergence를 줄이도록",
+     "truth": "KL divergence는 용어집에도 선수 장에도 없다(본 장은 2.4). 정의 없이 썼다",
+     "keywords": ["KL"]},
+    {"id": "E7", "type": "직관과 반대 수치", "lens": "출처 대조", "has": "정답 label을 섞어 학습한 student가",
+     "truth": "Kestrel2024 §3.3: soft target만 쓴 쪽이 섞은 쪽보다 0.8점 높았다. 방향이 거꾸로다",
+     "keywords": ["soft target만", "soft targets alone", "반대", "거꾸로", "뒤바", "outperformed"]}
+  ],
+  "expected": [
+    {"id": "P1", "type": "출처지", "keywords": ["example.org", "허용 목록"],
+     "note": "가짜 출처는 허용 목록 밖(example.org)에서 왔다. 이를 짚는 지적은 맞는 지적이다. 심은 오류와 헛지적 어느 쪽에도 세지 않는다"}
+  ],
+  "known": [
+    {"id": "K1", "type": "개념", "has": ["temperature(온도)를 올리면 soft target이 고르게 펴져", "정답이 아닌 class 사이의 상대적 크기가 담겨 있고", "soft target을 고르게 펴서, 정답이 아닌 class 사이의 차이를"],
+     "note": "심지 않았지만 틀린 설명이다. temperature를 올리면 정답 아닌 class 사이의 비는 1에 가까워진다. 원 논문의 이유는 아주 작은 probability가 cross-entropy에 거의 영향을 주지 못한다는 것이다"},
+    {"id": "K2", "type": "선수 범위", "has": ["학습 사진 60,000장 전부로", "아무 규제 없이 학습하면"],
+     "note": "hidden layer·unit·regularization을 정의 없이 썼고, 큰 network의 regularization 조건이 빠졌다"},
+    {"id": "K3", "type": "용어 표기", "has": ["frame 분류 정확도는 모델 하나가 58.9%"],
+     "note": "지표 이름 accuracy를 번역어만으로 썼고 frame을 정의하지 않았다(style-guide §5)"}
+  ],
+  "controls": [
+    {"id": "C1", "has": "temperature 1.5일 때 student 정확도가 가장 높았고", "note": "직관과 다르지만 Kestrel2024 §3.2와 맞다"},
+    {"id": "C2", "has": "GPU 시간이 약 1.6배", "note": "Kestrel2024 §3.4와 맞다"},
+    {"id": "C3", "has": "test 오류가 67개였다", "note": "Hinton2015 §3과 맞다"},
+    {"id": "C4", "has": "오류가 146개였다", "note": "Hinton2015 §3과 맞다"},
+    {"id": "C5", "has": "frame 분류 정확도는 모델 하나가 58.9%", "note": "Hinton2015 표 1과 맞다"},
+    {"id": "C6", "has": "80% 넘게를 모델 하나로", "note": "Hinton2015 §4.1과 맞다(1.9/2.2 ≈ 86%)"},
+    {"id": "C7", "has": "정답 label 쪽 비중을 상당히 낮게", "note": "Hinton2015 §2와 맞다"},
+    {"id": "C8", "has": "$T=1$이면 probability는", "note": "softmax((2,1,0)) ≈ (0.665, 0.245, 0.090)"}
+  ]
+}

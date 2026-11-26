@@ -1,0 +1,77 @@
+{
+  "chapter": "1.5",
+  "chapter_file": "book/part01-big-picture/01-05-distillation-primer.md",
+  "curriculum_row": "| 1.5 | knowledge distillation 맛보기 | L1 | 1.4 | 큰 모델이 배운 것을 작은 모델로 어떻게 옮기나? temperature는 왜 쓰나? | `book/part01-big-picture/01-05-distillation-primer.md` | 계획 |",
+  "copy_sources": [{"id": "hinton2015-v1", "url": "https://arxiv.org/pdf/1503.02531v1"}],
+  "fake_sources": [
+    {"id": "kestrel2024", "url": "https://example.org/kestrel2024", "file": "kestrel2024.html",
+     "content_type": "text/html; charset=utf-8"}
+  ],
+  "delta": {
+    "status": "초고 · Claude",
+    "references_add": [
+      "- **@Kestrel2024** · Ana Kestrel, Ilya Morrow. 「How Small Can a Student Be? Temperature and Target Choice in Knowledge Distillation」. Workshop on Efficient Learning, 2024. https://example.org/kestrel2024"
+    ],
+    "note": ""
+  },
+  "calc_records": {
+    "build/harness/1.5/runs/calc-1.txt": "softmax(z / T), z = (2, 1, 0)\nT=1: 0.665 0.245 0.090  합 1.000\nT=2: 0.419 0.326 0.254  합 1.000\n"
+  },
+  "ledger": {
+    "writer": "Claude",
+    "sources": {
+      "Hinton2015": {"source_id": "hinton2015-v1", "scope": "전문"},
+      "Kestrel2024": {"source_id": "kestrel2024", "scope": "전문"}
+    },
+    "rules": [
+      {"has": "큰 teacher 모델의 출력을 작은 student 모델이 따라 하게 해서", "kind": "출처",
+       "refs": [{"key": "Hinton2015", "loc": "§1, 1쪽", "anchor": "the cumbersome model to a small model that is more suitable for deployment"}]},
+      {"has": "이미 학습한 큰 모델을 teacher로 삼아", "kind": "출처",
+       "refs": [{"key": "Hinton2015", "loc": "§1, 1쪽", "anchor": "the cumbersome model to a small model that is more suitable for deployment"}]},
+      {"has": "teacher가 낸 probability 전체를 soft target", "kind": "출처",
+       "refs": [{"key": "Hinton2015", "loc": "§1, 2쪽", "anchor": "use the class probabilities produced by the cumbersome model as"},
+                {"key": "Hinton2015", "loc": "§1, 2쪽", "anchor": "much more information per training case than hard targets"}]},
+      {"has": "\\frac{\\exp(z_i / T)}", "kind": "출처",
+       "refs": [{"key": "Hinton2015", "loc": "§2, 식 (1), 2~3쪽", "anchor": "Using a higher value for T produces a softer"}]},
+      {"has": "$T=1$이면 probability는", "kind": "계산", "path": "build/harness/1.5/runs/calc-1.txt"},
+      {"has": "$T=2$로 올리면", "kind": "계산", "path": "build/harness/1.5/runs/calc-1.txt"},
+      {"has": "세 값의 합은 1이다", "kind": "계산", "path": "build/harness/1.5/runs/calc-1.txt"},
+      {"has": "teacher와 같은 높은 temperature로 자기 probability를", "kind": "출처",
+       "refs": [{"key": "Hinton2015", "loc": "§2, 3쪽", "anchor": "using the same high temperature in the softmax of the distilled model"}]},
+      {"has": "정답 label 쪽 비중을 상당히 낮게", "kind": "출처",
+       "refs": [{"key": "Hinton2015", "loc": "§2, 3쪽", "anchor": "best results were generally obtained by using a condiderably lower weight"}]},
+      {"has": "MNIST로 먼저 시험했다", "kind": "출처",
+       "refs": [{"key": "Hinton2015", "loc": "§3, 3쪽", "anchor": "Preliminary experiments on MNIST"}]},
+      {"has": "test 오류가 67개였다", "kind": "출처",
+       "refs": [{"key": "Hinton2015", "loc": "§3, 3~4쪽", "anchor": "two hidden layers of 1200 rectified linear hidden units"},
+                {"key": "Hinton2015", "loc": "§3, 4쪽", "anchor": "This net achieved 67 test errors"}]},
+      {"has": "오류가 146개였다", "kind": "출처",
+       "refs": [{"key": "Hinton2015", "loc": "§3, 4쪽", "anchor": "800 rectified linear hidden units and no regularization achieved 146"}]},
+      {"has": "오류가 94개로 줄었다", "kind": "출처",
+       "refs": [{"key": "Hinton2015", "loc": "§3, 4쪽", "anchor": "produced by the large net at a temperature of 20"}]},
+      {"has": "unit을 30개로 크게 줄였을 때는", "kind": "출처",
+       "refs": [{"key": "Hinton2015", "loc": "§3, 4쪽", "anchor": "radically reduced to 30 units per layer"}]},
+      {"has": "같은 구조의 모델 10개를 따로 학습해", "kind": "출처",
+       "refs": [{"key": "Hinton2015", "loc": "§4.1, 5쪽", "anchor": "We trained 10 separate models to predict"}]},
+      {"has": "frame 분류 정확도는 모델 하나가 58.9%", "kind": "출처",
+       "refs": [{"key": "Hinton2015", "loc": "§4, 표 1, 5쪽", "anchor": "Test Frame Accuracy"}]},
+      {"has": "80% 넘게를 모델 하나로", "kind": "출처",
+       "refs": [{"key": "Hinton2015", "loc": "§4.1, 5쪽", "anchor": "More than 80% of the improvement in frame classification accuracy"}]},
+      {"has": "Q-Bench에서 student의 크기와 temperature를 바꿔 가며", "kind": "출처",
+       "refs": [{"key": "Kestrel2024", "loc": "Abstract", "anchor": "vary the size of the student, the distillation temperature, and the training targets"}]},
+      {"has": "teacher 정확도의 91.2%를 유지했다", "kind": "출처",
+       "refs": [{"key": "Hinton2015", "loc": "초록, 1쪽", "anchor": "compress the knowledge in an ensemble into a single model"}]},
+      {"has": "temperature 1.5일 때 student 정확도가 가장 높았고", "kind": "출처",
+       "refs": [{"key": "Kestrel2024", "loc": "§3.2", "anchor": "Student accuracy peaked at a temperature of 1.5"}]},
+      {"has": "정답 label을 섞어 학습한 student가", "kind": "출처",
+       "refs": [{"key": "Kestrel2024", "loc": "§3.3", "anchor": "Training on soft targets alone outperformed the mixed objective with hard labels"}]},
+      {"has": "GPU 시간이 약 1.6배", "kind": "출처",
+       "refs": [{"key": "Kestrel2024", "loc": "§3.4", "anchor": "about 1.6 times the GPU hours"}]},
+      {"has": "knowledge distillation과 temperature를 제안하고", "kind": "출처",
+       "refs": [{"key": "Hinton2015", "loc": "제목, 1쪽", "anchor": "Distilling the Knowledge in a Neural Network"}]},
+      {"has": "student 크기·temperature·학습 신호를 바꿔 가며", "kind": "출처",
+       "refs": [{"key": "Kestrel2024", "loc": "제목", "anchor": "How Small Can a Student Be?"}]}
+    ],
+    "default_kind": "설명"
+  }
+}

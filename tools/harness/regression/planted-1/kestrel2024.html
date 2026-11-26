@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>How Small Can a Student Be? Temperature and Target Choice in Knowledge Distillation</title></head>
+<body>
+<h1>How Small Can a Student Be? Temperature and Target Choice in Knowledge Distillation</h1>
+<p>Ana Kestrel, Ilya Morrow</p>
+<p>Workshop on Efficient Learning, 2024</p>
+
+<h2>Abstract</h2>
+<p>We revisit knowledge distillation on Q-Bench, an image classification benchmark, and vary the size of the student, the distillation temperature, and the training targets. Small students recover most of the teacher's accuracy, the best temperature is lower than commonly assumed, and soft targets alone can be enough.</p>
+
+<h2>1 Introduction</h2>
+<p>Knowledge distillation trains a small student network to match the output distribution of a larger, already trained teacher. Most practitioners pick a high temperature and mix soft targets with hard labels. We ask whether these defaults hold when the student is very small.</p>
+
+<h2>2 Setup</h2>
+<p>Q-Bench contains 120,000 training images in 300 classes, with a held-out validation split of 15,000 images. The teacher is a 24-layer convolutional network. Students have 4, 6 or 8 layers. The teacher is trained once and kept frozen during distillation. We report top-1 accuracy on the validation split, averaged over three seeds.</p>
+
+<h2>3 Results</h2>
+<h3>3.1 Student size</h3>
+<p>On the Q-Bench validation split, a 6-layer student with 23% of the teacher's parameters retained 91.2% of the teacher's top-1 accuracy. The 4-layer student retained 84.7%.</p>
+
+<h3>3.2 Temperature</h3>
+<p>We swept the temperature from 1 to 8. Student accuracy peaked at a temperature of 1.5; raising the temperature to 4 or above reduced accuracy, by 1.3 points at T = 4 compared with T = 1.5.</p>
+
+<h3>3.3 Targets</h3>
+<p>Training on soft targets alone outperformed the mixed objective with hard labels by 0.8 points. We attribute this to label noise in Q-Bench, which the hard labels pass on to the student.</p>
+
+<h3>3.4 Cost</h3>
+<p>Distillation required about 1.6 times the GPU hours of training the same student on hard labels alone, mainly because of teacher inference over the transfer set.</p>
+
+<h2>4 Conclusion</h2>
+<p>For very small students on Q-Bench, a low temperature and soft targets alone worked best. These findings are specific to our setting and should be re-checked on other data.</p>
+</body>
+</html>

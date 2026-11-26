@@ -325,13 +325,20 @@ def fetch_and_ledger_cases(s: Suite) -> None:
         def __exit__(self, *a) -> None:
             return None
 
+    s.expect("fetch: 허용 목록 밖 호스트 거부", ["tools/harness/fetch.py", "get", "https://example.com/x", "--id", "x"], 1, "허용 목록")
+    hosts = s.path("tools/harness/allowed-hosts.txt")
+    hosts_orig = hosts.read_text(encoding="utf-8")
     fetch.check_host = lambda url: None
+    fetch.check_allowed = lambda url: None
     fetch.HOST_INTERVAL = 0
     fetch.urllib.request.urlopen = lambda req, timeout=0: Resp()
     rec = fetch.get("https://example.org/hinton", "hinton2015-test")
+    fetch.get("https://example.org/hinton", "hinton2015-part")
     s.check("fetch: 가짜 응답 받기", rec["kind"] == "html" and rec.get("text_sha256") is not None)
     s.check("fetch: script 본문 제외", "ignore me" not in (fetch.SOURCES / "hinton2015-test/text.txt").read_text(encoding="utf-8"))
     F = ["tools/harness/fetch.py"]
+    s.expect("fetch verify: 허용 목록 밖에서 받은 출처", F + ["verify"], 1, "허용 목록 밖에서 받은 출처")
+    hosts.write_text(hosts_orig + "example.org\n", encoding="utf-8")
     s.expect("fetch verify 정상", F + ["verify"], 0, "문제 0개")
     s.expect("fetch anchor", F + ["anchor", "hinton2015-test", "which we call distillation"], 0, '"found": true')
     stray = fetch.SOURCES / "hinton2015-test/note.md"
@@ -346,6 +353,15 @@ def fetch_and_ledger_cases(s: Suite) -> None:
                        "anchor": "which we call distillation"}], "gaps": []}
     write(led, json.dumps(data, ensure_ascii=False))
     s.expect("ledger facts 정상", L + ["facts", "1.5"], 0, "오류 0건")
+    data["sources"]["Hinton2015"]["parts"] = {"hinton2015-part": "해당 절만"}
+    data["facts"][0]["source_id"] = "hinton2015-part"
+    write(led, json.dumps(data, ensure_ascii=False))
+    s.expect("ledger facts: 같은 문헌의 다른 부분(parts)", L + ["facts", "1.5"], 0, "오류 0건")
+    data["facts"][0]["source_id"] = "hinton2015-other"
+    write(led, json.dumps(data, ensure_ascii=False))
+    s.expect("ledger facts: parts에 없는 source_id", L + ["facts", "1.5"], 1, "source_id·parts에 없다")
+    del data["facts"][0]["source_id"]
+    del data["sources"]["Hinton2015"]["parts"]
     data["facts"][0]["anchor"] = "which we name distillation"
     write(led, json.dumps(data, ensure_ascii=False))
     s.expect("ledger facts: 없는 닻", L + ["facts", "1.5"], 1, "출처 본문에 없다")
@@ -371,6 +387,17 @@ def fetch_and_ledger_cases(s: Suite) -> None:
             e.update(kind="설명")
         else:
             e.update(kind="연결")
+    write(led, json.dumps(led_data, ensure_ascii=False))
+    dl = s.path("build/harness/1.5/delta.json")
+    s.check("ledger 시험 준비: 1.5 변경분", dl.is_file())
+    s.expect("ledger validate: 인용하지 않는 references_add", L + ["validate", "1.5"], 1, "@Aaa2001를 이 장이 인용하지 않는다")
+    dd = json.loads(dl.read_text(encoding="utf-8"))
+    dd["references_add"] = []
+    write(dl, json.dumps(dd, ensure_ascii=False))
+    ent = json.loads(led.read_text(encoding="utf-8"))
+    ent["sources"]["Hinton2015"]["entry"] = "- **@Other2015** · X. 「Y」. arXiv, 2015. https://arxiv.org/abs/1503.02531"
+    write(led, json.dumps(ent, ensure_ascii=False))
+    s.expect("ledger validate: entry의 키가 다름", L + ["validate", "1.5"], 1, "entry는 참고문헌 형식")
     write(led, json.dumps(led_data, ensure_ascii=False))
     s.expect("ledger validate 정상", L + ["validate", "1.5"], 0, "오류 0건")
     cited = next(u["id"] for u in units if "[@Hinton2015]" in u["text"] and u["kind"] == "목록")
@@ -398,6 +425,39 @@ def fetch_and_ledger_cases(s: Suite) -> None:
     write(s.path("build/harness/1.5/judge-r1.json"), json.dumps({"decisions": [{"finding": "설명/F1", "decision": "기각"}]},
                                                                ensure_ascii=False))
     s.expect("ledger verdicts: 기각되면 일치", V + ["--judge", "build/harness/1.5/judge-r1.json"], 0, "일치가 아닌 문장 0개")
+    write(s.path("build/harness/1.5/judge-r1.json"), json.dumps({"round": 1, "decisions": [{"finding": "설명/F1", "decision": "채택"}]},
+                                                               ensure_ascii=False))
+    s.expect("ledger verdicts: 채택된 차단은 불일치", V + ["--judge", "build/harness/1.5/judge-r1.json"], 0, "일치가 아닌 문장 1개")
+    write(checks / "r2-explain.json", json.dumps({"lens": "설명", "round": 2, "chapter_hash": h, "verdicts": {cited: "일치"},
+          "findings": [{"id": "F1", "sentence": cited, "severity": "권고", "claim": "다듬기", "evidence": {"type": "규칙"}}]},
+          ensure_ascii=False))
+    write(s.path("build/harness/1.5/judge-r2.json"), json.dumps({"round": 2, "decisions": [{"finding": "설명/F1", "decision": "채택"}]},
+                                                               ensure_ascii=False))
+    s.expect("ledger verdicts: 늦은 회차가 이기고 권고는 판정을 바꾸지 않는다",
+             V + ["build/harness/1.5/checks/r2-explain.json", "--judge", "build/harness/1.5/judge-r1.json",
+                  "build/harness/1.5/judge-r2.json"], 0, "일치가 아닌 문장 0개")
+    s.expect("ledger validate --final 정상", L + ["validate", "1.5", "--final"], 0, "오류 0건")
+    link = next(u["id"] for u in units if led_data["sentences"][u["id"]]["kind"] == "설명")
+    as_link = json.loads(led.read_text(encoding="utf-8"))
+    as_link["sentences"][link]["kind"] = "연결"
+    write(led, json.dumps(as_link, ensure_ascii=False))
+    write(checks / "r2-explain.json", json.dumps({"lens": "설명", "round": 2, "chapter_hash": h, "verdicts": {cited: "일치"},
+          "findings": [{"id": "F2", "sentence": link, "severity": "차단", "claim": "틀린 그림", "evidence": {"type": "규칙"}}]},
+          ensure_ascii=False))
+    write(s.path("build/harness/1.5/judge-r2.json"), json.dumps({"round": 2, "decisions": [{"finding": "설명/F2", "decision": "채택"}]},
+                                                               ensure_ascii=False))
+    V2 = V + ["build/harness/1.5/checks/r2-explain.json", "--judge", "build/harness/1.5/judge-r1.json",
+              "build/harness/1.5/judge-r2.json"]
+    s.expect("ledger verdicts: 연결 문장의 채택된 차단도 불일치", V2, 0, "일치가 아닌 문장 1개")
+    s.expect("ledger validate --final: 연결 문장의 열린 차단", L + ["validate", "1.5", "--final"], 1, "판정이 '불일치'")
+    write(s.path("build/harness/1.5/judge-r2.json"), json.dumps({"round": 2, "decisions": [{"finding": "설명/F2", "decision": "기각"}]},
+                                                               ensure_ascii=False))
+    s.expect("ledger verdicts: 연결 문장의 지적이 기각되면 판정 칸을 비운다", V2, 0, "일치가 아닌 문장 0개")
+    s.check("verdicts: 연결 문장의 판정 칸", json.loads(led.read_text(encoding="utf-8"))["sentences"][link]["verdict"] == "")
+    back = json.loads(led.read_text(encoding="utf-8"))
+    back["sentences"][link]["kind"] = "설명"
+    write(led, json.dumps(back, ensure_ascii=False))
+    s.expect("ledger verdicts: 다시 설명 문장", V2, 0, "일치가 아닌 문장 0개")
     s.expect("ledger validate --final 정상", L + ["validate", "1.5", "--final"], 0, "오류 0건")
     s.expect("ledger export", L + ["export", "1.5"], 0, "workbench/evidence/1.5.md")
     ev = s.path("workbench/evidence/1.5.md").read_text(encoding="utf-8")

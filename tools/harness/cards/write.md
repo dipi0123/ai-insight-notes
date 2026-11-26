@@ -24,7 +24,7 @@
 5. 숫자 예시는 `runs/`에 계산을 돌려 기록을 남긴다. 「직접 만들기」 장은 코드를 먼저 돌리고 실행 기록으로 쓴다(§10.2).
 6. 장 안에 AI 이름·날짜·작업 경위를 쓰지 않는다.
 7. `python3 tools/book.py lint N.M`을 오류 0으로 만든다. 후보는 하나씩 보고 실제 위반만 고친다.
-8. `python3 -I tools/harness/ledger.py sync N.M --writer <모델 계열>`. 모든 문장에 갈래를 달고, 출처·교과 문장에는 `refs`를, 계산·실행 문장에는 `path`를 단다. `cross_review_priority`에 같은 계열 모델로는 가리기 어려운 곳(교과 판정, 비유와 번역어, 책 고유의 분류, 초록만 읽은 주장)을 적는다.
+8. `python3 -I tools/harness/ledger.py sync N.M --writer <모델 계열>`. `references_add`에는 본문이 인용하는 문헌만 남긴다. 인용 표시 없이 교과 문장의 근거로만 쓰는 문헌은 그 줄을 대장 `sources`의 그 키에 `entry`로 옮긴다. 모든 문장에 갈래를 달고, 출처·교과 문장에는 `refs`를, 계산·실행 문장에는 `path`를 단다. `cross_review_priority`에 같은 계열 모델로는 가리기 어려운 곳(교과 판정, 비유와 번역어, 책 고유의 분류, 초록만 읽은 주장)을 적는다.
 9. `python3 -I tools/harness/ledger.py validate N.M`을 오류 0으로 통과시킨다.
 10. `delta.json`: `status`는 `초고 · <모델 계열>`, `stage_files`는 놓을 파일마다 `shasum -a 256` 값.
 

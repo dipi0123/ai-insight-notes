@@ -26,7 +26,7 @@
    - `key`·`loc`(절·쪽·표·그림)·`anchor`(본문에 그대로 있는 15단어 미만 구절)·`conditions`(데이터셋·지표·설정·시점)
    - `fetch.py anchor`로 닻이 찾히는지 확인한다.
 6. `sources`에 키마다 `source_id`와 `scope`(`전문`·`초록만`·`해당 절만`)를 적는다.
-7. 새 문헌은 style-guide §7 형식으로 `references_add`에 넣는다. 저자·제목·연도·학회는 받은 문서 자체(첫 쪽, arXiv 초록 페이지)에서 확인한다. 학회를 확인하지 못하면 「arXiv, 연도」로 쓴다.
+7. 새 문헌은 style-guide §7 형식으로 `references_add`에 넣는다. 저자·제목·연도·학회는 받은 문서 자체(첫 쪽, arXiv 초록 페이지)에서 확인한다. 학회를 확인하지 못하면 「arXiv, 연도」로 쓴다. 집필 패스가 본문에서 인용하지 않기로 한 문헌은 그 패스가 `sources`의 `entry`로 옮긴다.
 8. 찾지 못한 사실, 출처끼리 다투는 사실은 메우지 않고 `gaps`에 적는다.
 9. `python3 -I tools/harness/ledger.py facts N.M`을 오류 0으로 통과시킨다.
 
