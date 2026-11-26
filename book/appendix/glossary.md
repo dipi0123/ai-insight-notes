@@ -15,10 +15,12 @@
 | action | — | 행동 | 학습신호 | reinforcement learning에서 모델이 내놓는 행동. language model에서는 생성한 답이 action이다 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 10.1 |
 | active learning | — | 능동 학습 | 학습과정 | 모델이 label이 가장 도움이 될 데이터를 골라 label을 요청하며 배우는 방식 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 3.10 |
 | adaptation | — | 적응 | 학습과정 | foundation model을 바탕으로 특정 task를 하는 모델을 만드는 일. 예: fine-tuning | [1.6](../part01-big-picture/01-06-industry-stack.md), 9.1 |
+| anchor box | — | 앵커 박스 | 구조 | object detection에서 box를 예측할 때 바탕으로 삼는, 미리 정해 둔 기준 box. YOLO v2가 쓴다 | [1.5](../part01-big-picture/01-05-landmark-models.md) |
 | architecture | — | 구조 | 구조 | 모델 안에서 layer를 어떤 모양으로 짜고 이었는지. 예: CNN, Transformer | [1.2](../part01-big-picture/01-02-naming-axes.md) |
 | artificial intelligence | AI | 인공지능 | 분야 | 사람의 지능이 필요하다고 여기는 일을 컴퓨터가 하게 만드는 분야 전체 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md) |
 | attention | — | — | 구조 | 입력의 각 위치가 다른 위치를 얼마나 참고할지 계산해 정보를 모으는 계산. Transformer의 핵심이다 | [1.2](../part01-big-picture/01-02-naming-axes.md), 5.5 |
 | autoencoder | — | 오토인코더 | 구조 | 입력을 작은 숫자 배열로 압축하는 encoder와, 그것에서 입력을 되살리는 decoder를 함께 학습한 모델 | [1.5](../part01-big-picture/01-05-landmark-models.md), 11.4 |
+| automatic speech recognition | — | 자동 음성 인식 | 과제 | 말소리를 받아 글로 옮기는 task | [1.2](../part01-big-picture/01-02-naming-axes.md), 11.7 |
 | autoregressive model | — | 자기회귀 모델 | 방식 | 앞에서 만든 출력을 보고 다음 조각을 하나씩 이어 붙여 출력을 만드는 모델 | [1.2](../part01-big-picture/01-02-naming-axes.md), 7.2 |
 | backpropagation | — | 역전파 | 수학 | 출력에서 거꾸로 거슬러 가며 weight마다 loss를 줄이려면 어느 쪽으로 고쳐야 하는지 계산하는 방법 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 4.3 |
 | base model | — | 베이스 모델 | 규모·활용 | pre-training만 하고 지시를 따르도록 더 학습하지 않은 language model을 흔히 부르는 이름 | [1.2](../part01-big-picture/01-02-naming-axes.md), 9.3 |
@@ -48,7 +50,7 @@
 | distribution | — | 분포 | 수학 | 값들이 어떻게 퍼져 있는지, 또는 각 값이 나올 가능성이 얼마인지 나타낸 것 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), [1.4](../part01-big-picture/01-04-training-methods-map.md), 2.3 |
 | distribution shift | — | 분포 변화 | 데이터 | 학습 데이터와 실제 입력의 distribution이 다른 것. 모델 성능이 떨어지는 흔한 원인이다 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 13.6 |
 | DPO | direct preference optimization | — | 학습과정 | reward model과 reinforcement learning 과정 없이 preference pair에서 바로 모델을 최적화하는 post-training 방법 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 10.5 |
-| embedding | — | 임베딩 | 구조 | 입력을 나타내는 숫자 배열 가운데, 다른 입력의 것과 견주거나 다른 부품에 넘기려고 만든 것. 예: CLIP은 짝이 맞는 이미지와 글의 embedding이 가까워지도록 배운다 | [1.5](../part01-big-picture/01-05-landmark-models.md), 5.4 |
+| embedding | — | 임베딩 | 구조 | 넓게는 모델 안 어느 layer에서든 꺼낸, 입력을 나타내는 숫자 배열. 흔히 embedding layer가 범주마다 학습한 숫자 배열을 가리키고, 비슷한 것은 비슷한 embedding을 갖는다. 예: CLIP은 짝이 맞는 이미지와 글의 embedding이 가까워지도록 배운다 | [1.5](../part01-big-picture/01-05-landmark-models.md), 5.4 |
 | encoder | — | 인코더 | 구조 | 모델 안에서 입력을 읽어 숫자 배열로 바꾸는 부분 | [1.5](../part01-big-picture/01-05-landmark-models.md), 5.7 |
 | encoder-decoder | — | 인코더-디코더 | 구조 | encoder와 decoder를 모두 둔 구조. 처음 나온 Transformer와 Whisper가 이 구조다 | [1.5](../part01-big-picture/01-05-landmark-models.md), 5.7 |
 | environment | — | 환경 | 학습신호 | reinforcement learning에서 모델의 action을 받아 그 결과와 reward를 돌려주는 바깥 세계. 예: 게임 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 10.1 |
@@ -56,6 +58,7 @@
 | feature | — | 특징 | 데이터 | 모델이 판단에 쓰는, 입력에서 뽑은 정보 조각. 고전 machine learning에서는 사람이 고르고 deep learning에서는 학습이 만든다 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md) |
 | feature engineering | — | 특징 공학 | 학습과정 | 모델에 넣을 feature를 사람이 뽑고 고르는 일. deep learning에서는 학습이 대신한다 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 3.9 |
 | federated learning | — | 연합 학습 | 학습과정 | 데이터를 한곳에 모으지 않고 여러 기기에서 학습한 결과만 모으는 방식 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 3.10 |
+| few-shot | — | — | 규모·활용 | task 설명과 함께 예시 몇 개를 입력 글에 넣어, 추가 학습 없이 task를 풀게 하는 것 | [1.5](../part01-big-picture/01-05-landmark-models.md) |
 | fine-tuning | — | 파인튜닝 | 학습과정 | pre-trained model을 특정 task나 형식에 맞춰 더 학습하는 것. 이 책은 label 데이터로 하는 supervised 추가 학습이라는 좁은 뜻으로 쓴다 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 9.1 |
 | forward pass | — | 순전파 | 수학 | 입력에서 출력 쪽으로 모델의 계산을 한 번 따라가는 것. inference는 forward pass만 한다 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 4.2 |
 | foundation model | — | 파운데이션 모델 | 규모·활용 | 넓은 데이터로 대규모 학습해 여러 task에 맞춰 고쳐 쓸 수 있는 모델 | [1.2](../part01-big-picture/01-02-naming-axes.md), [1.6](../part01-big-picture/01-06-industry-stack.md) |
@@ -71,7 +74,7 @@
 | inference | — | 추론 | 시스템 | 학습된 모델의 weight를 고정한 채 새 입력의 출력을 계산하는 일 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 7.2, 13.2 |
 | inference server | — | 추론 서버 | 시스템 | weight를 칩의 메모리에 올려 두고 들어오는 요청마다 inference를 돌려 결과를 돌려주는 서버 소프트웨어 | [1.6](../part01-big-picture/01-06-industry-stack.md), 13.2 |
 | instance segmentation | — | 인스턴스 분할 | 과제 | 물체마다 그 물체에 속한 픽셀 묶음(mask)과 class를 출력하는 task | [1.2](../part01-big-picture/01-02-naming-axes.md), 6.7 |
-| instruction tuning | — | — | 학습과정 | 지시를 따르도록 「지시 → 좋은 답」 데이터로 더 학습하는 것 | [1.2](../part01-big-picture/01-02-naming-axes.md), 9.3 |
+| instruction tuning | — | — | 학습과정 | 지시를 따르도록 「지시 → 좋은 답」 데이터로 더 학습하는 것 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 9.3 |
 | knowledge base | — | 지식 베이스 | 분야 | 세상에 관한 지식을 형식 언어의 문장으로 적어 두고 논리 규칙으로 추론하게 하는 AI 방식 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md) |
 | label | — | 라벨 | 데이터 | 입력마다 붙인 정답. 예: 사진에 붙인 「고양이」 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md), [1.3](../part01-big-picture/01-03-model-lifecycle.md), [1.4](../part01-big-picture/01-04-training-methods-map.md), 6.9 |
 | labeling | annotation | 라벨링 | 데이터 | 데이터마다 label을 붙이는 일 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 6.9 |
@@ -129,19 +132,21 @@
 | retraining | — | 재학습 | 학습과정 | 새로 모은 데이터를 더해 모델을 다시 학습하는 것. 배포 뒤 성능이 떨어지면 한다 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 13.6 |
 | reward | — | 보상 | 학습신호 | reinforcement learning에서 action의 결과에 매기는 점수 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 10.1 |
 | reward model | — | 보상 모델 | 학습과정 | 답이 얼마나 좋은지 점수를 매기도록 학습한 모델. RLHF에서 preference 데이터로 학습해 reward를 만든다 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 10.4 |
-| RLHF | reinforcement learning from human feedback | — | 학습과정 | 사람의 preference 비교로 reward model을 학습하고, 그 점수를 reward로 reinforcement learning하는 방법 | [1.2](../part01-big-picture/01-02-naming-axes.md), [1.4](../part01-big-picture/01-04-training-methods-map.md), 10.4 |
+| RLHF | reinforcement learning from human feedback | — | 학습과정 | 사람의 preference 비교로 reward model을 학습하고, 그 점수를 reward로 reinforcement learning하는 방법 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 10.4 |
 | RNN | recurrent neural network | 순환 신경망 | 구조 | 순서가 있는 데이터를 한 칸씩 읽으며 앞에서 읽은 내용을 다음 칸으로 넘기는 neural network | [1.2](../part01-big-picture/01-02-naming-axes.md), 5.3 |
 | segmentation | — | 분할 | 과제 | 사진의 픽셀마다 class를 매겨 물체의 모양까지 찾는 task를 통틀어 부르는 말 | [1.2](../part01-big-picture/01-02-naming-axes.md), 6.7 |
 | self-supervised learning | — | 자기지도 학습 | 학습신호 | label 없는 데이터에서 정답 노릇을 할 것을 만들어 supervised learning처럼 배우는 학습. 예: 다음 단어 맞히기, 가린 부분 맞히기 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 3.3 |
 | semantic segmentation | — | 의미론적 분할 | 과제 | 픽셀마다 class를 매기는 task. 같은 class의 물체끼리는 구별하지 않는다 | [1.2](../part01-big-picture/01-02-naming-axes.md), 6.7 |
 | semi-supervised learning | — | 준지도 학습 | 학습신호 | label이 있는 일부 데이터와 label이 없는 데이터를 함께 쓰는 학습 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 3.10 |
 | serving | — | 서빙 | 시스템 | 학습한 모델이 online inference나 offline inference로 예측을 내놓을 수 있게 만드는 일 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 13.2 |
-| SFT | supervised fine-tuning | 지도 파인튜닝 | 학습과정 | 입력과 바라는 출력을 짝지은 데이터로 더 학습하는 supervised learning 방식의 fine-tuning. 지시와 답의 짝으로 하면 instruction tuning이라 한다 | [1.2](../part01-big-picture/01-02-naming-axes.md), [1.4](../part01-big-picture/01-04-training-methods-map.md), 9.3 |
+| SFT | supervised fine-tuning | 지도 파인튜닝 | 학습과정 | 입력과 바라는 출력을 짝지은 데이터로 더 학습하는 supervised learning 방식의 fine-tuning. 지시와 답의 짝으로 하면 instruction tuning이라 한다 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 9.3 |
 | speech | — | 음성 | 분야 | 말소리를 다루는 AI 분야 | [1.2](../part01-big-picture/01-02-naming-axes.md), 11.7 |
 | speech recognition model | — | 음성 인식 모델 | 과제 | 말소리를 받아 글로 옮기는 모델 | [1.2](../part01-big-picture/01-02-naming-axes.md), 11.7 |
+| student | student model | 학생 | 학습과정 | distillation에서 teacher의 출력을 따라 하도록 학습하는 더 작은 모델 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 9.6 |
 | supervised learning | — | 지도 학습 | 학습신호 | 입력마다 붙은 정답(label)과 비교하며 배우는 학습 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 3.3 |
 | synthetic data | — | 합성 데이터 | 데이터 | 실제로 모은 것이 아니라 모델이나 프로그램으로 만들어 낸 학습 데이터 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 12.4 |
 | task | — | 과제 | 과제 | 모델이 풀도록 정한 문제의 종류와 그 출력 형식 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md), [1.2](../part01-big-picture/01-02-naming-axes.md), [1.4](../part01-big-picture/01-04-training-methods-map.md) |
+| teacher | teacher model | 교사 | 학습과정 | distillation에서 작은 모델이 따라 할 출력을 내는, 이미 학습한 큰 모델 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 9.6 |
 | test set | — | 테스트 세트 | 평가 | 학습에 쓰지 않고 마지막 평가를 위해 남겨 둔 데이터 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 3.4 |
 | text classification | — | 텍스트 분류 | 과제 | 글 전체에 class 하나를 매기는 task. 예: 스팸 판별 | [1.2](../part01-big-picture/01-02-naming-axes.md) |
 | text generation | — | 텍스트 생성 | 과제 | 글을 받아 이어지는 글을 만드는 task | [1.2](../part01-big-picture/01-02-naming-axes.md), 7.2 |
@@ -151,7 +156,7 @@
 | training from scratch | — | 처음부터 학습 | 학습과정 | 사전에 학습한 weight 없이 무작위 값에서 시작해 모든 weight를 학습하는 것 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 4.11, 8.6 |
 | Transformer | — | — | 구조 | attention으로 입력의 각 위치가 다른 위치를 참고하게 하는 neural network 구조. 글을 만드는 데 쓰는 판은 앞쪽 위치만 참고한다 | [1.2](../part01-big-picture/01-02-naming-axes.md), 5.6 |
 | unsupervised learning | — | 비지도 학습 | 학습신호 | 정답 없이 데이터 안의 cluster나 distribution을 찾는 학습 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 3.3 |
-| VAE | variational autoencoder | 변분 오토인코더 | 방식 | 데이터를 representation으로 바꾸는 부분과 representation에서 데이터를 다시 만드는 부분을 함께 배우고, 다 배운 뒤에는 미리 정해 둔 확률에 따라 뽑은 representation으로 새 데이터를 만드는 generative model | [1.2](../part01-big-picture/01-02-naming-axes.md), 11.4 |
+| VAE | variational autoencoder | 변분 오토인코더 | 방식 | 데이터를 representation으로 바꾸는 부분과 representation에서 데이터를 다시 만드는 부분을 함께 배우되, 얻은 representation이 무작위로 뽑는 값과 크게 다르지 않도록 맞춰, 다 배운 뒤에는 무작위로 뽑은 representation으로 새 데이터를 만드는 generative model | [1.2](../part01-big-picture/01-02-naming-axes.md), 11.4 |
 | validation set | — | 검증 세트 | 평가 | 학습하는 동안 모델을 여러 번 재 보고 고르는 데 쓰려고 학습 데이터·test set과 겹치지 않게 떼어 둔 데이터 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 3.4 |
 | verifiable reward | — | 검증 가능한 보상 | 학습신호 | 프로그램으로 맞고 틀림을 확인할 수 있는 reward. 예: 수학 답 일치, 코드 테스트 통과 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 10.7 |
 | verifier | — | 검증기 | 시스템 | 답이 맞는지 자동으로 확인하는 프로그램이나 모델 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 10.7 |

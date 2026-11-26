@@ -86,7 +86,7 @@ SITE_GENERATED = ("nav", "docs_dir", "site_dir")
 
 # 책 전체 집필 하네스(작업 절차 §10). 작업 파일은 git에 올리지 않는 build/harness/에 둔다.
 HARNESS = BUILD / "harness"
-TOOL_VERSION = "2026.11.3"  # lint·sentences·merge 결과에 적는 도구 판. 검사 내용을 바꾸면 올린다
+TOOL_VERSION = "2026.11.4"  # lint·sentences·merge 결과에 적는 도구 판. 검사 내용을 바꾸면 올린다
 
 # 집필 규칙 §5: 용어집 「분류」 칸의 값.
 CATEGORIES = ("분야", "구조", "과제", "방식", "학습신호", "규모·활용", "학습과정", "평가", "데이터", "수학", "시스템")
@@ -1107,7 +1107,6 @@ MERMAID_NODE_RE = re.compile(r"(?<![\w-])([A-Za-z_][\w]*)\s*(?:\[|\(|\{|>)")
 MERMAID_EDGE_RE = re.compile(r"(?<![\w-])([A-Za-z_][\w]*)\s*(?:-->|---|-\.->|==>|--\s|-\.-)"
                              r"|(?:-->|---|-\.->|==>|-\.-)\s*(?:\|[^|]*\|\s*)?([A-Za-z_][\w]*)")
 LATIN_RE = re.compile(r"[A-Za-z][A-Za-z0-9]*(?:[-'][A-Za-z0-9]+)*")
-READ_LIMIT_CHARS = 13500  # 이론 장 분량 경고선(시범 운영에서 1부 장 30~40분 읽기에 해당). 넘으면 경고만 한다
 
 
 def section_range(heads: list[tuple[int, str]], name: str, n_lines: int):
@@ -1477,9 +1476,6 @@ def lint_chapter(ch: Chapter, chapters: dict[str, Chapter], src: Path, stage: Pa
         for k, ln in items:
             if "[@" not in ln:
                 warn(k, "더 읽을거리 항목은 [@키]로 인용한다")
-
-    if len(text) > READ_LIMIT_CHARS:
-        warn(1, f"{len(text):,}자 — 경고선 {READ_LIMIT_CHARS:,}자를 넘는다. 40분 안에 읽기 어려울 수 있으니 줄일 곳을 본다(작업 절차 §2의 5)")
 
     body_start = (meta_i + 1) if meta_i is not None else 0
     cands, unknown = term_candidates(lines, body_start, glossary_entries(delta))

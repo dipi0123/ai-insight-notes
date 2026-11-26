@@ -7,15 +7,13 @@
 - 학습 방법의 이름은 한 가지 기준으로 나눈 목록이 아니다. 「정답 신호가 어떤 형태로 오나」「모델 개발의 어느 단계인가」「어느 weight(가중치)를 바꾸나」「신호를 누가 만드나」「데이터가 어떻게 들어오나」라는 서로 다른 축에 붙은 이름이다.
 - 그래서 학습 한 번에 이름이 여러 개 붙는다. supervised fine-tuning(SFT, 지도 파인튜닝)은 신호로 보면 supervised learning(지도 학습)이고, 단계로 보면 post-training(사후학습)이다.
 - 대화형 language model(언어 모델)은 보통 pre-training(사전학습) → SFT → preference(선호)나 reward(보상)로 다듬기의 순서로 만든다. 단계의 수와 이름은 개발사마다 다르다.
-- reinforcement learning(강화 학습)과 preference learning(선호 학습)은 같은 신호 축에 있는 서로 다른 신호의 이름이다. reinforcement learning은 모델이 고른 답 하나에 대한 점수인 reward를 받고, preference learning은 두 답의 비교를 받는다. 둘은 reinforcement learning from human feedback(RLHF)에서 만난다. language model의 post-training에서는 preference로 다듬는 방법들이 reinforcement learning을 쓰든 쓰지 않든 SFT 다음의 같은 자리에서 같은 목표를 푼다. 그래서 둘이 한데 묶여 불린다.
+- reinforcement learning(강화 학습)과 preference learning(선호 학습)은 같은 신호 축에 있는 서로 다른 신호의 이름이다. reinforcement learning은 모델이 고른 답 하나에 대한 점수인 reward를 받고, preference learning은 두 답의 비교를 받는다. 둘은 reinforcement learning from human feedback(RLHF)에서 만난다.
 
 ## 1. 학습 방법 이름이 헷갈리는 이유
 
 [1.2장](01-02-naming-axes.md)에서 모델 이름이 분야·구조·task(과제) 같은 여러 축에 붙는다고 했다. 학습 방법의 이름도 똑같다. 「pre-training」은 언제 하는지를, 「reinforcement learning」은 무엇을 신호로 어떻게 배우는지를, 「low-rank adaptation(LoRA)」은 어느 weight를 바꾸는지를 가리킨다. 기준이 다른 이름들이 한 목록에 섞여 있으니 겹치고 빠진 것처럼 보인다.
 
-소프트웨어에 빗대면 「단위 테스트」「CI에서 도는 테스트」「모킹을 쓴 테스트」가 같은 테스트 하나를 가리킬 수 있는 것과 같다. 각각 범위·실행 시점·방식이라는 다른 축의 이름이다.
-
-> **핵심** 학습 방법 이름을 만나면 「이 이름은 어느 축의 이름인가」부터 묻는다. 그러면 겹쳐 보이던 이름들이 정리된다.
+그러니 학습 방법 이름을 만나면 어느 축의 이름인지부터 묻는다.
 
 ## 2. 다섯 개의 축
 
@@ -30,7 +28,7 @@
 | reinforcement learning(RL, 강화 학습) | 정답을 보여 주지 않는다. 모델이 action(행동), 곧 답을 내면 그 결과에 점수인 reward만 준다 | 10부 |
 | preference learning(선호 학습) | 두 결과 중 어느 쪽이 나은지 비교한 데이터로 배운다 | 10.4, 10.5 |
 
-[1.2장](01-02-naming-axes.md)의 contrastive learning(대조 학습)은 이 표에 따로 두지 않았다. 맞는 쌍과 틀린 쌍을 가려 배우는 이 방식을 self-supervised learning의 한 기법으로 드는 문헌이 있다 [@Bommasani2021].
+[1.2장](01-02-naming-axes.md)의 contrastive learning(대조 학습)은 이 표에 따로 두지 않았다. 맞는 쌍과 틀린 쌍을 가려 배우는 이 방식을 self-supervised learning의 한 기법으로 드는 문헌이 있다 [@Bommasani2021]. 이 책도 그렇게 보고, 8.3장에서 이미지의 self-supervised pre-training 방법 가운데 하나로 다룬다.
 
 ### 2.2 단계: 모델 개발의 어디에서 하나
 
@@ -39,7 +37,7 @@
 | pre-training(사전학습) | 큰 데이터로 넓고 일반적인 representation(표현)을 먼저 배운다 | 8부 |
 | continual pre-training(추가 사전학습) | pre-trained model(사전학습 모델)을 특정 분야 데이터로, pre-training과 같은 방식으로 더 학습한다 | 8.5 |
 | fine-tuning(파인튜닝) | pre-trained model을 특정 task나 형식에 맞춰 더 학습한다. 이 책은 이 가운데 label 데이터로 하는 supervised 추가 학습을 fine-tuning이라고 부른다(§5 「표준과 관례」) | 9부 |
-| post-training(사후학습) | pre-training 뒤에 모델을 다듬는 학습을 통틀어 부른다. language model에서는 SFT, preference optimization(선호 최적화), reinforcement learning을 포함한다. preference optimization은 §2.1의 preference learning 신호인 나은 답과 못한 답의 쌍으로, reinforcement learning을 거치지 않고 모델을 바로 최적화하는 방법들이다(예: §5의 direct preference optimization(DPO)) | 9~10부 |
+| post-training(사후학습) | pre-training 뒤에 모델을 다듬는 학습을 통틀어 부른다. language model에서는 SFT, preference optimization(선호 최적화), reinforcement learning을 포함한다. preference optimization은 나은 답과 못한 답의 쌍으로 모델을 바로 최적화하는 방법들이다(예: direct preference optimization(DPO), §5) | 9~10부 |
 
 ### 2.3 바꾸는 범위: 어느 weight를 바꾸나
 
@@ -47,8 +45,8 @@
 |---|---|---|
 | training from scratch(처음부터 학습) | pre-trained weight 없이, 무작위 값으로 정한 weight에서 시작해 모든 weight를 학습한다 | 4.11, 8.6 |
 | full fine-tuning(전체 파인튜닝) | pre-trained model의 모든 weight를 고친다 | 9.1 |
-| freezing(층 고정) | 일부 layer(층)는 그대로 두고 나머지만 고친다. 보통 입력에 가까운 앞쪽 layer를 고정하고 출력에 가까운 뒤쪽 layer를 고친다. 예: 모델 맨 끝에서 최종 출력을 만드는 head만 학습 | 9.1 |
-| parameter-efficient fine-tuning(PEFT, 효율적 파인튜닝) | full fine-tuning보다 훨씬 적은 parameter(파라미터)만 학습한다. 예: LoRA는 원래 weight를 모두 고정하고, 작게 덧붙인 weight만 학습한다 [@Hu2021] | 9.4 |
+| freezing(층 고정) | 일부 layer(층)는 그대로 두고 나머지만 고친다. 보통 입력에 가까운 앞쪽 layer를 고정하고 출력에 가까운 뒤쪽 layer를 고친다. [1.1장 §3.2](01-01-ai-ml-dl.md#32-deep-learning은-feature를-layer마다-쌓아-배운다)에서 본 대로 앞쪽 layer는 단순한 feature(특징)를, 뒤쪽 layer는 그 위에 쌓인 추상적인 feature를 만든다. 이미지 모델의 실험에서 맨 앞 layer의 feature는 여러 데이터와 task에 두루 쓸 수 있었고, 뒤쪽 layer로 갈수록 feature가 원래 task에 맞춰졌다 [@Yosinski2014]. 그래서 task가 바뀌면 주로 뒤쪽을 고친다. 예: 모델 맨 끝에서 최종 출력을 만드는 head만 학습 | 9.1 |
+| parameter-efficient fine-tuning(PEFT, 효율적 파인튜닝) | full fine-tuning보다 훨씬 적은 parameter(파라미터)만 학습한다. 예: LoRA는 원래 weight를 모두 고정하고, 작게 덧붙인 weight만 학습한다 [@Hu2021]. 학습하는 parameter가 적으니 학습에 드는 GPU(그래픽 처리 장치) 메모리가 줄고, task마다 덧붙인 작은 weight만 따로 저장하면 된다 [@Hu2021] | 9.4 |
 | weight를 바꾸지 않음 | prompt(프롬프트)와 예시만으로 원하는 동작을 끌어낸다. 이것을 in-context learning이라고 한다 | 9.2 |
 
 head는 task에 맞춰 바꿔 달기도 한다. 예를 들어 ViT는 fine-tuning할 때 pre-training에서 쓴 head를 떼고, 새 task의 class(클래스) 수에 맞춘 layer를 새로 단다 [@Dosovitskiy2021].
@@ -83,7 +81,7 @@ environment는 reinforcement learning에서 모델이 action을 하는 바깥 �
 | 학습 | 신호 | 단계 | 바꾸는 범위 | 가르치는 쪽 |
 |---|---|---|---|---|
 | language model pre-training | self-supervised: next-token prediction(다음 토큰 예측) | pre-training | 처음부터, 전체 | 데이터 자체 |
-| language model의 SFT | supervised: demonstration 따라 하기 | post-training | 전체 또는 LoRA | 사람 또는 큰 모델이 쓴 답 |
+| language model의 SFT | supervised: 바라는 답 따라 하기 | post-training | 전체 또는 LoRA | 사람 또는 큰 모델이 쓴 답 |
 | RLHF | preference(비교를 reward로 바꿔 쓴다) | post-training | 전체 또는 LoRA | 사람 |
 | DPO | preference | post-training | 전체 또는 LoRA | 사람 또는 모델 |
 | verifiable reward(검증 가능한 보상)로 하는 reinforcement learning | reward(verifier의 판정) | post-training | 전체 또는 LoRA | verifier |
@@ -92,13 +90,15 @@ environment는 reinforcement learning에서 모델이 action을 하는 바깥 �
 
 pre-trained model을 더 학습할 때는 바꾸는 범위를 다른 축과 따로 고를 수 있다. 예를 들어 학습 도구 TRL은 SFT·DPO와 reinforcement learning 학습 모두에서 LoRA 같은 PEFT를 쓸 수 있게 한다 [@HuggingFace2026b].
 
+표에서 distillation만 단계 칸이 「여러 단계」인 까닭은 이 이름이 단계가 아니라 무엇을 정답으로 삼느냐에 붙었기 때문이다. distillation은 이미 학습한 큰 모델을 teacher(교사)로, 더 작은 모델을 student(학생)로 두고, student가 teacher의 출력을 따라 하게 하는 학습이다 [@Google2026]. 본래 뜻으로는 teacher가 class마다 낸 probability distribution(확률 분포)을 정답으로 삼는다 [@Hinton2015]. 넓게는 teacher가 쓴 답 문장을 정답으로 삼아 SFT하는 것도 distillation이라고 부른다 [@DeepSeekAI2025]. 목적은 teacher와 비슷한 일을 하는 더 작고 싼 모델을 얻는 것이다. 작은 모델은 inference(추론)가 빠르고 메모리와 에너지를 덜 쓰지만, 보통 teacher만큼 정확하지는 않다 [@Google2026]. [1.3장 §3](01-03-model-lifecycle.md#3-학습과-inference)에서 본 대로 inference 비용은 서비스하는 내내 쌓이므로, 모델이 작아지면 그만큼 비용이 준다. 방법은 9.6장에서 본다.
+
 ## 4. 대화형 language model이 만들어지는 순서
 
 대화형 language model은 보통 다음 순서를 거친다.
 
 ```mermaid
 flowchart LR
-  A["pre-training<br/>self-supervised: next-token prediction"] --> B["SFT<br/>supervised: demonstration 따라 하기"]
+  A["pre-training<br/>self-supervised: next-token prediction"] --> B["SFT<br/>supervised: 바라는 답 따라 하기"]
   B --> C["preference로 다듬기<br/>RLHF 또는 DPO"]
   C -.-> D["verifiable reward로 reinforcement learning<br/>(더하기도 한다)"]
 ```
@@ -106,11 +106,11 @@ flowchart LR
 그림: 대화형 language model 학습의 일반적인 단계. 점선으로 그린 마지막 단계는 모델에 따라 더하기도 하고, 넣는 자리와 횟수도 다르다.
 
 1. **pre-training.** 인터넷 글처럼 큰 텍스트에서 다음 token을 맞히며 언어와 지식을 배운다. 이 단계만 거친 모델은 다음 token을 잇도록 배웠을 뿐, 지시를 따르도록 배우지는 않았다. 실제로 pre-training만 한 GPT-3는 코드 요약 같은 task를 할 수는 있었지만, 더 공들인 prompt가 필요했고 보통은 지시를 따르지 않았다 [@Ouyang2022].
-2. **SFT.** SFT는 입력과 바라는 출력을 짝지은 데이터로 하는 supervised fine-tuning이다 [@DeepSeekAI2025]. 대화형 language model의 post-training에서는 이 쌍이 흔히 「지시 → 좋은 답」 쌍이다 [@Zhao2023]. 이 쌍을 보여 주고 따라 하게 해서, 대화 형식과 지시를 따르는 법을 배운다. [1.2장](01-02-naming-axes.md)에서 본 instruction tuning은 이렇게 지시와 답의 쌍으로 하는 SFT를 부르는 이름이다. RLHF처럼 사람의 preference에 맞추는 다음 단계는 instruction tuning과 나눠 부르기도 하고, 이 책도 둘을 나눈다 [@Zhao2023].
-3. **preference로 다듬기.** 좋은 답을 직접 써 보이기보다 두 답 중 나은 쪽을 고르기가 쉬운 경우가 많다. 이 비교 데이터로 모델을 더 낫게 다듬는다.
+2. **SFT.** SFT는 입력과 바라는 출력을 짝지은 데이터로 하는 supervised fine-tuning이다 [@DeepSeekAI2025]. 대화형 language model의 post-training에서는 이 쌍이 흔히 「지시 → 좋은 답」 쌍이다 [@Zhao2023]. 이 쌍을 보여 주고 따라 하게 해서, 대화 형식과 지시를 따르는 법을 배운다. instruction tuning은 이렇게 지시와 답의 쌍으로 하는 SFT를 부르는 이름이다. RLHF처럼 사람의 preference에 맞추는 다음 단계는 instruction tuning과 나눠 부르기도 하고, 이 책도 둘을 나눈다 [@Zhao2023].
+3. **preference로 다듬기.** SFT는 바라는 답 하나를 따라 하게 할 뿐이라, 그럴듯한 답 여럿 가운데 어느 쪽이 더 나은지는 가르치지 않는다. 그래서 같은 질문에 모델이 낸 두 답을 놓고, 사람이 더 정확하거나 덜 해로운 쪽을 고른 비교 데이터를 모은다. 좋은 답을 직접 써 보이기보다 두 답 중 나은 쪽을 고르기가 쉬운 경우가 많다 [@Zhao2023; @Rafailov2023]. 모델은 이 비교 데이터로 나은 쪽 답을 더 자주 내도록 다듬어진다. 방법은 §5에서 본다.
 4. **verifiable reward로 reinforcement learning.** 정답을 확인할 수 있는 문제(수학 답, 코드 테스트)를 풀게 하고, 맞으면 reward를 준다. 이 단계를 넣는 자리와 횟수는 모델마다 다르다. 데이터·코드·학습 방법까지 모두 공개한 language model 계열인 Tülu 3는 preference로 다듬은 다음 마지막 단계로 둔다 [@Lambert2024]. [1.3장](01-03-model-lifecycle.md)에서 본 reasoning model(추론 모델)의 하나인 DeepSeek-R1은 SFT와 reinforcement learning을 번갈아 두 번씩 한다 [@DeepSeekAI2025].
 
-InstructGPT는 pre-training을 마친 GPT-3를 글로 쓴 지시를 따르도록 다듬은 모델이다 [@Ouyang2022]. 그 논문은 SFT → 답의 점수를 매기는 reward model(보상 모델) 학습 → reinforcement learning 알고리즘의 하나인 proximal policy optimization(PPO)으로 하는 reinforcement learning의 세 단계를 자세히 공개했다. 개발사마다 단계를 나누는 방식과 부르는 이름이 다르고, 자세한 구성을 공개하지 않는 경우도 많다.
+InstructGPT는 pre-training을 마친 GPT-3를 글로 쓴 지시를 따르도록 다듬은 모델이다 [@Ouyang2022]. 그 논문은 SFT → 답의 점수를 매기는 reward model(보상 모델) 학습 → reinforcement learning 알고리즘의 하나인 proximal policy optimization(PPO)으로 하는 reinforcement learning의 세 단계를 자세히 공개했다.
 
 ## 5. reinforcement learning과 preference learning은 왜 함께 묶이나
 
@@ -125,20 +125,20 @@ reinforcement learning이라는 이름은 신호와 함께 배우는 방식까�
 | reinforcement learning을 씀 | 게임 점수로 배우는 reinforcement learning, verifier의 판정을 reward로 배우는 reinforcement learning | RLHF |
 | reinforcement learning을 쓰지 않음 | supervised learning, self-supervised learning | DPO, 항목끼리 비교한 데이터로 순위 매기기를 배우는 학습 |
 
-둘이 만나는 분야를 preference-based reinforcement learning(PbRL, 선호 기반 강화 학습)이라고 한다. 숫자 reward 대신 비교를 신호로 받아 reinforcement learning 문제를 푼다 [@Wirth2017]. RLHF는 이 분야의 방법이다. 사람이 두 결과 중 나은 쪽을 고르고, 그 비교로 「얼마나 좋은 답인가」를 점수로 매기는 reward model을 학습한다. 그다음 그 점수를 reward로 삼아 reinforcement learning을 한다 [@Christiano2017]. InstructGPT는 이 방법을 language model에 적용했다 [@Ouyang2022]. 이때 출발점인 SFT 모델에서 멀어질수록 더 큰 벌점을 준다. reward model의 점수만 지나치게 쫓지 않게 하려는 것이다 [@Ouyang2022].
+둘이 만나는 분야를 preference-based reinforcement learning(PbRL, 선호 기반 강화 학습)이라고 한다. 숫자 reward 대신 비교를 신호로 받아 reinforcement learning 문제를 푼다 [@Wirth2017]. RLHF는 이 분야의 방법이다. 사람이 두 결과 중 나은 쪽을 고르고, 그 비교로 「얼마나 좋은 답인가」를 점수로 매기는 reward model을 학습한다. 그다음 그 점수를 reward로 삼아 reinforcement learning을 한다 [@Christiano2017]. InstructGPT는 이 방법을 language model에 적용했다 [@Ouyang2022]. 이때 같은 답을 낼 probability(확률)가 출발점인 SFT 모델과 달라질수록 더 큰 벌점을 준다. reward model의 점수만 지나치게 쫓지 않게 하려는 것이다 [@Ouyang2022]. reward model은 사람의 비교 판단을 배워 흉내 낸 것이라 허점이 있고, 모델은 그 허점을 파고들어 실제로는 좋지 않은 답으로 점수를 올릴 수 있다(10부) [@Christiano2017].
 
-그 뒤 DPO는 RLHF와 같은 목표를 다른 방법으로 푼다 [@Rafailov2023]. reward model과 reinforcement learning 과정 없이, preference pair(선호 쌍)에서 바로 모델을 최적화한다. DPO는 reinforcement learning이 아니지만 RLHF와 같은 자리에서 같은 일을 한다.
+그 뒤 DPO는 RLHF와 같은 목표를 다른 방법으로 푼다 [@Rafailov2023]. reward model과 reinforcement learning 과정 없이, preference pair(선호 쌍)에서 바로 모델을 최적화한다.
 
 정리하면 둘이 한데 묶이는 까닭은 language model의 post-training에 있다. RLHF는 reinforcement learning이고 DPO는 아니지만, 둘 다 preference로 다듬는 방법이라 다음 세 가지를 공유한다.
 
 - 같은 단계에 온다. SFT 다음에 모델을 다듬는다.
 - 같은 문제를 푼다. 정답 하나로 적기 어려운 「더 나은 답」을 비교 데이터로 배운다.
-- 같은 목표를 쓴다. 좋은 답의 점수를 높이되 원래 모델에서 너무 멀어지지 않게 한다.
+- 같은 목표를 쓴다. 좋은 답의 점수를 높이되 원래 모델에서 너무 멀어지지 않게 한다. RLHF에서 이 점수는 reward model이 매긴다. DPO에는 따로 학습하는 reward model이 없고, 학습 중인 모델이 출발점 모델보다 그 답을 얼마나 더 높은 probability로 내는지가 점수 노릇을 한다 [@Rafailov2023]. DPO 논문은 RLHF의 이 목표를 preference pair에 바로 적용하는 loss(손실)로 바꿔 썼고, 이 loss로 학습하면 나은 답의 probability는 오르고 못한 답의 probability는 내린다(10.5) [@Rafailov2023].
 
 그래서 language model 논문에서는 SFT 다음 단계를 통틀어 reinforcement learning이라고 부르기도 하고 [@DeepSeekAI2025], 사람의 preference에 맞추는 일을 통틀어 preference learning이라고 부르기도 한다(「표준과 관례」). verifiable reward로 하는 reinforcement learning은 같은 post-training 안에 있어도 preference를 쓰지 않고, 정답을 확인할 수 있는 문제를 다룬다.
 
 > **표준과 관례**
-> - supervised·unsupervised·self-supervised·reinforcement learning과 preference learning은 학계에서 공통으로 쓰는 학습의 이름이다. 다만 supervised와 unsupervised조차 엄밀하게 정의된 용어가 아니어서 경계가 흐리다 [@Goodfellow2016]. self-supervised learning을 unsupervised learning의 한 종류로 분류하는 문헌도 있다.
+> - supervised·unsupervised·self-supervised·reinforcement learning과 preference learning은 학계에서 공통으로 쓰는 학습의 이름이다. 다만 supervised와 unsupervised조차 엄밀하게 정의된 용어가 아니어서 경계가 흐리다 [@Goodfellow2016]. 이 책이 self-supervised learning으로 두는 language model의 pre-training을 unsupervised라고 부르는 문헌도 있다 [@Devlin2019; @Rafailov2023].
 > - language model 논문에서는 preference learning이 pre-training 뒤 사람의 preference에 맞추는 단계 전체를 가리키기도 한다. 이때는 사람이 쓴 demonstration으로 하는 SFT도 preference learning의 한 방법으로 든다 [@Rafailov2023]. 이 책은 preference learning을 비교라는 신호의 이름으로 쓴다.
 > - DPO는 특정 논문이 붙인 방법 이름이다 [@Rafailov2023]. RLHF는 사람의 피드백으로 reward를 만들어 reinforcement learning을 하는 방법들을 묶어 부르는 이름으로, 여러 논문에 걸쳐 쓰인다.
 > - post-training은 업계의 관례 용어라 무엇까지 포함하는지가 개발사마다 다르다.
@@ -149,11 +149,11 @@ reinforcement learning이라는 이름은 신호와 함께 배우는 방식까�
 
 | 헷갈리는 개념 | 차이 |
 |---|---|
-| fine-tuning과 SFT | SFT는 fine-tuning의 한 종류로, 입력과 바라는 출력의 쌍으로 하는 supervised fine-tuning이다. 이 책이 쓰는 좁은 뜻의 fine-tuning과 학습 방식이 같다. language model의 post-training에서는 그 쌍이 흔히 「지시 → 좋은 답」 쌍이다 |
+| fine-tuning과 SFT | 이 책에서 둘은 같은 학습 방식이다. 둘 다 입력과 바라는 출력의 쌍으로 하는 supervised 추가 학습이다. 다른 것은 쓰는 곳이다. SFT라는 이름은 주로 language model의 post-training에서 「지시 → 좋은 답」 쌍으로 하는 학습에 쓰고, BERT처럼 task의 label로 하는 학습은 흔히 fine-tuning이라고 부른다 [@Devlin2019] |
 | self-supervised learning과 unsupervised learning | self-supervised learning은 데이터에서 만든 정답과 비교해 loss(손실)를 계산한다. unsupervised learning에는 비교할 정답이 없다 |
 | reinforcement learning과 preference learning | reinforcement learning은 고른 답 하나에 대한 점수(reward)로, preference learning은 두 답의 비교로 배운다. RLHF는 둘을 함께 쓴다 |
 | pre-training과 continual pre-training | 학습 방식(next-token prediction 등)은 같다. 데이터의 범위와 출발점이 다르다 |
-| distillation과 큰 모델의 답으로 하는 SFT | 본래 뜻의 distillation은 큰 모델이 내는 출력의 probability distribution(확률 분포)을 작은 모델이 따라 하게 하는 방법이다 [@Hinton2015]. 큰 모델이 쓴 답 문장으로 SFT하는 것도 넓게 distillation이라고 부른다 |
+| distillation과 큰 모델의 답으로 하는 SFT | 따라 하는 것이 다르다. 본래 뜻의 distillation은 teacher가 낸 probability distribution을 따라 하고 [@Hinton2015], 큰 모델의 답으로 하는 SFT는 답 문장만 따라 한다. 뒤의 것도 넓게 distillation이라고 부른다(§3) |
 
 ## 정리
 

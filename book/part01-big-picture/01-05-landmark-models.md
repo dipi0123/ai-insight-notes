@@ -25,8 +25,6 @@
 
 학습 칸은 [1.4장](01-04-training-methods-map.md#2-다섯-개의-축)의 축을 함께 쓴다. pre-training(사전학습)·좁은 뜻의 fine-tuning(파인튜닝)·self-supervised learning(자기지도 학습)·freezing(층 고정)·in-context learning은 1.4장에서 정한 뜻 그대로다.
 
-이 지도에는 이 책이 직접 만드는 모델의 자리도 있다. 6.2장의 작은 image classifier(분류기)는 ResNet과, 9.7장과 14.4장의 detection model(검출 모델)은 YOLO v1과, 8.6장과 14.3장의 작은 language model(언어 모델)은 GPT와 같은 칸에 놓인다.
-
 ## 2. 이미지를 보는 모델: ResNet·YOLO·SAM
 
 ### 2.1 ResNet: 아주 깊은 CNN을 학습할 수 있게
@@ -49,7 +47,7 @@ YOLO v1에서는 neural network 하나가 이미지 전체를 한 번 계산해 
 
 SAM은 이미지와 prompt(프롬프트)를 함께 받아 mask(마스크)를 내는 segmentation(분할) 모델이다 [@Kirillov2023]. SAM 논문이 말하는 prompt는 글만이 아니다. 전경과 배경을 찍은 점, 대략의 box나 mask, 자유 글처럼 어느 물체를 찾을지 알려 주는 정보는 모두 prompt다 [@Kirillov2023].
 
-SAM은 세 부품으로 이루어진다 [@Kirillov2023]. 모델 안에서 입력을 읽어 숫자 배열로 바꾸는 부분을 encoder(인코더), 그 숫자 배열에서 출력을 만드는 부분을 decoder(디코더)라고 한다. SAM에서는 image encoder가 이미지를, prompt encoder가 prompt를 각각 숫자 배열로 바꾸면, 가벼운 mask decoder가 둘을 합쳐 mask를 낸다 [@Kirillov2023]. 이 숫자 배열처럼 입력을 나타내 다른 입력과 비교하거나 다른 부품에 넘기는 숫자 배열을 embedding(임베딩)이라 한다(5.4장). image encoder는 미리 학습해 둔 ViT([1.2장 §2.2](01-02-naming-axes.md#22-구조-모델-안의-계산이-어떻게-짜여-있나))를 고해상도 입력에 맞게 조금 고쳐 쓴다 [@Kirillov2023].
+SAM은 세 부품으로 이루어진다 [@Kirillov2023]. 모델 안에서 입력을 읽어 숫자 배열로 바꾸는 부분을 encoder(인코더), 그 숫자 배열에서 출력을 만드는 부분을 decoder(디코더)라고 한다. SAM에서는 image encoder가 이미지를, prompt encoder가 prompt를 각각 숫자 배열로 바꾸면, 가벼운 mask decoder가 둘을 합쳐 mask를 낸다 [@Kirillov2023]. 모델 안에서 입력을 나타내는 숫자 배열을 [1.1장](01-01-ai-ml-dl.md#32-deep-learning은-feature를-layer마다-쌓아-배운다)에서 representation(표현)이라 했다. embedding(임베딩)은 넓게는 모델 안 어느 layer에서든 꺼낸, 입력을 나타내는 숫자 배열을 가리켜 representation과 거의 같은 뜻으로 쓰인다 [@Google2026]. 흔히는 embedding layer라는 layer가 나무 종류 같은 범주마다 하나씩 학습해 두는 숫자 배열을 가리킨다 [@Google2026]. 비슷한 것은 embedding도 비슷하게 배우므로, 두 embedding을 비교해 얼마나 비슷한지 잴 수 있다 [@Google2026]. SAM과 CLIP도 encoder가 내놓는 숫자 배열을 embedding이라 부른다 [@Kirillov2023; @Radford2021]. embedding은 5.4장에서 자세히 본다. image encoder는 미리 학습해 둔 ViT([1.2장 §2.2](01-02-naming-axes.md#22-구조-모델-안의-계산이-어떻게-짜여-있나))를 고해상도 입력에 맞게 조금 고쳐 쓴다 [@Kirillov2023].
 
 연구진은 모델을 labeling(라벨링) 작업 안에 넣어 dataset과 모델을 함께 키웠고, 이것을 data engine이라 불렀다 [@Kirillov2023]. 그렇게 모은 SA-1B dataset은 이미지 1,100만 장과 mask 11억 개이고, 그 mask의 99.1%는 모델이 자동으로 만들었다 [@Kirillov2023]. [1.4장 §2.4](01-04-training-methods-map.md#24-신호를-만드는-쪽-누가-가르치나)의 표로 말하면 정답을 만드는 쪽에 모델이 들어간 예다. SAM 논문은 segmentation을 위한 foundation model(파운데이션 모델)을 목표로 삼았다 [@Kirillov2023]. mask를 내는 방식은 6.7장에서 본다.
 
@@ -59,19 +57,19 @@ SAM은 세 부품으로 이루어진다 [@Kirillov2023]. 모델 안에서 입력
 
 ### 3.1 BERT: encoder로 앞뒤 문맥을 함께 읽는다
 
-BERT라는 이름의 뜻은 [1.2장 §3.2](01-02-naming-axes.md#32-한-이름이-여러-축을-묶는다)에서 보았다. 구조는 여러 층의 Transformer encoder다 [@Devlin2019]. 글을 받아 token(토큰)마다 왼쪽과 오른쪽 문맥을 함께 참고한 representation(표현)을 만든다 [@Devlin2019].
+BERT라는 이름의 뜻은 [1.2장 §3.2](01-02-naming-axes.md#32-한-이름이-여러-축을-묶는다)에서 보았다. 구조는 여러 층의 Transformer encoder다 [@Devlin2019]. 글을 받아 token(토큰)마다 왼쪽과 오른쪽 문맥을 함께 참고한 representation을 만든다 [@Devlin2019].
 
 BERT는 pre-training과 fine-tuning의 두 단계로 학습한다 [@Devlin2019]. pre-training에는 label이 없는 글을 쓴다 [@Devlin2019]. 입력 token의 일부를 무작위로 가리고, 문맥만으로 가린 token을 맞히게 한다 [@Devlin2019]. 이 학습 목표를 masked language modeling(마스크 언어 모델링)이라 한다. 정답을 데이터 안에서 만들어 배우니 [1.4장 §2.1](01-04-training-methods-map.md#21-학습-신호-정답이-어떤-형태로-오나)의 self-supervised learning이다.
 
-fine-tuning에서는 출력 layer 하나를 더하고, 풀려는 task(과제)의 label 데이터로 모든 parameter를 고친다 [@Devlin2019]. task마다 따로 fine-tuning한 모델을 둔다 [@Devlin2019]. 1.4장에서 정한 좁은 뜻의 fine-tuning이다. 입력과 바라는 출력의 쌍으로 배우니 [1.2장](01-02-naming-axes.md#25-학습-무엇을-신호로-어느-단계까지-배웠나)의 정의대로 하면 supervised fine-tuning(SFT, 지도 파인튜닝)이기도 하다. 다만 task마다 그 task의 label로 하는 학습이라, 대화 모델을 지시와 답의 쌍으로 학습하는 instruction tuning과는 다르다. BERT-BASE는 parameter 1억 1,000만 개, BERT-LARGE는 3억 4,000만 개다 [@Devlin2019]. 학습 목표는 8.2장에서 본다.
+fine-tuning에서는 출력 layer 하나를 더하고, 풀려는 task(과제)의 label 데이터로 모든 parameter를 고친다 [@Devlin2019]. task마다 따로 fine-tuning한 모델을 둔다 [@Devlin2019]. 1.4장에서 정한 좁은 뜻의 fine-tuning이다. BERT-BASE는 parameter 1억 1,000만 개, BERT-LARGE는 3억 4,000만 개다 [@Devlin2019]. 학습 목표는 8.2장에서 본다.
 
 ### 3.2 GPT: decoder로 다음 token을 맞힌다
 
-[1.1장](01-01-ai-ml-dl.md#13-deep-learning-여러-layer로-쌓아-배우는-방법)에서 본 ChatGPT는 GPT 계열의 language model을 대화에 맞게 고친 것이다 [@Zhao2023]. 이 장은 첫 논문의 GPT-1과 규모를 크게 키운 GPT-3를 기준으로 쓴다.
+이 장은 첫 논문의 GPT-1과 규모를 크게 키운 GPT-3를 기준으로 쓴다.
 
-GPT-1은 여러 층의 Transformer decoder로 만든 language model이다 [@Radford2018]. BERT와 달리 각 token은 자기 왼쪽 문맥만 참고한다 [@Devlin2019]. 먼저 label이 없는 글에서 앞 token들을 보고 다음 token의 확률을 맞히게 한다 [@Radford2018]. 1.4장의 next-token prediction(다음 토큰 예측)이고, 논문은 이 단계를 generative pre-training이라 부른다 [@Radford2018]. 그다음 task마다 label 데이터로 parameter를 맞춘다 [@Radford2018]. 원 논문은 이 단계를 supervised fine-tuning이라 부른다 [@Radford2018]. BERT의 fine-tuning처럼 1.2장의 정의로는 SFT이고, 지시와 답의 쌍으로 하는 instruction tuning은 아니다.
+GPT-1은 여러 층의 Transformer decoder로 만든 language model(언어 모델)이다 [@Radford2018]. BERT와 달리 각 token은 자기 왼쪽 문맥만 참고한다 [@Devlin2019]. 먼저 label이 없는 글에서 앞 token들을 보고 다음 token의 확률을 맞히게 한다 [@Radford2018]. 1.4장의 next-token prediction(다음 토큰 예측)이고, 논문은 이 단계를 generative pre-training이라 부른다 [@Radford2018]. 그다음 task마다 label 데이터로 parameter를 맞춘다 [@Radford2018]. 원 논문은 이 단계를 supervised fine-tuning(SFT, 지도 파인튜닝)이라 부른다 [@Radford2018]. 입력과 바라는 출력의 쌍으로 배우니 [1.4장](01-04-training-methods-map.md#4-대화형-language-model이-만들어지는-순서)의 정의로도 SFT다. BERT의 fine-tuning도 마찬가지다. 다만 task마다 그 task의 label로 하는 학습이라, 대화 모델을 지시와 답의 쌍으로 학습하는 instruction tuning은 아니다.
 
-GPT-3는 parameter 1,750억 개의 autoregressive language model이다 [@Brown2020]. GPT-3 논문은 fine-tuning 없이, task 설명과 예시 몇 개를 입력 글로만 주어 평가했다 [@Brown2020]. GPT-3 논문은 이렇게 입력 글 안의 예시로 task를 푸는 과정을 in-context learning이라 부른다 [@Brown2020]. [1.4장 §2.3](01-04-training-methods-map.md#23-바꾸는-범위-어느-weight를-바꾸나)에서 본, weight(가중치)를 바꾸지 않는 학습이다. 그 가운데 예시 없이 지시만 주는 조건은 zero-shot이라 부른다 [@Brown2020]. 글을 만드는 과정은 7.2장에서 본다.
+GPT-3는 parameter 1,750억 개의 autoregressive language model이다 [@Brown2020]. GPT-3 논문은 fine-tuning 없이, task 설명과 예시 몇 개를 입력 글로만 주어 평가했다 [@Brown2020]. GPT-3 논문은 이렇게 입력 글 안의 예시로 task를 푸는 과정을 in-context learning이라 부른다 [@Brown2020]. [1.4장 §2.3](01-04-training-methods-map.md#23-바꾸는-범위-어느-weight를-바꾸나)에서 본, weight(가중치)를 바꾸지 않는 학습이다. 논문은 예시를 입력 글에 들어가는 만큼(보통 10~100개) 주는 조건을 few-shot, 예시 없이 지시만 주는 조건을 zero-shot이라 부른다 [@Brown2020]. 그리고 language model의 크기를 키우면 few-shot 성능이 크게 올라, 때로는 fine-tuning한 기존 최고 방법과 비슷한 수준에 이른다고 보고했다 [@Brown2020]. 큰 모델일수록 입력 글 안의 예시를 더 잘 활용한다는 것이다 [@Brown2020]. GPT-1과 달리 fine-tuning 없이 task를 풀 수 있게 한 바탕이 규모라는 뜻이다. 글을 만드는 과정은 7.2장에서 본다.
 
 ## 4. modality를 잇는 모델: CLIP·Stable Diffusion·Whisper
 
@@ -79,7 +77,7 @@ GPT-3는 parameter 1,750억 개의 autoregressive language model이다 [@Brown20
 
 CLIP은 [1.2장 §2.5](01-02-naming-axes.md#25-학습-무엇을-신호로-어느-단계까지-배웠나)에서 본 대로, 이미지와 글의 쌍 4억 개로 contrastive learning(대조 학습)을 한 모델이다 [@Radford2021].
 
-CLIP은 image encoder와 text encoder로 되어 있다 [@Radford2021]. 이미지와 글을 각각 받아 같은 공간의 embedding을 내고, 쌍을 이루는 이미지와 글의 embedding끼리 가까워지도록 배운다 [@Radford2021]. CLIP 논문은 이미지와 짝지은 글로 배우는 비슷한 연구들이 자기 방식을 unsupervised(비지도)·self-supervised·weakly supervised(뜻은 §4.3)·supervised로 저마다 달리 불렀다고 짚는다 [@Radford2021]. 그리고 그 공통점을 자연어를 학습 신호로 쓰는 것으로 본다 [@Radford2021]. text encoder는 Transformer다 [@Radford2021]. image encoder로는 ResNet을 바탕으로 한 구조와 ViT를 모두 써서 학습했다 [@Radford2021].
+CLIP은 image encoder와 text encoder로 되어 있다 [@Radford2021]. 이미지와 글을 각각 받아 같은 공간의 embedding을 내고, 쌍을 이루는 이미지와 글의 embedding끼리는 가까워지고, 쌍이 아닌 이미지와 글의 embedding끼리는 멀어지도록 배운다 [@Radford2021]. CLIP 논문은 이미지와 짝지은 글로 배우는 비슷한 연구들이 자기 방식을 unsupervised(비지도)·self-supervised·weakly supervised(뜻은 §4.3)·supervised로 저마다 달리 불렀다고 짚는다 [@Radford2021]. 그리고 그 공통점을 자연어를 학습 신호로 쓰는 것으로 본다 [@Radford2021]. text encoder는 Transformer다 [@Radford2021]. image encoder로는 ResNet을 바탕으로 한 구조와 ViT를 모두 써서 학습했다 [@Radford2021].
 
 이렇게 배우면 §3.2처럼 분류할 dataset의 예시 없이 분류하는 zero-shot classification을 할 수 있다. dataset의 class 이름들을 글 후보로 놓고, 이미지의 embedding과 가장 잘 맞는 글을 고른다 [@Radford2021]. 가장 좋은 CLIP 모델은 ImageNet의 학습 이미지 128만 장을 하나도 쓰지 않고, 그 이미지로 학습한 50층 ResNet(ResNet-50)과 맞먹는 정확도를 냈다 [@Radford2021]. 11.1장에서 자세히 본다.
 
@@ -87,9 +85,9 @@ CLIP은 image encoder와 text encoder로 되어 있다 [@Radford2021]. 이미지
 
 Stable Diffusion은 글을 받아 사진 같은 이미지를 만드는 text-to-image 모델이다 [@CompVis2022]. 방식은 1.2장 §2.4의 diffusion model(확산 모델)이다. 이 장은 v1-4의 model card(모델 카드)를 기준으로 쓴다.
 
-Stable Diffusion은 픽셀 위가 아니라, 이미지를 훨씬 작은 숫자 배열로 압축한 공간에서 diffusion을 한다 [@Rombach2022; @CompVis2022]. 이 방식을 latent diffusion(잠재 확산)이라 하고, 압축한 공간을 latent 공간이라 한다 [@Rombach2022]. 압축은 autoencoder(오토인코더)가 맡는다. 이미지를 압축하는 encoder와, 압축한 것에서 이미지를 되살리는 decoder를 함께 학습한 모델이다 [@Rombach2022]. v1-4의 autoencoder는 가로와 세로를 각각 8분의 1로 줄이고 4채널의 숫자 배열을 만든다 [@CompVis2022]. 색 3채널인 512×512 이미지(512×512×3)라면 64×64×4 latent가 되어, 숫자 786,432개가 16,384개로 48분의 1이 된다.
+Stable Diffusion은 픽셀 위가 아니라, 이미지를 훨씬 작은 숫자 배열로 압축한 공간에서 diffusion을 한다 [@Rombach2022; @CompVis2022]. 이 방식을 latent diffusion(잠재 확산)이라 하고, 압축한 공간을 latent 공간이라 한다 [@Rombach2022]. 압축은 autoencoder(오토인코더)가 맡는다. 이미지를 압축하는 encoder와, 압축한 것에서 이미지를 되살리는 decoder를 함께 학습한 모델이다 [@Rombach2022]. v1-4의 autoencoder는 가로와 세로를 각각 8분의 1로 줄이고 4채널의 숫자 배열을 만든다 [@CompVis2022]. 색 3채널인 512×512 이미지(512×512×3)라면 64×64×4 latent가 되어, 숫자 786,432개가 16,384개로 48분의 1이 된다. diffusion은 noise(잡음)를 제거하는 계산을 여러 번 반복하므로, 다룰 숫자를 이렇게 줄이면 학습과 이미지 생성에 드는 계산이 크게 준다 [@Rombach2022].
 
-구조는 부품 세 개의 조합이다 [@CompVis2022]. autoencoder가 이미지와 latent 사이를 오가고, UNet이라는 neural network가 latent에서 noise(잡음)를 제거한다 [@Rombach2022; @CompVis2022]. latent diffusion 원 논문은 이 UNet을 주로 §2.1의 CNN처럼 작은 창으로 계산하는 layer로 짰다 [@Rombach2022]. 글 prompt는 CLIP의 text encoder(ViT-L/14 버전)가 읽는데, v1-4는 이 부품을 미리 학습된 채 freezing해 쓴다(1.4장) [@CompVis2022]. 그 출력이 UNet에 들어가 글에 맞는 이미지를 만들게 한다 [@Rombach2022; @CompVis2022]. 학습할 때는 latent에 noise를 더하고, UNet이 더해진 noise를 맞히도록 배운다 [@CompVis2022]. latent diffusion은 11.5장에서 본다.
+구조는 부품 세 개의 조합이다 [@CompVis2022]. autoencoder가 이미지와 latent 사이를 오가고, UNet이라는 neural network가 latent에서 noise를 제거한다 [@Rombach2022; @CompVis2022]. latent diffusion 원 논문은 이 UNet을 주로 §2.1의 CNN처럼 작은 창으로 계산하는 layer로 짰다 [@Rombach2022]. 글 prompt는 CLIP의 text encoder(ViT-L/14 버전)가 읽는데, v1-4는 이 부품을 미리 학습된 채 freezing해 쓴다(1.4장) [@CompVis2022]. 그 출력이 UNet에 들어가 글에 맞는 이미지를 만들게 한다 [@Rombach2022; @CompVis2022]. 학습할 때는 latent에 noise를 더하고, UNet이 더해진 noise를 맞히도록 배운다 [@CompVis2022]. 이미지를 만들 때는 무작위 noise로 채운 latent에서 시작해 UNet으로 noise를 조금씩 여러 번 제거하고, 마지막에 decoder에 한 번 통과시켜 이미지로 되살린다 [@Rombach2022]. autoencoder의 encoder는 학습할 때 이미지를 latent로 바꾸는 데 쓰고, 이렇게 무작위 noise에서 이미지를 만들 때는 쓰지 않는다 [@Rombach2022]. latent diffusion은 11.5장에서 본다.
 
 ### 4.3 Whisper: 인터넷 자막으로 배운 음성 인식
 
@@ -101,18 +99,18 @@ Whisper는 음성을 받아 글을 내는 speech recognition model(음성 인식
 
 ## 5. 여덟 모델을 한 지도에
 
-§2~§4를 축별로 모으고 학습 데이터 규모를 더하면 다음 표가 된다. 연도는 참고문헌에 적은 학회·저널의 연도이고, 출처에서 확인하지 못한 칸은 「—」로 둔다. 학습 칸의 supervised·self-supervised 같은 신호 이름은 1.4장 §2.1의 표에 맞춰 이 책이 고른 분류다. Whisper의 weak supervision은 그 표에 없고 Whisper 논문이 쓴 이름이다(§4.3) [@Radford2023]. 출처가 신호 이름을 하나로 정하지 않은 CLIP과, 출처가 신호 이름으로 부르지 않은 Stable Diffusion v1은 학습 목표로 적었다.
+§2~§4를 축별로 모으고 학습 데이터 규모를 더하면 다음 표가 된다.
 
 | 모델 | 연도 | 입력 → 출력 | 구조 | 방식 | 학습 | 규모와 활용 |
 |---|---|---|---|---|---|---|
 | ResNet | 2016 | 이미지 → class | CNN(residual connection) | 해당 없음 | supervised | 학습 이미지 128만 장. CLIP의 바탕 |
-| YOLO v1 | 2016 | 이미지 → 물체마다 box·class·점수 | CNN | 해당 없음 | supervised. pre-training → fine-tuning | ImageNet, PASCAL VOC. 부품: — |
+| YOLO v1 | 2016 | 이미지 → 물체마다 box·class·점수 | CNN | 해당 없음 | supervised. pre-training → fine-tuning | ImageNet, PASCAL VOC |
 | SAM | 2023 | 이미지 + prompt → mask | 부품 조합(ViT image encoder, prompt encoder, mask decoder) | 해당 없음 | supervised. mask 대부분은 모델이 만들었다 | 이미지 1,100만 장, mask 11억 개 |
-| BERT | 2019 | 글 → token마다 representation | Transformer encoder | 해당 없음 | self-supervised(masked language modeling) → fine-tuning | 33억 단어. task마다 fine-tuning하는 출발점 |
-| GPT | 2018·2020 | 글 → 이어지는 글 | Transformer decoder | autoregressive | self-supervised(next-token prediction) → GPT-1만 fine-tuning | GPT-1은 책 7,000권 넘게, GPT-3는 3,000억 token |
-| CLIP | 2021 | 이미지 → embedding, 글 → embedding | 부품 조합(CNN이나 ViT image encoder, Transformer text encoder) | 해당 없음 | contrastive learning. 신호 이름은 문헌마다 다르다 | 이미지·글 쌍 4억 개. Stable Diffusion v1의 부품 |
-| Stable Diffusion v1 | 2022 | 글 → 이미지 | 부품 조합(autoencoder, CNN 계열의 UNet, CLIP text encoder) | diffusion(latent diffusion) | 더한 noise 맞히기 | 영어 설명이 붙은 이미지 dataset LAION-2B(en)과 그 부분집합. 부품: — |
-| Whisper | 2023 | 음성 → 글 | Transformer encoder-decoder | autoregressive | weak supervision | 68만 시간. 부품: — |
+| BERT | 2019 | 글 → token마다 representation | Transformer encoder | 해당 없음 | self-supervised(masked language modeling) → fine-tuning | 33억 단어 [@Devlin2019]. task마다 fine-tuning하는 출발점 |
+| GPT | 2018·2020 | 글 → 이어지는 글 | Transformer decoder | autoregressive | self-supervised(next-token prediction) → GPT-1만 fine-tuning | GPT-1은 책 7,000권 넘게 [@Radford2018], GPT-3는 3,000억 token [@Brown2020] |
+| CLIP | 2021 | 이미지 → embedding, 글 → embedding | 부품 조합(CNN이나 ViT image encoder, Transformer text encoder) | 해당 없음 | contrastive learning(§4.1) | 이미지·글 쌍 4억 개. Stable Diffusion v1의 부품 |
+| Stable Diffusion v1 | 2022 | 글 → 이미지 | 부품 조합(autoencoder, CNN 계열의 UNet, CLIP text encoder) | diffusion(latent diffusion) | 더한 noise 맞히기 | 영어 설명이 붙은 이미지 dataset LAION-2B(en)과 그 부분집합 [@CompVis2022] |
+| Whisper | 2023 | 음성 → 글 | Transformer encoder-decoder | autoregressive | weak supervision | 68만 시간 |
 
 ![여덟 대표 모델의 입력과 출력 지도](../figures/01-05-landmark-models-map.svg)
 
@@ -139,17 +137,18 @@ flowchart TB
 
 그림: 구조와 부품을 빌려 쓰는 관계. 받는 쪽의 논문이나 model card가 적은 구성만 그렸다.
 
-표와 그림에서 세 가지를 읽을 수 있다.
+표와 그림에서 네 가지를 읽을 수 있다.
 
 1. **부품 자리에는 같은 축의 이름끼리 바꿔 넣는다.** CLIP은 image encoder에 CNN과 ViT를 모두 넣어 학습했다 [@Radford2021]. 둘 다 구조 이름이라 서로 대신할 수 있다. [1.2장 §3.3](01-02-naming-axes.md#33-같은-축의-이름끼리만-비교할-수-있다)의 「같은 축끼리만 비교한다」가 부품 자리에도 맞는다. 모델을 바꿔 쓰려면 입력과 출력이 맞아야 한다. box를 내는 YOLO v1은 mask가 필요한 곳에 SAM 대신 넣을 수 없다.
-2. **Transformer는 글·이미지·음성에 두루 쓰인다.** modality가 달라도 구조 칸은 같을 수 있다.
-3. **큰 모델이 다른 모델의 부품이나 출발점이 된다.** [1.2장 §2.6](01-02-naming-axes.md#26-규모와-활용-얼마나-크고-어떻게-쓰나)의 foundation model이 이런 모델이고, 그 이름을 붙인 보고서는 BERT와 GPT-3를 예로 든다 [@Bommasani2021]. 이런 모델이 산업에서 이루는 층은 1.6장에서 본다.
+2. **Transformer는 글·이미지·음성에 두루 쓰인다.** modality가 달라도 구조 칸은 같을 수 있다. Transformer는 숫자 배열을 한 줄로 늘어놓은 열을 입력으로 받는다 [@Dosovitskiy2021]. 글은 token마다, 이미지는 ViT처럼 patch(패치)마다([1.2장 §2.2](01-02-naming-axes.md#22-구조-모델-안의-계산이-어떻게-짜여-있나)) 숫자 배열을 하나씩 만들어 늘어놓는다 [@Dosovitskiy2021]. Whisper는 음성을 25밀리초 길이의 구간으로 10밀리초씩 옮겨 가며 잘라, 구간마다 숫자 80개로 나타낸 열을 encoder에 넣는다 [@Radford2023]. 어느 modality든 이렇게 숫자 배열의 열로 바꾸면 같은 구조에 넣을 수 있다.
+3. **큰 모델이 다른 모델의 부품이나 출발점이 된다.** [1.2장 §2.6](01-02-naming-axes.md#26-규모와-활용-얼마나-크고-어떻게-쓰나)의 foundation model이 이런 모델이고, 그 이름을 붙인 보고서는 BERT와 GPT-3를 예로 든다 [@Bommasani2021]. 넓은 데이터로 한 번 크게 학습해 두면 여러 task에 맞춰 다시 쓸 수 있기 때문이다 [@Bommasani2021]. 이런 모델이 산업에서 이루는 층은 1.6장에서 본다.
+4. **사람이 학습용으로 데이터마다 정답을 따로 붙이지 않아도 되는 신호는 데이터를 훨씬 크게 모으기 쉽다.** 사람이 사진마다 class를 붙인 ResNet의 학습 이미지는 128만 장이다 [@He2016]. 인터넷에서 모은 이미지와 글의 쌍으로 배운 CLIP은 4억 쌍이니, 이미지 수로 약 300배다 [@Radford2021]. label이 없는 글에서 정답을 만드는 BERT는 33억 단어, GPT-3는 3,000억 token으로 배웠다 [@Devlin2019; @Brown2020]. Whisper는 덜 깨끗한 인터넷 자막을 받아들여 68만 시간을 모았고 [@Radford2023], SAM은 mask를 만드는 일을 모델에 맡겨 11억 개까지 늘렸다 [@Kirillov2023]. 단위가 달라 숫자끼리 바로 비교할 수는 없지만, §4.3에서 본 정답의 질과 양의 맞바꿈이 이 표의 여러 모델에서 나타난다.
 
-§1에서 짚은 대로, 이 책이 직접 만드는 모델은 이 표의 세 행과 같은 칸에 놓인다. 6.2장의 image classifier는 ResNet, 9.7장과 14.4장의 detection model은 YOLO v1, 8.6장과 14.3장의 language model은 GPT 행이다.
+이 책이 직접 만드는 모델도 이 표의 세 행과 같은 칸에 놓인다. 6.2장의 작은 image classifier(분류기)는 ResNet, 9.7장과 14.4장의 detection model(검출 모델)은 YOLO v1, 8.6장과 14.3장의 작은 language model은 GPT 행이다.
 
 ## 6. 이름이 모델 하나인가 계열인가
 
-GPT·YOLO·Stable Diffusion은 여러 버전을 묶는 이름이고, 버전마다 구조·크기·학습이 다를 수 있다 [@Redmon2017]. §3.2에서 본 대로 GPT-1은 task마다 fine-tuning했지만 GPT-3는 fine-tuning 없이 in-context learning으로 task를 풀었다.
+GPT·YOLO·Stable Diffusion은 여러 버전을 묶는 이름이고, 버전마다 구조·크기·학습이 다를 수 있다 [@Redmon2017]. §3.2에서 본 대로 GPT-1은 task마다 fine-tuning했지만 GPT-3는 fine-tuning 없이 in-context learning으로 task를 풀었다. YOLO도 v1은 box를 곧바로 예측했지만, YOLO v2는 미리 정해 둔 기준 box인 anchor box(앵커 박스)를 바탕으로 box를 예측하도록 구조를 바꿨다 [@Redmon2017].
 
 Stable Diffusion v1 안에서도 v1-4는 v1-2의 weight에서 시작해 고른 데이터로 더 fine-tuning한 버전이다 [@CompVis2022]. 논문과 공개 모델이 다를 수도 있다. latent diffusion 원 논문의 text-to-image 모델은 CLIP을 쓰지 않고, 글을 BERT와 같은 방식으로 token으로 쪼갠 뒤(7.1장) Transformer로 읽었다 [@Rombach2022]. 공개된 Stable Diffusion v1-4는 CLIP ViT-L/14의 text encoder를 쓴다 [@CompVis2022]. 그래서 이 장은 Stable Diffusion을 원 논문보다 v1-4의 model card대로 적었다.
 
@@ -168,7 +167,7 @@ Stable Diffusion v1 안에서도 v1-4는 v1-2의 weight에서 시작해 고른 �
 
 - 여덟 모델을 여섯 축에 놓으면 입력과 출력, 구조, 방식, 학습, 규모와 활용이 표 하나로 정리된다.
 - ResNet·YOLO v1은 CNN, BERT는 Transformer encoder, GPT는 decoder, Whisper는 encoder-decoder이고, SAM·CLIP·Stable Diffusion v1은 부품 조합이다. generative model 가운데 GPT·Whisper는 autoregressive, Stable Diffusion은 latent diffusion이다.
-- 학습 신호는 사람이 붙인 label(ResNet·YOLO), 데이터 안에서 만든 정답(BERT·GPT), 이미지와 글의 쌍(CLIP), 덜 깨끗한 인터넷 자막(Whisper) 등으로 갈린다. 같은 이름도 버전마다 다를 수 있다.
+- 학습 신호는 사람이 붙인 label(ResNet·YOLO), 데이터 안에서 만든 정답(BERT·GPT), 이미지와 글의 쌍(CLIP), 덜 깨끗한 인터넷 자막(Whisper) 등으로 갈린다. 사람이 학습용으로 정답을 따로 붙이지 않아도 되는 신호는 데이터를 크게 모으기 쉽다. 같은 이름도 버전마다 다를 수 있다.
 
 ## 확인 문제
 

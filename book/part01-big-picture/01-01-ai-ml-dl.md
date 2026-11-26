@@ -13,7 +13,7 @@
 
 ### 1.1 AI: 분야 전체의 이름
 
-「artificial intelligence」라는 이름은 1955년 8월 31일 자의 한 연구 제안서 제목에 나온다. John McCarthy, Marvin Minsky, Nathaniel Rochester, Claude Shannon이 이듬해인 1956년 여름 Dartmouth College에서 열 명이 두 달 동안 artificial intelligence를 연구하자고 제안한 문서다. 제안서는 학습을 비롯한 지능의 모든 측면을 원리적으로는 기계가 흉내 낼 수 있을 만큼 정확히 기술할 수 있다는 추측을 연구의 바탕으로 삼았다. 그리고 기계가 언어를 쓰고, 추상과 개념을 만들고, 당시에는 사람만 풀던 종류의 문제를 풀고, 스스로 나아지게 하는 방법을 찾겠다고 했다 [@McCarthy1955].
+「artificial intelligence」라는 이름은 John McCarthy, Marvin Minsky, Nathaniel Rochester, Claude Shannon이 1955년에 쓴 연구 제안서의 제목에 나온다. 1956년 여름 Dartmouth College에서 artificial intelligence를 함께 연구하자고 제안한 문서다. 제안서는 학습을 비롯한 지능의 모든 측면을 원리적으로는 기계가 흉내 낼 수 있을 만큼 정확히 기술할 수 있다는 추측을 연구의 바탕으로 삼았다. 그리고 기계가 언어를 쓰고, 추상과 개념을 만들고, 당시에는 사람만 풀던 종류의 문제를 풀고, 스스로 나아지게 하는 방법을 찾겠다고 했다 [@McCarthy1955].
 
 이처럼 AI는 특정 기술이 아니라 목표에 붙은 이름이다. 그 목표에 다가가는 방법은 여러 가지다. 사람이 아는 지식을 규칙으로 적어 넣는 방법도 AI이고, 데이터에서 배우게 하는 방법도 AI다.
 
@@ -46,25 +46,23 @@ deep learning은 machine learning의 한 분야다. 복잡한 개념을 더 단�
 ```mermaid
 flowchart TB
   subgraph AI["AI"]
-    A1["규칙과 수 읽기로 두는 체스 프로그램<br/>사람이 적은 지식을 논리 규칙으로 추론하는 knowledge base(지식 베이스) 시스템"]
     subgraph ML["machine learning"]
-      M1["사람이 고른 feature로 배우는 스팸 필터"]
-      subgraph DL["deep learning"]
-        D1["픽셀을 받아 여러 layer를 거쳐 물체를 알아보는 모델<br/>대화형 language model(언어 모델)"]
-      end
+      DL["deep learning"]
     end
   end
 ```
 
-그림: AI·machine learning·deep learning의 포함 관계와 각 영역의 예. 바깥 상자일수록 넓은 이름이다.
+그림: AI·machine learning·deep learning의 포함 관계. 바깥 상자일수록 넓은 이름이다. 각 영역의 예는 아래 표에 있다.
 
 | 예 | AI | machine learning | deep learning |
 |---|---|---|---|
 | 체스 규칙과 수 읽기로 두는 체스 프로그램 | 예 | 아니오 | 아니오 |
-| 사람이 형식 언어로 적어 넣은 지식을 논리 규칙으로 추론하는 knowledge base(지식 베이스) 시스템(예: Cyc) | 예 | 아니오 | 아니오 |
+| knowledge base(지식 베이스) 시스템([§2.1](#21-규칙-기반-프로그램)) | 예 | 아니오 | 아니오 |
 | 사람이 고른 단어 feature로, 스팸 표시가 된 메일에서 배우는 스팸 필터 | 예 | 예 | 아니오 |
 | 사진의 픽셀을 그대로 받아 여러 layer를 거쳐 물체를 알아보는 모델 | 예 | 예 | 예 |
 | ChatGPT 같은 대화형 language model(언어 모델) | 예 | 예 | 예 |
+
+표에 나온 feature는 입력에서 뽑아 모델에 넣는 정보 조각으로, [§3.1](#31-고전-machine-learning은-feature를-사람이-고른다)에서 다룬다.
 
 language model은 글에서 뒤에 올 말이 무엇일지 확률로 예측하는 모델이다. ChatGPT는 GPT 계열의 language model을 대화에 맞게 고친 것이다. 이런 language model은 주로 layer를 아주 깊게 쌓은 neural network로 만든다 [@Zhao2023].
 
@@ -91,6 +89,14 @@ machine learning에서는 규칙을 직접 쓰지 않는다. 대신 다음을 �
 이 목록은 스팸 필터처럼 정답이 붙은 예시로 배우는 경우다. Mitchell의 체커 예에서는 정답을 알려 주는 사람 없이 프로그램이 스스로 게임을 두고, 게임을 결국 이겼는지 졌는지만 보고 배운다 [@Mitchell1997]. 학습 방법의 여러 종류는 [1.4](01-04-training-methods-map.md)에서 다룬다.
 
 학습을 돌리면 weight가 정해지고, 그 weight를 담은 모델이 새 메일을 받아 스팸인지 판단한다. 소프트웨어로 말하면 모델은 함수이고, 그 함수의 몸통 중 동작을 좌우하는 숫자를 사람이 아니라 학습이 채운다. 모델을 돌리는 코드와 학습 코드는 여전히 사람이 쓴다.
+
+스팸 필터로 숫자를 넣어 보자. 메일마다 두 값을 잰다. $x_1$은 「'무료'라는 단어가 있으면 1, 없으면 0」이고, $x_2$는 「링크 수」다. 모델의 틀은 다음 식이고, 점수 $\text{score}$가 0보다 크면 스팸, 아니면 정상으로 판단한다.
+
+$$\text{score} = w_0 + w_1 x_1 + w_2 x_2$$
+
+여기서 $x_1$·$x_2$는 위에서 잰 두 값이다. $w_0$은 두 값이 모두 0일 때의 기본 점수이고, $w_1$·$w_2$는 각각 $x_1$·$x_2$에 곱해 점수를 얼마나 움직일지 정하는 수다. 사람이 정한 것은 이 식의 모양과, $x_1$·$x_2$로 무엇을 잴지다. $w_0$·$w_1$·$w_2$가 weight이고, 그 값은 학습이 정한다.
+
+학습 결과 $w_0 = -2$, $w_1 = 2$, $w_2 = 0.5$가 되었다고 하자. '무료'가 있고 링크가 3개인 메일은 $\text{score} = -2 + 2 \cdot 1 + 0.5 \cdot 3 = 1.5$로 0보다 크므로 스팸이다. '무료'가 없고 링크가 1개인 메일은 $\text{score} = -2 + 2 \cdot 0 + 0.5 \cdot 1 = -1.5$이므로 정상이다. 이 weight로 정해지는 동작을 말로 풀면 「'무료'가 있으면 링크가 하나만 있어도 스팸, '무료'가 없으면 링크가 5개 이상일 때 스팸」이다. 이 경계는 기본 점수 $w_0 = -2$에서 나온다. '무료'가 없으면 링크 하나가 0.5씩 보태는 점수로 −2를 넘어야 하는데, 링크가 4개면 점수가 정확히 0이라 아직 정상이고 5개가 되어야 0.5로 0을 넘는다. 규칙 기반이라면 이런 조건문을 사람이 생각해 적는다. machine learning에서는 아무 단서가 없을 때의 기본 점수($w_0$), '무료'가 얼마나 스팸 쪽으로 기울게 하는지($w_1$), 링크 하나가 얼마나 보태는지($w_2$)를 학습이 예시에서 찾는다.
 
 ```mermaid
 flowchart TB
@@ -119,15 +125,19 @@ flowchart TB
 
 ### 3.1 고전 machine learning은 feature를 사람이 고른다
 
-고전 machine learning에서는 사람이 입력에서 쓸모 있는 정보 조각을 골라 모델에 넣는다. 이 정보 조각을 feature라고 한다. 스팸 필터라면 「'무료'라는 단어가 있나」「링크가 몇 개인가」 같은 것이다.
+고전 machine learning에서는 사람이 입력에서 쓸모 있는 정보 조각을 골라 모델에 넣는다. 이 정보 조각을 feature라고 한다. 스팸 필터라면 「'무료'라는 단어가 있나」「링크가 몇 개인가」 같은 것이다. §2.2 스팸 점수 식의 $x_1$·$x_2$가 바로 이런 feature다.
 
-이런 모델의 성능은 어떤 feature를 주느냐에 크게 달린다. Goodfellow 등은 의사가 정리해 준 환자 정보(feature)로 제왕절개 권고 여부를 판단하는 logistic regression(로지스틱 회귀) 모델을 예로 든다. logistic regression은 feature마다 weight를 곱해 더한 값을 정해진 함수 하나에 넣어 결과를 내는 단순한 machine learning 모델이다. 이 모델은 feature와 결과의 관계는 배우지만 feature를 어떻게 정할지는 바꾸지 못한다. 정리된 정보 대신 MRI 영상의 픽셀을 그대로 주면 쓸 만한 예측을 하지 못한다. 픽셀 하나하나는 결과와 거의 관계가 없기 때문이다 [@Goodfellow2016].
+§1.2의 Samuel도 같은 방식으로 일했다. 그의 프로그램은 말의 배치가 가진 여러 성질을 숫자로 잰 값에 각각의 상대적 중요도를 정하는 coefficient(계수)를 곱해 더한 식으로 배치를 평가했고, 게임을 두며 그 coefficient를 고쳤다 [@Samuel1959]. 사람이 준 성질의 목록이 feature이고, 학습이 정한 coefficient가 weight다.
+
+이런 모델의 성능은 어떤 feature를 주느냐에 크게 달린다. Goodfellow 등은 의사가 정리해 준 환자 정보(feature)로 제왕절개 권고 여부를 판단하는 logistic regression(로지스틱 회귀) 모델을 예로 든다. logistic regression은 feature마다 weight를 곱해 더한 값을 정해진 함수 하나에 넣어 결과를 내는 단순한 machine learning 모델이다. §2.2의 스팸 점수가 이 「곱해 더한 값」에 해당한다. 이 모델은 feature와 결과의 관계는 배우지만 feature를 어떻게 정할지는 바꾸지 못한다. 정리된 정보 대신 MRI 영상의 픽셀을 그대로 주면 쓸 만한 예측을 하지 못한다. 픽셀 하나하나는 결과와 거의 관계가 없기 때문이다 [@Goodfellow2016].
 
 문제는 많은 task에서 어떤 feature를 뽑아야 할지 사람도 알기 어렵다는 것이다. 사진에서 자동차를 찾고 싶어 「바퀴가 있다」를 feature로 쓰려 해도, 바퀴가 어떻게 생겼는지를 픽셀 값으로 정확히 기술하기 어렵다. 그림자가 지거나 빛이 반사되거나 일부가 가려지면 같은 바퀴도 전혀 다른 픽셀이 된다 [@Goodfellow2016].
 
 ### 3.2 deep learning은 feature를 layer마다 쌓아 배운다
 
-representation learning은 feature를 사람이 고르지 않고 데이터에서 배우게 하는 방법이다. 여기서 representation(표현)은 모델이 입력을 나타내는 방식, 곧 배운 feature들을 말한다. deep learning은 representation learning을 여러 layer로 쌓는다. 앞쪽 layer가 단순한 feature를 만들면 다음 layer는 그것을 조합해 더 추상적인 feature를 만든다.
+representation learning은 feature를 사람이 고르지 않고 데이터에서 배우게 하는 방법이다. 여기서 representation(표현)은 모델이 입력을 나타내는 방식, 곧 배운 feature들을 말한다. representation learning의 대표 예는 autoencoder(오토인코더)다 [@Goodfellow2016]. autoencoder는 입력을 다른 representation으로 바꾸는 encoder(인코더)와, 그 representation을 원래 형식으로 되돌리는 decoder(디코더)를 이은 것이다. 입력이 encoder와 decoder를 거친 뒤에도 정보가 되도록 많이 남게 학습한다 [@Goodfellow2016]. 이와 함께 새 representation이 여러 좋은 성질을 갖도록 학습하며, 어떤 성질을 바라느냐에 따라 autoencoder의 종류가 갈린다 [@Goodfellow2016]. 정보를 남기는 조건만 있으면 입력을 그대로 베껴 내놓아도 목표를 채우므로, 새로 배우는 것이 없다. 두 조건을 함께 채우도록 배운 encoder의 representation이 사람이 고르지 않은 feature 구실을 한다. Goodfellow 등은 layer를 깊게 쌓지 않은 얕은(shallow) autoencoder를 deep learning이 아닌 representation learning의 예로 든다 [@Goodfellow2016].
+
+deep learning은 representation learning을 여러 layer로 쌓는다. 앞쪽 layer가 단순한 feature를 만들면 다음 layer는 그것을 조합해 더 추상적인 feature를 만든다.
 
 사진을 알아보는 deep learning 모델을 예로 들면 다음과 같다 [@Goodfellow2016].
 
@@ -144,8 +154,8 @@ flowchart LR
 |---|---|---|
 | 규칙 기반 프로그램 | 입력에서 출력까지의 프로그램 전체 | 없음 |
 | 고전 machine learning | feature | feature에서 출력을 내는 계산 |
-| representation learning | — | feature와, feature에서 출력을 내는 계산 |
-| deep learning | — | 단순한 feature, 그 위에 여러 layer로 쌓은 더 추상적인 feature, 출력을 내는 계산 |
+| representation learning | 모델 구조와 학습 과정(feature는 설계하지 않는다) | feature와, feature에서 출력을 내는 계산 |
+| deep learning | 모델 구조와 학습 과정(feature는 설계하지 않는다) | 단순한 feature, 그 위에 여러 layer로 쌓은 더 추상적인 feature, 출력을 내는 계산 |
 
 물론 deep learning에서도 사람이 정하는 것은 많다. layer를 몇 개 어떻게 쌓을지, 어떤 데이터로 어떻게 학습할지는 사람이 정한다. 사람이 설계하는 일의 중심이 feature에서 모델 구조와 학습 과정으로 옮겨 간 것이다. 이 책의 2~14부가 그 설계를 배우는 과정이다.
 
@@ -153,12 +163,12 @@ flowchart LR
 
 ## 4. deep learning은 어떻게 핵심 기술이 되었나
 
-neural network 실험은 1950년대부터 있었다. 그런데도 deep learning이 핵심 기술로 널리 인정받은 것은 그보다 훨씬 뒤다. Goodfellow 등은 그 이유로 학습 알고리즘보다 자원의 변화를 꼽는다. 복잡한 task에서 사람 수준에 이른 학습 알고리즘들(2016년 기준)은 1980년대에 작은 문제에서 고전하던 알고리즘과 거의 같다. 다만 그 알고리즘으로 학습하는 모델 쪽에는 아주 깊은 구조를 학습하기 쉽게 하는 변화가 있었다. 가장 큰 변화는 그 알고리즘에 필요한 자원을 줄 수 있게 된 것이다 [@Goodfellow2016].
+neural network 실험은 1950년대부터 있었다. 그런데도 deep learning이 핵심 기술로 널리 인정받은 것은 그보다 훨씬 뒤다. Goodfellow 등은 그 이유로 학습 알고리즘보다 자원의 변화를 꼽는다. 복잡한 task에서 사람 수준에 이른 학습 알고리즘들(2016년 기준)은 1980년대에 작은 문제에서 고전하던 알고리즘과 거의 같다. 다만 그 알고리즘으로 학습하는 모델 쪽에는 아주 깊은 구조를 학습하기 쉽게 하는 변화가 있었다. 예를 들어 [1.5장 §2.1](01-05-landmark-models.md#21-resnet-아주-깊은-cnn을-학습할-수-있게)의 ResNet은 layer 몇 개를 건너뛰는 지름길인 residual connection(잔차 연결)을 내어 아주 깊은 neural network도 학습하기 쉽게 했다 [@He2016]. 가장 큰 변화는 그 알고리즘에 필요한 자원을 줄 수 있게 된 것이다 [@Goodfellow2016].
 
 - **데이터.** 연구에서 기준으로 쓰는 dataset(데이터셋)의 크기가 1980~1990년대의 예시 수만 개 규모에서 2000년대 말~2010년대 전반의 수십만~수천만 개 규모로 커졌다.
-- **계산.** 더 빠른 CPU, 범용으로 쓸 수 있는 graphics processing unit(GPU, 그래픽 처리 장치), 분산 계산 소프트웨어 덕분에 훨씬 큰 모델을 돌릴 수 있게 되었다.
+- **계산.** 더 빠른 CPU, 범용으로 쓸 수 있는 graphics processing unit(GPU, 그래픽 처리 장치, [1.6](01-06-industry-stack.md)), 분산 계산 소프트웨어 덕분에 훨씬 큰 모델을 돌릴 수 있게 되었다. GPU는 원래 그래픽용으로 만든 칩으로 많은 계산을 나란히 하도록 설계되었는데, neural network의 계산에도 같은 성질이 필요하다 [@Goodfellow2016].
 
-Goodfellow 등에 따르면 더 큰 neural network는 더 복잡한 task에서 더 높은 정확도를 낼 수 있다. 또 학습 데이터가 많을수록 좋은 성능을 내는 데 필요한 사람의 기술이 줄어든다 [@Goodfellow2016]. 데이터와 계산, 이 두 자원이 갖춰지면서 deep learning은 사진 속 물체 알아보기와 음성 인식에서 그전 방법들을 크게 앞섰다 [@Goodfellow2016]. 이 책이 다루는 모델 대부분도 deep learning 모델이다.
+Goodfellow 등에 따르면 더 큰 neural network는 더 복잡한 task에서 더 높은 정확도를 낼 수 있다 [@Goodfellow2016]. 데이터와 계산, 이 두 자원이 갖춰지면서 deep learning은 사진 속 물체 알아보기와 말소리 알아듣기에서 그전 방법들을 크게 앞섰다 [@Goodfellow2016]. 이 책이 다루는 모델 대부분도 deep learning 모델이다.
 
 ## 헷갈리기 쉬운 점
 
@@ -192,7 +202,7 @@ Goodfellow 등에 따르면 더 큰 neural network는 더 복잡한 task에서 �
 
 1. (a) AI. 사람이 준 규칙과 수 읽기로 동작하고 데이터에서 배우지 않는다. (b) machine learning. 데이터에서 배우지만 feature는 사람이 골랐다. (c) deep learning. 픽셀에서 시작해 feature까지 여러 layer로 배운다.
 2. task T: 메일을 스팸과 정상으로 나누기. performance measure P: 맞게 나눈 메일의 비율. experience E: 사람이 스팸인지 아닌지 표시해 둔 메일 묶음.
-3. 규칙이 쌓여 복잡해질수록 유지보수하기 어렵고, 스팸을 보내는 쪽이 바뀌면 무엇을 보고 거를지도 바뀌어 사람이 규칙을 다시 써야 한다. machine learning 필터는 새 스팸에 label을 붙여 데이터에 더하고 다시 학습한다.
+3. 규칙이 쌓여 복잡해질수록 유지보수하기 어렵고, 스팸을 보내는 쪽이 바뀌면 무엇을 보고 거를지도 바뀌어 사람이 규칙을 다시 써야 한다. machine learning 필터는 새 스팸에 label을 붙여 데이터에 더하고 다시 학습해 weight를 고친다. 다만 새로 살펴야 할 단서가 생기면, 고전 machine learning에서는 그 feature를 사람이 더해야 한다.
 4. 고전 machine learning: 사람이 feature를 설계하고, feature에서 출력을 내는 계산을 데이터에서 배운다. deep learning: 단순한 feature부터 추상적인 feature, 출력을 내는 계산까지 데이터에서 배운다. 사람은 모델 구조와 학습 방법, 데이터를 정한다.
 
 </details>

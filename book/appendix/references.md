@@ -45,7 +45,6 @@
 - **@OpenAI2026** · OpenAI. 「Supervised fine-tuning」(OpenAI API 문서). 웹 문서, 2026년 11월 확인. https://developers.openai.com/api/docs/guides/supervised-fine-tuning
 - **@OpenAI2026b** · OpenAI. 「Pricing」(OpenAI API 문서). 웹 문서, 2026년 11월 확인. https://developers.openai.com/api/docs/pricing
 - **@OSI2024** · Open Source Initiative. 「The Open Source AI Definition」 1.0. 웹 문서, 2024. https://opensource.org/ai/open-source-ai-definition
-- **@OSI2025** · Open Source Initiative. 「Open Weights」. 웹 문서, 2025. https://opensource.org/ai/open-weights
 - **@Ouyang2022** · Long Ouyang 외. 「Training Language Models to Follow Instructions with Human Feedback」. NeurIPS, 2022. https://arxiv.org/abs/2203.02155
 - **@Paszke2019** · Adam Paszke 외. 「PyTorch: An Imperative Style, High-Performance Deep Learning Library」. NeurIPS, 2019. https://arxiv.org/abs/1912.01703
 - **@Patterson2022** · David Patterson 외. 「The Carbon Footprint of Machine Learning Training Will Plateau, Then Shrink」. IEEE Computer 55(7), 2022. https://doi.org/10.1109/MC.2022.3148714
@@ -65,5 +64,6 @@
 - **@Sutton2018** · Richard S. Sutton, Andrew G. Barto. 「Reinforcement Learning: An Introduction」(2판). MIT Press, 2018. http://incompleteideas.net/book/the-book-2nd.html
 - **@Vaswani2017** · Ashish Vaswani 외. 「Attention Is All You Need」. NeurIPS, 2017. https://arxiv.org/abs/1706.03762
 - **@Wirth2017** · Christian Wirth, Riad Akrour, Gerhard Neumann, Johannes Fürnkranz. 「A Survey of Preference-Based Reinforcement Learning Methods」. Journal of Machine Learning Research 18, 2017. https://jmlr.org/papers/volume18/16-634/16-634.pdf
+- **@Yosinski2014** · Jason Yosinski, Jeff Clune, Yoshua Bengio, Hod Lipson. 「How transferable are features in deep neural networks?」. NeurIPS, 2014. https://arxiv.org/abs/1411.1792
 - **@Zhao2023** · Wayne Xin Zhao 외. 「A Survey of Large Language Models」. arXiv, 2023. https://arxiv.org/abs/2303.18223
 - **@Zinkevich2025** · Martin Zinkevich. 「Rules of Machine Learning: Best Practices for ML Engineering」. Google for Developers 웹 문서, 2025년 8월 갱신, 2026년 11월 확인. https://developers.google.com/machine-learning/guides/rules-of-ml

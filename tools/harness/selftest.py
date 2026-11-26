@@ -123,7 +123,6 @@ def lint_cases(s: Suite) -> None:
         ("시점 표현", rep("## 정리\n", "최근 모델은 크다.\n\n## 정리\n"), 0, "경고", "'최근'"),
         ("그림 설명", lambda t: "\n".join(ln for ln in t.splitlines() if not ln.startswith("그림: ML lifecycle")) + "\n", 0, "그림: …"),
         ("더 읽을거리 인용", lambda t: t.rstrip("\n") + "\n- 아무 문헌\n", 0, "[@키]로 인용"),
-        ("분량 경고선", rep("## 정리\n", "가" * 3000 + "\n\n## 정리\n"), 0, "경고선 13,500자"),
         ("괄호 한국어 되풀이", rep("배포 뒤에 생기는 distribution shift다.", "배포 뒤에 생기는 distribution shift(분포 변화)다."), 0,
          "'distribution shift'의 괄호 한국어를 첫 등장"),
         ("직역투 낱말", rep("## 정리\n", "학습은 되풀이를 견준다. noise를 걷어 낸다.\n\n## 정리\n"), 0,
