@@ -4,7 +4,7 @@
 
 ## 한눈에
 
-- artificial intelligence(AI, 인공지능)는 사람의 지능이 필요하다고 여기는 일을 컴퓨터가 하게 만드는 분야 전체의 이름이다. machine learning(머신러닝)은 그 안에서 동작 규칙을 사람이 짜 넣지 않고 데이터에서 배우게 하는 방법이다. deep learning(딥러닝)은 machine learning 안에서 여러 layer(층)를 쌓은 neural network(신경망)로 배우는 방법이다.
+- 이 책에서 artificial intelligence(AI, 인공지능)는 사람의 지능이 필요하다고 여기는 일을 컴퓨터가 하게 만드는 분야 전체를 가리킨다. machine learning(머신러닝)은 그 안에서 동작 규칙을 사람이 짜 넣지 않고 데이터에서 배우게 하는 방법이다. deep learning(딥러닝)은 machine learning 안에서 여러 layer(층)를 쌓은 neural network(신경망)로 배우는 방법이다.
 - 그래서 셋은 AI ⊃ machine learning ⊃ deep learning의 포함 관계다. 모든 AI가 machine learning은 아니고, 모든 machine learning이 deep learning도 아니다.
 - 규칙 기반 프로그램은 사람이 동작을 코드로 적는다. machine learning 모델은 사람이 모델의 틀과 학습 방법과 데이터를 주고, 동작을 정하는 숫자인 weight(가중치)는 학습이 채운다.
 - deep learning은 입력에서 무엇을 볼지, 곧 feature(특징)까지 데이터에서 배운다. 그래서 사람이 feature를 설계하기 어려운 사진·음성·글에서 강하다.
@@ -13,15 +13,17 @@
 
 ### 1.1 AI: 분야 전체의 이름
 
-「artificial intelligence」라는 이름을 처음 쓴 문서로 꼽히는 것은 1955년의 한 연구 제안서다. John McCarthy, Marvin Minsky, Nathaniel Rochester, Claude Shannon이 이듬해 여름 Dartmouth 대학에서 열 연구 모임을 제안한 문서다. 제안서는 학습을 비롯한 지능의 모든 측면을 기계가 흉내 낼 수 있을 만큼 정확히 기술할 수 있다는 추측을 출발점으로 삼았고, 기계가 언어를 쓰고 추상 개념을 만들고 문제를 풀고 스스로 나아지게 하는 법을 연구 주제로 들었다 [@McCarthy1955].
+「artificial intelligence」라는 이름은 1955년 8월 31일 자의 한 연구 제안서 제목에 나온다. John McCarthy, Marvin Minsky, Nathaniel Rochester, Claude Shannon이 이듬해인 1956년 여름 Dartmouth College에서 열 명이 두 달 동안 artificial intelligence를 연구하자고 제안한 문서다. 제안서는 학습을 비롯한 지능의 모든 측면을 원리적으로는 기계가 흉내 낼 수 있을 만큼 정확히 기술할 수 있다는 추측을 연구의 바탕으로 삼았다. 그리고 기계가 언어를 쓰고, 추상과 개념을 만들고, 당시에는 사람만 풀던 종류의 문제를 풀고, 스스로 나아지게 하는 방법을 찾겠다고 했다 [@McCarthy1955].
 
-이처럼 AI는 처음부터 특정 기술이 아니라 목표에 붙은 이름이다. 그 목표에 다가가는 방법은 여러 가지다. 사람이 아는 지식을 규칙으로 적어 넣는 방법도 AI이고, 데이터에서 배우게 하는 방법도 AI다.
+이처럼 AI는 특정 기술이 아니라 목표에 붙은 이름이다. 그 목표에 다가가는 방법은 여러 가지다. 사람이 아는 지식을 규칙으로 적어 넣는 방법도 AI이고, 데이터에서 배우게 하는 방법도 AI다.
+
+> **표준과 관례** 이 책은 AI를 「사람의 지능이 필요하다고 여기는 일을 컴퓨터가 하게 만드는 분야 전체」라는 넓은 뜻으로 쓴다. 특정 문헌의 정의를 옮긴 것이 아니라 이 책이 고른 작업 정의다.
 
 ### 1.2 machine learning: 데이터에서 배우는 방법
 
-1959년 Arthur Samuel은 「Some Studies in Machine Learning Using the Game of Checkers」라는 논문에서 체커(체스판에서 두는 보드게임) 프로그램을 학습시킨 결과를 보고했다. 게임 규칙과 몇 가지 단서만 주고 8~10시간쯤 게임을 두게 하자, 프로그램은 그것을 짠 사람보다 체커를 잘 두게 되었다 [@Samuel1959]. Samuel은 문제를 푸는 방법을 사람이 하나하나 정확히 지정하는 일은 시간과 비용이 많이 들고, 경험에서 배우도록 프로그래밍하면 그런 세세한 프로그래밍이 대부분 필요 없어질 것이라고 썼다.
+1959년 Arthur Samuel은 「Some Studies in Machine Learning Using the Game of Checkers」라는 논문에서 체커(체스판에서 두는 보드게임) 프로그램을 학습시킨 결과를 보고했다. Samuel은 프로그램에 게임 규칙, 이기는 쪽으로 밀고 나아가게 하는 방향 감각, 그리고 게임과 관계있을 것으로 보이는 항목의 목록만 주었다. 각 항목이 유리하게 작용하는지와 얼마나 중요한지는 정해 주지 않았다. 그런데도 프로그램은 8~10시간 동안 게임을 두며 배운 끝에 그것을 짠 사람보다 체커를 잘 두게 되었다 [@Samuel1959]. Samuel은 문제를 푸는 방법을 사람이 아주 세세하고 정확하게 지정하는 일은 시간과 비용이 많이 든다고 보았다. 그리고 컴퓨터가 스스로 겪은 일에서 배우도록 프로그래밍하면 결국 그런 세세한 프로그래밍의 상당 부분이 필요 없어질 것이라고 썼다 [@Samuel1959].
 
-machine learning 교과서에서 널리 인용하는 정의는 Tom Mitchell의 것이다 [@Mitchell1997].
+Tom Mitchell의 machine learning 교과서는 학습을 다음과 같이 정의한다 [@Mitchell1997].
 
 > **핵심** 어떤 task(과제) T에서 performance measure(성능 척도) P로 잰 성능이 experience(경험) E를 쌓을수록 나아지면, 그 프로그램은 E로부터 배운다고 한다.
 
@@ -33,22 +35,22 @@ Mitchell이 든 예는 체커다.
 | performance measure P | 상대와 둔 게임에서 이긴 비율 |
 | experience E | 자기 자신과 연습 게임 두기 |
 
-이 정의에는 「사람처럼 생각한다」 같은 말이 없다. 정해 둔 task에서, 정해 둔 척도로 재었을 때, 경험이 쌓일수록 점수가 오르면 배운 것이다. machine learning을 공학으로 다룰 수 있는 이유가 여기에 있다. 무엇을 풀지, 무엇으로 잴지, 무엇으로 배울지를 정하면 학습이 되었는지 숫자로 확인할 수 있다.
+이 정의에는 「사람처럼 생각한다」 같은 말이 없다. 정해 둔 task에서, 정해 둔 performance measure로 재었을 때, experience가 쌓일수록 점수가 오르면 배운 것이다. machine learning을 공학으로 다룰 수 있는 이유가 여기에 있다. 무엇을 풀지, 무엇으로 잴지, 무엇으로 배울지를 정하면 학습이 되었는지 숫자로 확인할 수 있다.
 
 ### 1.3 deep learning: 여러 layer로 쌓아 배우는 방법
 
-deep learning은 machine learning의 한 갈래다. 쉬운 개념을 먼저 배우고, 그 위에 더 복잡한 개념을 쌓아 가며 배운다. 이렇게 쌓인 개념을 그래프로 그리면 layer가 여러 겹인 깊은(deep) 그래프가 된다. 이름이 deep learning인 까닭이다 [@Goodfellow2016]. 이렇게 layer를 쌓는 모델이 neural network다. neural network는 뇌의 신경세포에서 이름을 따왔지만, 뇌를 그대로 흉내 낸 모형이 아니라 수학 함수를 이어 붙인 계산이다 [@Goodfellow2016].
+deep learning은 machine learning의 한 갈래다. 복잡한 개념을 더 단순한 개념들로 지어 올리는 방식으로 배운다. 이렇게 쌓인 개념을 그래프로 그리면 layer가 여러 겹인 깊은(deep) 그래프가 된다. 이름이 deep learning인 까닭이다 [@Goodfellow2016]. 모델에서 layer는 입력이나 앞 layer의 결과를 받아 단순한 계산 하나를 하고, 그 결과를 다음 layer로 넘기는 계산 단위다. 이렇게 layer를 쌓는 모델이 neural network다. neural network는 뇌의 신경세포에서 이름을 따왔지만, 뇌를 그대로 흉내 낸 모형이 아니라 수학 함수를 이어 붙인 계산이다 [@Goodfellow2016].
 
-Goodfellow 등의 교과서는 machine learning과 deep learning 사이에 representation learning(표현 학습)이라는 갈래를 하나 더 두어 AI ⊃ machine learning ⊃ representation learning ⊃ deep learning으로 그린다 [@Goodfellow2016]. representation learning은 §3에서 다룬다.
+> **표준과 관례** AI ⊃ machine learning ⊃ deep learning이라는 포함 관계는 Goodfellow 등의 교과서가 쓰는 정리다 [@Goodfellow2016]. 이 교과서는 machine learning과 deep learning 사이에 representation learning(표현 학습)이라는 갈래를 하나 더 두어 AI ⊃ machine learning ⊃ representation learning ⊃ deep learning으로 그린다. representation learning은 §3에서 다룬다.
 
 ```mermaid
 flowchart TB
   subgraph AI["AI"]
-    A1["규칙과 수 읽기로 두는 체스 프로그램<br/>사람이 적은 규칙으로 판단하는 expert system"]
+    A1["규칙과 수 읽기로 두는 체스 프로그램<br/>사람이 적은 지식을 논리 규칙으로 추론하는 knowledge base(지식 베이스) 시스템"]
     subgraph ML["machine learning"]
       M1["사람이 고른 feature로 배우는 스팸 필터"]
       subgraph DL["deep learning"]
-        D1["사진 속 물체를 알아보는 모델<br/>대화형 language model"]
+        D1["픽셀을 받아 여러 layer를 거쳐 물체를 알아보는 모델<br/>대화형 language model(언어 모델)"]
       end
     end
   end
@@ -59,10 +61,12 @@ flowchart TB
 | 예 | AI | machine learning | deep learning |
 |---|---|---|---|
 | 체스 규칙과 수 읽기로 두는 체스 프로그램 | 예 | 아니오 | 아니오 |
-| 사람이 적은 「만약 ~이면 ~이다」 규칙으로 판단하는 expert system(전문가 시스템) | 예 | 아니오 | 아니오 |
+| 사람이 형식 언어로 적어 넣은 지식을 논리 규칙으로 추론하는 knowledge base(지식 베이스) 시스템(예: Cyc) | 예 | 아니오 | 아니오 |
 | 사람이 고른 단어 feature로, 스팸 표시가 된 메일에서 배우는 스팸 필터 | 예 | 예 | 아니오 |
-| 사진의 픽셀을 그대로 받아 물체를 알아보는 모델 | 예 | 예 | 예 |
+| 사진의 픽셀을 그대로 받아 여러 layer를 거쳐 물체를 알아보는 모델 | 예 | 예 | 예 |
 | ChatGPT 같은 대화형 language model(언어 모델) | 예 | 예 | 예 |
+
+language model은 글에서 뒤에 올 말이 무엇일지 확률로 예측하는 모델이다. ChatGPT는 GPT 계열의 language model을 대화에 맞게 고친 것이다. 이런 language model은 주로 layer를 아주 깊게 쌓은 neural network로 만든다 [@Zhao2023].
 
 ## 2. 규칙을 짜 넣은 프로그램과 데이터로 배우는 모델
 
@@ -70,24 +74,26 @@ flowchart TB
 
 스팸 메일을 거르는 프로그램을 짠다고 하자. 가장 먼저 떠오르는 방법은 규칙을 적는 것이다. 「제목에 '무료'가 있고 보낸 사람이 주소록에 없으면 스팸」처럼 조건문을 쌓는다. 동작은 전부 사람이 쓴 코드에 있다. 결과가 틀리면 어느 규칙이 틀렸는지 찾아 고치면 된다.
 
-규칙을 말로 다 적을 수 있는 문제라면 이 방법이 가장 좋다. 세금 계산이나 체스에서 말이 움직일 수 있는 칸 검사가 그렇다. 체스는 64칸과 32개의 말, 정해진 이동 규칙으로 완전히 기술된다. 사람에게는 어려운 추상적·형식적 과제가 컴퓨터에게는 오히려 쉬운 편이다 [@Goodfellow2016].
+규칙을 말로 다 적을 수 있는 문제라면 대개 이 방법이 낫다. 세금 계산이나 체스에서 말이 움직일 수 있는 칸 검사가 그렇다. 체스는 64칸과 32개의 말, 정해진 이동 규칙으로 완전히 기술된다. 사람에게는 어려운 추상적·형식적 task가 컴퓨터에게는 오히려 쉬운 편이다 [@Goodfellow2016].
 
-어려운 것은 사람에게 쉬운 과제다. 얼굴을 알아보거나 말소리를 알아듣는 일은 사람이 직관으로 해내지만, 어떻게 하는지 규칙으로 적기는 거의 불가능하다 [@Goodfellow2016]. 세상에 관한 지식을 형식 언어로 적어 넣고 논리 규칙으로 추론하게 하는 knowledge base(지식 베이스) 방식의 AI 프로젝트들이 있었지만, 큰 성공을 거두지 못했다. 사람이 세상을 정확히 기술할 만큼 복잡한 규칙을 만들어 내기 어려웠기 때문이다 [@Goodfellow2016].
+어려운 것은 사람에게 쉬운 task다. 얼굴을 알아보거나 말소리를 알아듣는 일은 사람이 직관으로 해내지만, 어떻게 하는지 형식적인 규칙으로 적기는 어렵다 [@Goodfellow2016]. 세상에 관한 지식을 형식 언어로 적어 넣고 논리 규칙으로 추론하게 하는 knowledge base 방식의 AI 프로젝트들이 있었지만, 큰 성공을 거두지 못했다. 사람이 세상을 정확히 기술할 만큼 복잡한 규칙을 만들어 내기 어려웠기 때문이다 [@Goodfellow2016].
 
-스팸 필터도 비슷한 벽에 부딪힌다. 규칙이 늘수록 서로 부딪히고, 스팸을 보내는 쪽이 문구를 바꾸면 사람이 규칙을 다시 써야 한다.
+스팸 필터도 비슷한 벽에 부딪힌다. 규칙이 쌓여 복잡해질수록 유지보수하기 어려워진다. 게다가 스팸 거르기는 보내는 쪽과 벌이는 싸움이라, 무엇을 보고 거를지가 계속 바뀐다 [@Zinkevich2025].
 
 ### 2.2 데이터로 배우는 모델
 
 machine learning에서는 규칙을 직접 쓰지 않는다. 대신 다음을 정한다.
 
-1. **모델의 틀.** 입력을 받아 출력을 내는 계산의 모양이다. 계산 안에는 아직 정해지지 않은 숫자(weight)가 많이 들어 있다.
-2. **학습 방법.** 모델이 낸 답을 정답과 비교해 weight를 조금씩 고치는 절차다.
+1. **모델의 틀.** 입력을 받아 출력을 내는 계산의 모양이다. 계산 안에는 학습으로 값을 정할 숫자(weight)가 들어 있다.
+2. **학습 방법.** 흔히 쓰는 것은 모델이 낸 답을 정답과 비교해 weight를 조금씩 고치는 절차다.
 3. **데이터.** 「이 메일은 스팸, 이 메일은 정상」처럼 정답인 label(라벨)이 붙은 예시를 많이 모은다.
+
+이 목록은 스팸 필터처럼 정답이 붙은 예시로 배우는 경우다. Mitchell의 체커 예에서는 정답을 알려 주는 사람 없이 프로그램이 스스로 게임을 두고, 게임을 결국 이겼는지 졌는지만 보고 배운다 [@Mitchell1997]. 학습 방법의 여러 갈래는 [1.4](01-04-training-methods-map.md)에서 다룬다.
 
 학습을 돌리면 weight가 정해지고, 그 weight를 담은 모델이 새 메일을 받아 스팸인지 판단한다. 소프트웨어로 말하면 모델은 함수이고, 그 함수의 몸통 중 동작을 좌우하는 숫자를 사람이 아니라 학습이 채운다. 모델을 돌리는 코드와 학습 코드는 여전히 사람이 쓴다.
 
 ```mermaid
-flowchart LR
+flowchart TB
   subgraph R["규칙 기반"]
     R1["입력"] --> R2["사람이 쓴 규칙"] --> R3["출력"]
   end
@@ -97,7 +103,7 @@ flowchart LR
   end
 ```
 
-그림: 규칙 기반 프로그램은 사람이 쓴 규칙이 입력을 출력으로 바꾼다. machine learning은 예시로 먼저 학습해 모델을 만들고, 그 모델이 새 입력을 출력으로 바꾼다.
+그림: 규칙 기반 프로그램은 사람이 쓴 규칙이 입력을 출력으로 바꾼다. label이 붙은 예시로 배우는 machine learning은 먼저 학습해 모델을 만들고, 그 모델이 새 입력을 출력으로 바꾼다.
 
 | | 규칙 기반 프로그램 | machine learning 모델 |
 |---|---|---|
@@ -113,11 +119,11 @@ flowchart LR
 
 ### 3.1 고전 machine learning은 feature를 사람이 고른다
 
-machine learning 모델이 입력을 그대로 보는 것은 아니다. 고전적인 machine learning에서는 사람이 입력에서 쓸모 있는 정보 조각을 골라 모델에 넣는다. 이 정보 조각을 feature라고 한다. 스팸 필터라면 「'무료'라는 단어가 있나」「링크가 몇 개인가」 같은 것이다.
+고전 machine learning에서는 사람이 입력에서 쓸모 있는 정보 조각을 골라 모델에 넣는다. 이 정보 조각을 feature라고 한다. 스팸 필터라면 「'무료'라는 단어가 있나」「링크가 몇 개인가」 같은 것이다.
 
-이런 모델의 성능은 어떤 feature를 주느냐에 크게 달린다. Goodfellow 등은 의사가 정리해 준 환자 정보(feature)로 제왕절개 권고 여부를 판단하는 logistic regression(로지스틱 회귀) 모델을 예로 든다. 이 모델은 feature와 결과의 관계는 배우지만 feature를 어떻게 정할지는 바꾸지 못한다. 정리된 정보 대신 MRI 영상의 픽셀을 그대로 주면 쓸 만한 예측을 하지 못한다. 픽셀 하나하나는 결과와 거의 관계가 없기 때문이다 [@Goodfellow2016].
+이런 모델의 성능은 어떤 feature를 주느냐에 크게 달린다. Goodfellow 등은 의사가 정리해 준 환자 정보(feature)로 제왕절개 권고 여부를 판단하는 logistic regression(로지스틱 회귀) 모델을 예로 든다. logistic regression은 feature마다 weight를 곱해 더한 값을 정해진 함수 하나에 넣어 결과를 내는 단순한 machine learning 모델이다. 이 모델은 feature와 결과의 관계는 배우지만 feature를 어떻게 정할지는 바꾸지 못한다. 정리된 정보 대신 MRI 영상의 픽셀을 그대로 주면 쓸 만한 예측을 하지 못한다. 픽셀 하나하나는 결과와 거의 관계가 없기 때문이다 [@Goodfellow2016].
 
-문제는 많은 task에서 어떤 feature를 뽑아야 할지 사람도 모른다는 것이다. 사진에서 자동차를 찾고 싶어 「바퀴가 있다」를 feature로 쓰려 해도, 바퀴가 어떻게 생겼는지를 픽셀 값으로 정확히 기술하기 어렵다. 그림자가 지거나 빛이 반사되거나 일부가 가려지면 같은 바퀴도 전혀 다른 픽셀이 된다 [@Goodfellow2016].
+문제는 많은 task에서 어떤 feature를 뽑아야 할지 사람도 알기 어렵다는 것이다. 사진에서 자동차를 찾고 싶어 「바퀴가 있다」를 feature로 쓰려 해도, 바퀴가 어떻게 생겼는지를 픽셀 값으로 정확히 기술하기 어렵다. 그림자가 지거나 빛이 반사되거나 일부가 가려지면 같은 바퀴도 전혀 다른 픽셀이 된다 [@Goodfellow2016].
 
 ### 3.2 deep learning은 feature를 layer마다 쌓아 배운다
 
@@ -130,7 +136,7 @@ flowchart LR
   P["픽셀"] --> E["밝기가 바뀌는 경계"] --> C["모서리와 윤곽"] --> O["물체의 부분"] --> I["물체가 무엇인가<br/>자동차·사람·동물"]
 ```
 
-그림: 사진을 알아보는 deep learning 모델의 layer가 차례로 배우는 feature. 각 단계를 사람이 정해 주지 않고 학습이 찾아낸다.
+그림: 사진을 알아보는 deep learning 모델. 입력인 픽셀과 출력인 「물체가 무엇인가」 사이의 layer들은 뒤쪽으로 갈수록 더 추상적인 feature를 뽑는다. 이 feature들의 값은 데이터에 주어지지 않으므로, 어떤 feature가 쓸모 있는지는 모델이 학습하며 정한다.
 
 정리하면 방식마다 사람이 설계하는 부분과 데이터에서 배우는 부분이 다르다 [@Goodfellow2016].
 
@@ -141,22 +147,18 @@ flowchart LR
 | representation learning | — | feature와, feature에서 출력을 내는 계산 |
 | deep learning | — | 단순한 feature, 그 위에 여러 layer로 쌓은 더 추상적인 feature, 출력을 내는 계산 |
 
-물론 deep learning에서도 사람이 정하는 것은 많다. layer를 몇 개 어떻게 쌓을지, 어떤 데이터로 어떻게 학습할지는 사람이 정한다. 사람이 설계하던 대상이 feature에서 모델 구조와 학습 과정으로 옮겨 간 것이다. 이 책의 2~14부가 그 설계를 배우는 과정이다.
+물론 deep learning에서도 사람이 정하는 것은 많다. layer를 몇 개 어떻게 쌓을지, 어떤 데이터로 어떻게 학습할지는 사람이 정한다. 사람이 설계하는 일의 중심이 feature에서 모델 구조와 학습 과정으로 옮겨 간 것이다. 이 책의 2~14부가 그 설계를 배우는 과정이다.
 
-> **표준과 관례** layer가 몇 개 이상이어야 deep인지 합의된 기준은 없다. deep learning은 전통적인 machine learning보다 학습한 함수나 개념을 훨씬 여러 번 겹쳐 쓰는 모델을 다루는 분야라고 보면 된다 [@Goodfellow2016].
+> **표준과 관례** layer가 몇 개 이상이어야 deep인지 합의된 기준은 없다. deep learning은 고전 machine learning보다 학습한 함수나 개념을 더 여러 번 이어 붙인 모델을 다루는 분야라고 보면 된다 [@Goodfellow2016].
 
-## 4. 왜 지금 deep learning이 중심에 있나
+## 4. deep learning은 어떻게 핵심 기술이 되었나
 
-neural network 실험은 1950년대부터 있었다. 그런데도 deep learning이 핵심 기술로 널리 인정받은 것은 그보다 훨씬 뒤다. Goodfellow 등은 그 이유로 학습 알고리즘보다 자원의 변화를 꼽는다. 사람 수준에 이른 학습 알고리즘들은 1980년대에 작은 문제에서 고전하던 알고리즘과 거의 같다. 다만 아주 깊은 구조를 학습하기 쉽게 하는 개선이 더해졌다. 가장 큰 변화는 그 알고리즘에 필요한 자원을 줄 수 있게 된 것이다 [@Goodfellow2016].
+neural network 실험은 1950년대부터 있었다. 그런데도 deep learning이 핵심 기술로 널리 인정받은 것은 그보다 훨씬 뒤다. Goodfellow 등은 그 이유로 학습 알고리즘보다 자원의 변화를 꼽는다. 복잡한 task에서 사람 수준에 이른 학습 알고리즘들(2016년 기준)은 1980년대에 작은 문제에서 고전하던 알고리즘과 거의 같다. 다만 그 알고리즘으로 학습하는 모델 쪽에는 아주 깊은 구조를 학습하기 쉽게 하는 변화가 있었다. 가장 큰 변화는 그 알고리즘에 필요한 자원을 줄 수 있게 된 것이다 [@Goodfellow2016].
 
-- **데이터.** 학습용 데이터셋이 수만 개 규모에서 수십만~수천만 개 규모로 커졌다.
+- **데이터.** 연구에서 기준으로 쓰는 dataset(데이터셋)의 크기가 1980~1990년대의 예시 수만 개 규모에서 2000년대 말~2010년대 전반의 수십만~수천만 개 규모로 커졌다.
 - **계산.** 더 빠른 CPU, 범용으로 쓸 수 있는 GPU, 분산 계산 소프트웨어 덕분에 훨씬 큰 모델을 돌릴 수 있게 되었다.
 
-Goodfellow 등에 따르면 더 큰 neural network가 더 복잡한 task에서 더 높은 정확도를 내고, 데이터가 많을수록 좋은 성능을 내는 데 필요한 사람의 기술도 줄어든다 [@Goodfellow2016]. 이 두 자원이 갖춰지면서 사진·음성·글을 다루는 AI의 중심이 deep learning으로 옮겨 갔다. 이 책이 다루는 모델 대부분도 deep learning 모델이다.
-
-> **표준과 관례**
-> - AI는 분야 이름이라 하나로 합의된 엄밀한 정의가 없다. 이 책은 「사람의 지능이 필요하다고 여기는 일을 컴퓨터가 하게 하는 기술 전체」라는 넓은 뜻으로 쓴다.
-> - AI ⊃ machine learning ⊃ deep learning이라는 포함 관계는 교과서에서 널리 쓰는 정리다 [@Goodfellow2016].
+Goodfellow 등에 따르면 더 큰 neural network는 더 복잡한 task에서 더 높은 정확도를 낼 수 있다. 또 학습 데이터가 많을수록 좋은 성능을 내는 데 필요한 사람의 기술이 줄어든다 [@Goodfellow2016]. 데이터와 계산, 이 두 자원이 갖춰지면서 deep learning은 사진 속 물체 알아보기와 음성 인식에서 그전 방법들을 크게 앞섰다 [@Goodfellow2016]. 이 책이 다루는 모델 대부분도 deep learning 모델이다.
 
 ## 헷갈리기 쉬운 점
 
@@ -169,11 +171,11 @@ Goodfellow 등에 따르면 더 큰 neural network가 더 복잡한 task에서 �
 
 ## 정리
 
-- AI는 지능이 필요한 일을 컴퓨터가 하게 하는 분야 전체, machine learning은 그중 데이터에서 배우는 방법, deep learning은 그중 여러 layer의 neural network로 배우는 방법이다. 포함 관계는 AI ⊃ machine learning ⊃ deep learning이다.
+- 이 책에서 AI는 사람의 지능이 필요하다고 여기는 일을 컴퓨터가 하게 만드는 분야 전체를 가리킨다. machine learning은 그중 데이터에서 배우는 방법, deep learning은 그중 여러 layer의 neural network로 배우는 방법이다. 포함 관계는 AI ⊃ machine learning ⊃ deep learning이다.
 - 규칙 기반 프로그램은 사람이 동작을 코드로 적고, machine learning 모델은 사람이 정한 틀 안의 weight를 학습이 채운다.
 - 프로그램이 배운다는 것은 정해 둔 task T에서 performance measure P로 잰 성능이 experience E를 쌓을수록 나아진다는 뜻이다.
 - 고전 machine learning은 feature를 사람이 고르고, deep learning은 feature까지 layer마다 쌓아 데이터에서 배운다.
-- deep learning이 중심이 된 것은 더 많은 데이터와 더 큰 계산 자원이 갖춰졌기 때문이다.
+- deep learning이 널리 쓰이고 쓸모가 커진 것은 주로 더 강력한 컴퓨터, 더 큰 dataset, 더 깊은 neural network를 학습시키는 기법 덕분이다.
 
 ## 확인 문제
 
@@ -190,7 +192,7 @@ Goodfellow 등에 따르면 더 큰 neural network가 더 복잡한 task에서 �
 
 1. (a) AI. 사람이 준 규칙과 수 읽기로 동작하고 데이터에서 배우지 않는다. (b) machine learning. 데이터에서 배우지만 feature는 사람이 골랐다. (c) deep learning. 픽셀에서 시작해 feature까지 여러 layer로 배운다.
 2. task T: 메일을 스팸과 정상으로 나누기. performance measure P: 맞게 나눈 메일의 비율. experience E: 사람이 스팸인지 아닌지 표시해 둔 메일 묶음.
-3. 스팸을 보내는 쪽이 문구를 바꾸면 사람이 규칙을 새로 써야 하고, 규칙이 늘수록 서로 부딪힌다. machine learning 필터는 새 스팸에 label을 붙여 데이터에 더하고 다시 학습한다.
+3. 규칙이 쌓여 복잡해질수록 유지보수하기 어렵고, 스팸을 보내는 쪽이 바뀌면 무엇을 보고 거를지도 바뀌어 사람이 규칙을 다시 써야 한다. machine learning 필터는 새 스팸에 label을 붙여 데이터에 더하고 다시 학습한다.
 4. 고전 machine learning: 사람이 feature를 설계하고, feature에서 출력을 내는 계산을 데이터에서 배운다. deep learning: 단순한 feature부터 추상적인 feature, 출력을 내는 계산까지 데이터에서 배운다. 사람은 모델 구조와 학습 방법, 데이터를 정한다.
 
 </details>
@@ -199,5 +201,5 @@ Goodfellow 등에 따르면 더 큰 neural network가 더 복잡한 task에서 �
 
 - [@Goodfellow2016] 1장. 규칙 기반 프로그램, 고전 machine learning, representation learning, deep learning의 관계를 그림으로 정리한다
 - [@Mitchell1997] 1장. task·performance measure·experience로 학습을 정의하고 여러 학습 문제에 대입한다
-- [@Samuel1959] 체커 프로그램이 짠 사람보다 잘 두도록 학습한 초기 machine learning 연구
-- [@McCarthy1955] 「artificial intelligence」라는 이름을 처음 쓴 Dartmouth 연구 모임 제안서
+- [@Samuel1959] 체커 프로그램이 그것을 짠 사람보다 잘 두도록 학습시킨 1959년 연구. machine learning 절차 두 가지를 살펴본다
+- [@McCarthy1955] 1956년 Dartmouth 여름 연구 프로젝트의 제안서. 함께 연구할 문제 일곱 가지와 네 제안자 각자의 연구 계획을 적었다
