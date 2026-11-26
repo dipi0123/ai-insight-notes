@@ -14,3 +14,5 @@
 | OQ-005 | ISO/IEC 22989의 범위(Scope) 조항과, 이 표준이 모델 이름 짓기 규칙을 다루는지 | 1.2 | ISO 원문이나 공식 소개 페이지를 사람이 열어 본다(www.iso.org는 내려받기 도구에 HTTP 403을 돌려줌) |
 | OQ-006 | 구조 이름(CNN·RNN·Transformer)과 task 이름(classification·detection·segmentation)이 교과서와 논문에서 거의 같은 뜻으로 쓰인다는 것 | 1.2 | 교과서 두세 권(예: Goodfellow 외 9장)과 대표 논문의 정의를 맞대어 본다 |
 | OQ-007 | 모델 이름 꼬리(Instruct·Base)와 크기 표기(8B)가 공개 모델 저장소의 관례이고 정해진 규칙은 없다는 것 | 1.2 | 여러 계열(Llama·Qwen·Gemma 등)의 모델 카드에서 꼬리와 크기 표기를 비교하고, 명명 규칙을 밝힌 문서가 있는지 본다 |
+| OQ-008 | Stable Diffusion v1 계열 autoencoder가 Rombach2022의 KL-reg.(VAE와 비슷한 정규화) 변형인지 VQ-reg. 변형인지. 확인되면 1.5장 §4.2에서 1.2장 §2.4의 VAE로 이을 수 있다 | 1.5 | CompVis/stable-diffusion 저장소의 v1 추론 설정 파일(first_stage_config)과 Rombach2022 §3.1을 대조한다 |
+| OQ-009 | @Abadi2016(OSDI 2016 게재로 알려짐)과 @Kapoor2024의 학회 게재 여부. 받은 문서에서 확인하지 못해 참고문헌을 arXiv로 적었다 | 1.6 | 학회 프로시딩 페이지(OSDI 2016은 usenix.org, 허용 목록 밖)에서 확인하고 참고문헌 항목의 학회 표기를 고친다 |

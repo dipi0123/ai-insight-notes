@@ -24,8 +24,8 @@
 | 1.2 | 모델 이름을 읽는 여섯 개의 축 | L1 | 1.1 | CNN·ViT·LLM·VLM·diffusion 같은 이름은 어떤 기준으로 붙나? 왜 서로 겹쳐 보이나? 공식 분류 체계가 있나? classification·detection·segmentation 같은 task는 각각 무엇을 출력하나? | `book/part01-big-picture/01-02-naming-axes.md` | 초고 · Claude |
 | 1.3 | 모델의 한살이: 데이터에서 서비스까지 | L1 | 1.1 | 데이터 수집·labeling·학습·평가·배포는 어떻게 이어지나? 학습과 inference는 무엇이 다른가? | `book/part01-big-picture/01-03-model-lifecycle.md` | 초고 · Claude |
 | 1.4 | 학습 방법 지도: pre-training에서 reinforcement learning까지 | L1 | 1.3 | 학습 방법의 이름은 어떤 기준으로 나뉘나? pre-training·fine-tuning·SFT·RLHF·distillation은 각각 학습의 어느 단계에서 무엇을 정답으로 삼나? reinforcement learning과 preference learning은 어떤 관계인가? 대화형 AI는 어떤 학습 단계를 거쳐 만들어지나? | `book/part01-big-picture/01-04-training-methods-map.md` | 초고 · Claude |
-| 1.5 | 대표 모델 지도 | L1 | 1.2 | ResNet·YOLO·SAM·CLIP·BERT·GPT·Stable Diffusion·Whisper는 각 축에서 어디에 놓이나? | `book/part01-big-picture/01-05-landmark-models.md` | 계획 |
-| 1.6 | AI 산업의 기술 층위 | L1 | 1.3 | 반도체·프레임워크·파운데이션 모델·서빙·응용은 어떻게 층을 이루나? 오픈 가중치 모델과 API 모델은 무엇이 다른가? | `book/part01-big-picture/01-06-industry-stack.md` | 계획 |
+| 1.5 | 대표 모델 지도 | L1 | 1.2 | ResNet·YOLO·SAM·CLIP·BERT·GPT·Stable Diffusion·Whisper는 각 축에서 어디에 놓이나? | `book/part01-big-picture/01-05-landmark-models.md` | 초고 · Claude |
+| 1.6 | AI 산업의 기술 층위 | L1 | 1.3 | 반도체·프레임워크·foundation model·serving·응용은 어떻게 층을 이루나? open-weight model과 API 모델은 무엇이 다른가? | `book/part01-big-picture/01-06-industry-stack.md` | 초고 · Claude |
 
 ## 2부. 수학과 도구의 최소한
 | 장 | 제목 | 수준 | 선수 | 이 장의 질문 | 파일 | 상태 |

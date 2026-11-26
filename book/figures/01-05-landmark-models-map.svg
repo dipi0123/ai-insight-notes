@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 500" font-family="system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">여덟 대표 모델의 입력과 출력 지도</title>
+  <desc id="d">왼쪽의 입력(이미지, 위치 prompt, 글, 음성)에서 가운데의 여덟 모델로, 모델에서 오른쪽의 출력으로 화살표가 이어진다. ResNet은 이미지를 받아 class를, YOLO v1은 이미지를 받아 box와 class와 점수를, SAM은 이미지와 prompt를 받아 mask를, CLIP은 이미지와 글을 각각 받아 embedding을, BERT는 글을 받아 representation을, GPT는 글을 받아 글을, Stable Diffusion v1은 글을 받아 이미지를, Whisper는 음성을 받아 글을 낸다. 모델 상자의 아래 줄은 구조다.</desc>
+  <rect width="760" height="500" fill="#ffffff"/>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b7280"/></marker></defs>
+  <text x="80" y="22" font-size="13" font-weight="700" fill="#1f2937" text-anchor="middle">입력</text>
+  <text x="375" y="22" font-size="13" font-weight="700" fill="#1f2937" text-anchor="middle">모델(아래 줄: 구조)</text>
+  <text x="680" y="22" font-size="13" font-weight="700" fill="#1f2937" text-anchor="middle">출력</text>
+  <g stroke="#6b7280" stroke-width="1.4" fill="none">
+    <line x1="140" y1="130" x2="278" y2="60" marker-end="url(#a)"/>
+    <line x1="140" y1="130" x2="278" y2="112" marker-end="url(#a)"/>
+    <line x1="140" y1="130" x2="278" y2="164" marker-end="url(#a)"/>
+    <line x1="140" y1="192" x2="278" y2="164" marker-end="url(#a)"/>
+    <line x1="140" y1="130" x2="278" y2="216" marker-end="url(#a)"/>
+    <line x1="140" y1="300" x2="278" y2="216" marker-end="url(#a)"/>
+    <line x1="140" y1="300" x2="278" y2="268" marker-end="url(#a)"/>
+    <line x1="140" y1="300" x2="278" y2="320" marker-end="url(#a)"/>
+    <line x1="140" y1="300" x2="278" y2="372" marker-end="url(#a)"/>
+    <line x1="140" y1="424" x2="278" y2="424" marker-end="url(#a)"/>
+    <line x1="470" y1="60" x2="618" y2="60" marker-end="url(#a)"/>
+    <line x1="470" y1="112" x2="618" y2="112" marker-end="url(#a)"/>
+    <line x1="470" y1="164" x2="618" y2="164" marker-end="url(#a)"/>
+    <line x1="470" y1="216" x2="618" y2="216" marker-end="url(#a)"/>
+    <line x1="470" y1="268" x2="618" y2="268" marker-end="url(#a)"/>
+    <line x1="470" y1="320" x2="618" y2="340" marker-end="url(#a)"/>
+    <line x1="470" y1="372" x2="618" y2="400" marker-end="url(#a)"/>
+    <line x1="470" y1="424" x2="618" y2="340" marker-end="url(#a)"/>
+  </g>
+  <rect x="20" y="112" width="120" height="36" rx="6" fill="#eef2ff" stroke="#6366f1"/>
+  <text x="80" y="135" font-size="13" fill="#111827" text-anchor="middle">이미지</text>
+  <rect x="20" y="174" width="120" height="36" rx="6" fill="#eef2ff" stroke="#6366f1"/>
+  <text x="80" y="197" font-size="13" fill="#111827" text-anchor="middle">prompt(점·box)</text>
+  <rect x="20" y="282" width="120" height="36" rx="6" fill="#eef2ff" stroke="#6366f1"/>
+  <text x="80" y="305" font-size="13" fill="#111827" text-anchor="middle">글</text>
+  <rect x="20" y="406" width="120" height="36" rx="6" fill="#eef2ff" stroke="#6366f1"/>
+  <text x="80" y="429" font-size="13" fill="#111827" text-anchor="middle">음성</text>
+  <rect x="280" y="39" width="190" height="42" rx="6" fill="#f9fafb" stroke="#374151"/>
+  <text x="375" y="57" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">ResNet</text>
+  <text x="375" y="74" font-size="11" fill="#4b5563" text-anchor="middle">CNN</text>
+  <rect x="280" y="91" width="190" height="42" rx="6" fill="#f9fafb" stroke="#374151"/>
+  <text x="375" y="109" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">YOLO v1</text>
+  <text x="375" y="126" font-size="11" fill="#4b5563" text-anchor="middle">CNN</text>
+  <rect x="280" y="143" width="190" height="42" rx="6" fill="#f9fafb" stroke="#374151"/>
+  <text x="375" y="161" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">SAM</text>
+  <text x="375" y="178" font-size="11" fill="#4b5563" text-anchor="middle">부품 조합</text>
+  <rect x="280" y="195" width="190" height="42" rx="6" fill="#f9fafb" stroke="#374151"/>
+  <text x="375" y="213" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">CLIP</text>
+  <text x="375" y="230" font-size="11" fill="#4b5563" text-anchor="middle">부품 조합</text>
+  <rect x="280" y="247" width="190" height="42" rx="6" fill="#f9fafb" stroke="#374151"/>
+  <text x="375" y="265" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">BERT</text>
+  <text x="375" y="282" font-size="11" fill="#4b5563" text-anchor="middle">Transformer encoder</text>
+  <rect x="280" y="299" width="190" height="42" rx="6" fill="#f9fafb" stroke="#374151"/>
+  <text x="375" y="317" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">GPT</text>
+  <text x="375" y="334" font-size="11" fill="#4b5563" text-anchor="middle">Transformer decoder</text>
+  <rect x="280" y="351" width="190" height="42" rx="6" fill="#f9fafb" stroke="#374151"/>
+  <text x="375" y="369" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">Stable Diffusion v1</text>
+  <text x="375" y="386" font-size="11" fill="#4b5563" text-anchor="middle">부품 조합</text>
+  <rect x="280" y="403" width="190" height="42" rx="6" fill="#f9fafb" stroke="#374151"/>
+  <text x="375" y="421" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">Whisper</text>
+  <text x="375" y="438" font-size="11" fill="#4b5563" text-anchor="middle">Transformer encoder-decoder</text>
+  <rect x="620" y="42" width="120" height="36" rx="6" fill="#ecfdf5" stroke="#10b981"/>
+  <text x="680" y="65" font-size="13" fill="#111827" text-anchor="middle">class</text>
+  <rect x="620" y="94" width="120" height="36" rx="6" fill="#ecfdf5" stroke="#10b981"/>
+  <text x="680" y="117" font-size="13" fill="#111827" text-anchor="middle">box·class·점수</text>
+  <rect x="620" y="146" width="120" height="36" rx="6" fill="#ecfdf5" stroke="#10b981"/>
+  <text x="680" y="169" font-size="13" fill="#111827" text-anchor="middle">mask</text>
+  <rect x="620" y="198" width="120" height="36" rx="6" fill="#ecfdf5" stroke="#10b981"/>
+  <text x="680" y="221" font-size="13" fill="#111827" text-anchor="middle">embedding</text>
+  <rect x="620" y="250" width="120" height="36" rx="6" fill="#ecfdf5" stroke="#10b981"/>
+  <text x="680" y="273" font-size="13" fill="#111827" text-anchor="middle">representation</text>
+  <rect x="620" y="322" width="120" height="36" rx="6" fill="#ecfdf5" stroke="#10b981"/>
+  <text x="680" y="345" font-size="13" fill="#111827" text-anchor="middle">글</text>
+  <rect x="620" y="382" width="120" height="36" rx="6" fill="#ecfdf5" stroke="#10b981"/>
+  <text x="680" y="405" font-size="13" fill="#111827" text-anchor="middle">이미지</text>
+  <text x="20" y="486" font-size="11" fill="#4b5563">CLIP은 이미지와 글을 각각 받아 같은 공간의 embedding을 낸다. BERT의 representation은 fine-tuning으로 붙인 출력 layer가 task의 출력으로 바꾼다.</text>
+</svg>
