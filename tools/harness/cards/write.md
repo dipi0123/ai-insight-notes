@@ -29,4 +29,4 @@
 10. `delta.json`: `status`는 `초고 · <모델 계열>`, `stage_files`는 놓을 파일마다 `shasum -a 256` 값.
 
 ## 돌려줄 것
-`{"status", "chars": <자>, "sentences": <수>, "lint_errors": 0, "gaps": ["…"], "note": "…"}`
+`{"status", "chars": <자>, "sentences": <수>, "lint_errors": 0, "gaps": ["…"], "note": "…"}` — `status`는 [공통 규칙 8](../README.md#모든-카드-공통)의 네 값 중 하나다.

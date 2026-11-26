@@ -24,4 +24,4 @@
 8. 묶음 나눔이 §10.1을 지키나.
 
 ## 돌려줄 것
-`{"status", "critique": "build/harness/part-NN/critique.md", "blocking": <차단 지적 수>}`
+`{"status", "critique": "build/harness/part-NN/critique.md", "blocking": <차단 지적 수>}` — `status`는 [공통 규칙 8](../README.md#모든-카드-공통)의 네 값 중 하나다.

@@ -61,7 +61,7 @@
 
 - [1.1 AI·machine learning·deep learning](part01-big-picture/01-01-ai-ml-dl.md) · L1
 - [1.2 모델 이름을 읽는 여섯 개의 축](part01-big-picture/01-02-naming-axes.md) · L1
-- [1.3 모델의 한살이: 데이터에서 서비스까지](part01-big-picture/01-03-model-lifecycle.md) · L1
+- [1.3 ML lifecycle: 데이터에서 서비스까지](part01-big-picture/01-03-model-lifecycle.md) · L1
 - [1.4 학습 방법 지도: pre-training에서 reinforcement learning까지](part01-big-picture/01-04-training-methods-map.md) · L1
 - [1.5 대표 모델 지도](part01-big-picture/01-05-landmark-models.md) · L1
 - [1.6 AI 산업의 기술 층위](part01-big-picture/01-06-industry-stack.md) · L1

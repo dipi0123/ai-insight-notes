@@ -39,9 +39,9 @@ Mitchell이 든 예는 체커다.
 
 ### 1.3 deep learning: 여러 layer로 쌓아 배우는 방법
 
-deep learning은 machine learning의 한 갈래다. 복잡한 개념을 더 단순한 개념들로 지어 올리는 방식으로 배운다. 이렇게 쌓인 개념을 그래프로 그리면 layer가 여러 겹인 깊은(deep) 그래프가 된다. 이름이 deep learning인 까닭이다 [@Goodfellow2016]. 모델에서 layer는 입력이나 앞 layer의 결과를 받아 단순한 계산 하나를 하고, 그 결과를 다음 layer로 넘기는 계산 단위다. 이렇게 layer를 쌓는 모델이 neural network다. neural network는 뇌의 신경세포에서 이름을 따왔지만, 뇌를 그대로 흉내 낸 모형이 아니라 수학 함수를 이어 붙인 계산이다 [@Goodfellow2016].
+deep learning은 machine learning의 한 분야다. 복잡한 개념을 더 단순한 개념들을 조합해 쌓아 가는 방식으로 배운다. 이렇게 쌓인 개념을 그래프로 그리면 layer가 여러 겹인 깊은(deep) 그래프가 된다. 이름이 deep learning인 까닭이다 [@Goodfellow2016]. 모델에서 layer는 입력이나 앞 layer의 결과를 받아 단순한 계산 하나를 하고, 그 결과를 다음 layer로 넘기는 계산 단위다. 이렇게 layer를 쌓는 모델이 neural network다. neural network는 뇌의 신경세포에서 이름을 따왔지만, 뇌를 그대로 흉내 낸 모형이 아니라 수학 함수를 이어 붙인 계산이다 [@Goodfellow2016].
 
-> **표준과 관례** AI ⊃ machine learning ⊃ deep learning이라는 포함 관계는 Goodfellow 등의 교과서가 쓰는 정리다 [@Goodfellow2016]. 이 교과서는 machine learning과 deep learning 사이에 representation learning(표현 학습)이라는 갈래를 하나 더 두어 AI ⊃ machine learning ⊃ representation learning ⊃ deep learning으로 그린다. representation learning은 §3에서 다룬다.
+> **표준과 관례** AI ⊃ machine learning ⊃ deep learning이라는 포함 관계는 Goodfellow 등의 교과서가 쓰는 정리다 [@Goodfellow2016]. 이 교과서는 machine learning과 deep learning 사이에 representation learning(표현 학습)이라는 영역을 하나 더 두어 AI ⊃ machine learning ⊃ representation learning ⊃ deep learning으로 그린다. representation learning은 §3에서 다룬다.
 
 ```mermaid
 flowchart TB
@@ -88,7 +88,7 @@ machine learning에서는 규칙을 직접 쓰지 않는다. 대신 다음을 �
 2. **학습 방법.** 흔히 쓰는 것은 모델이 낸 답을 정답과 비교해 weight를 조금씩 고치는 절차다.
 3. **데이터.** 「이 메일은 스팸, 이 메일은 정상」처럼 정답인 label(라벨)이 붙은 예시를 많이 모은다.
 
-이 목록은 스팸 필터처럼 정답이 붙은 예시로 배우는 경우다. Mitchell의 체커 예에서는 정답을 알려 주는 사람 없이 프로그램이 스스로 게임을 두고, 게임을 결국 이겼는지 졌는지만 보고 배운다 [@Mitchell1997]. 학습 방법의 여러 갈래는 [1.4](01-04-training-methods-map.md)에서 다룬다.
+이 목록은 스팸 필터처럼 정답이 붙은 예시로 배우는 경우다. Mitchell의 체커 예에서는 정답을 알려 주는 사람 없이 프로그램이 스스로 게임을 두고, 게임을 결국 이겼는지 졌는지만 보고 배운다 [@Mitchell1997]. 학습 방법의 여러 종류는 [1.4](01-04-training-methods-map.md)에서 다룬다.
 
 학습을 돌리면 weight가 정해지고, 그 weight를 담은 모델이 새 메일을 받아 스팸인지 판단한다. 소프트웨어로 말하면 모델은 함수이고, 그 함수의 몸통 중 동작을 좌우하는 숫자를 사람이 아니라 학습이 채운다. 모델을 돌리는 코드와 학습 코드는 여전히 사람이 쓴다.
 
@@ -162,10 +162,10 @@ Goodfellow 등에 따르면 더 큰 neural network는 더 복잡한 task에서 �
 
 ## 헷갈리기 쉬운 점
 
-| 헷갈리는 짝 | 차이 |
+| 헷갈리는 개념 | 차이 |
 |---|---|
 | AI와 machine learning | AI가 더 넓다. 규칙과 수 읽기로 동작하는 프로그램도 AI다. machine learning은 그중 데이터에서 배우는 방법이다 |
-| machine learning과 deep learning | deep learning은 machine learning의 한 갈래다. deep learning이 아닌 machine learning 방법(3.9)도 여전히 쓰인다 |
+| machine learning과 deep learning | deep learning은 machine learning의 한 분야다. deep learning이 아닌 machine learning 방법(3.9)도 여전히 쓰인다 |
 | 모델과 프로그램 | 모델도 프로그램 안에서 돌아가는 함수다. 다른 점은 동작을 좌우하는 숫자(weight)를 사람이 아니라 학습이 정한다는 것이다 |
 | neural network와 뇌 | 이름은 뇌의 신경세포에서 따왔지만, 뇌를 그대로 흉내 내려는 모형이 아니다. 선형대수·확률·최적화 같은 수학에 기대어 만든 계산이다 |
 

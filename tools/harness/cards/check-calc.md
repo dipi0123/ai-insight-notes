@@ -24,4 +24,4 @@
 판정: 계산·실행 문장마다 `일치`·`불일치`·`미확인`. 지적의 근거는 내 기록 파일(`evidence.type: 실행`, `output`)이다.
 
 ## 돌려줄 것
-`{"status", "file": "build/harness/N.M/checks/rN-calc.json", "blocking": <수>}`
+`{"status", "file": "build/harness/N.M/checks/rN-calc.json", "blocking": <수>}` — `status`는 [공통 규칙 8](../README.md#모든-카드-공통)의 네 값 중 하나다.

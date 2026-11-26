@@ -22,4 +22,4 @@
 고친 문장은 다음 회차에 다시 점검받는다. 두 번째 회차에도 고치지 못한 차단 지적이 있으면 억지로 맞추지 않고 `보류`로 돌려준다.
 
 ## 돌려줄 것
-`{"status", "changed": ["s-…", …], "removed": ["s-…"], "open_questions_add": <수>}`
+`{"status", "changed": ["s-…", …], "removed": ["s-…"], "open_questions_add": <수>}` — `status`는 [공통 규칙 8](../README.md#모든-카드-공통)의 네 값 중 하나다.

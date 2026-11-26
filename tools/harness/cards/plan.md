@@ -30,4 +30,4 @@
 curriculum과 다른 파일은 고치지 않는다.
 
 ## 돌려줄 것
-`{"status", "plan": "build/harness/part-NN/plan.md", "batches": [["N.M", …], …], "user_decisions": ["…"]}`
+`{"status", "plan": "build/harness/part-NN/plan.md", "batches": [["N.M", …], …], "user_decisions": ["…"]}` — `status`는 [공통 규칙 8](../README.md#모든-카드-공통)의 네 값 중 하나다.

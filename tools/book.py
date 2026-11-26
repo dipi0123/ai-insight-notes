@@ -86,7 +86,7 @@ SITE_GENERATED = ("nav", "docs_dir", "site_dir")
 
 # 책 전체 집필 하네스(작업 절차 §10). 작업 파일은 git에 올리지 않는 build/harness/에 둔다.
 HARNESS = BUILD / "harness"
-TOOL_VERSION = "2026.11.1"  # lint·sentences·merge 결과에 적는 도구 판. 검사 내용을 바꾸면 올린다
+TOOL_VERSION = "2026.11.3"  # lint·sentences·merge 결과에 적는 도구 판. 검사 내용을 바꾸면 올린다
 
 # 집필 규칙 §5: 용어집 「분류」 칸의 값.
 CATEGORIES = ("분야", "구조", "과제", "방식", "학습신호", "규모·활용", "학습과정", "평가", "데이터", "수학", "시스템")
@@ -98,6 +98,22 @@ TIME_WORDS = re.compile(r"최근|요즘|새로 나온|최신")
 # 용어집 한국어 칸과 겹치지만 일반 서술로 흔히 쓰는 말. 「번역어 단독 사용」 후보에서 뺀다.
 # 임시 목록이다. 정식 허용 목록은 사용자 승인으로 style-guide §5에 둔다(설계안 9절 8).
 EVERYDAY_KO = {"구조", "환경", "행동", "표현", "특징", "층", "음성", "손실", "정책", "클래스", "패치", "토큰", "잡음"}
+
+# 개발자 독자에게 직역투로 읽히는 낱말(style-guide §5). (정규식, 표시 이름, 흔히 쓰는 말). lint가 후보로 알리고 렌즈가 판정한다.
+# 새로 발견한 말은 여기에 더한다.
+LITERAL_KO = [
+    (r"한살이", "한살이", "lifecycle"),
+    (r"갈래", "갈래", "분야·종류·범주"),
+    (r"짝(?!지)", "짝", "쌍"),
+    (r"(?<![가-힣])판(?=이다|이|은|을|의|마다|에서|으로|[)\s,.])", "판", "버전"),
+    (r"꼬리", "꼬리", "접미사"),
+    (r"견[주준줄]", "견주다", "비교하다"),
+    (r"걷어\s?[내낸냈낼]", "걷어 내다", "제거하다"),
+    (r"되풀이", "되풀이", "반복"),
+    (r"짜임", "짜임", "구성"),
+    (r"도우미", "도우미", "어시스턴트"),
+    (r"지어\s?[올오][리린렸릴]", "지어 올리다", "쌓아 가다"),
+]
 
 # book/ 안에서 쓰면 안 되는 표현. 확실한 신호만 둔다(오탐을 피하려고 일반 단어는 넣지 않는다).
 FORBIDDEN = [
@@ -1091,7 +1107,7 @@ MERMAID_NODE_RE = re.compile(r"(?<![\w-])([A-Za-z_][\w]*)\s*(?:\[|\(|\{|>)")
 MERMAID_EDGE_RE = re.compile(r"(?<![\w-])([A-Za-z_][\w]*)\s*(?:-->|---|-\.->|==>|--\s|-\.-)"
                              r"|(?:-->|---|-\.->|==>|-\.-)\s*(?:\|[^|]*\|\s*)?([A-Za-z_][\w]*)")
 LATIN_RE = re.compile(r"[A-Za-z][A-Za-z0-9]*(?:[-'][A-Za-z0-9]+)*")
-READ_LIMIT_CHARS = 26000  # 40분 분량의 어림값(작업 절차 §2의 5). 넘으면 경고만 한다
+READ_LIMIT_CHARS = 13500  # 이론 장 분량 경고선(시범 운영에서 1부 장 30~40분 읽기에 해당). 넘으면 경고만 한다
 
 
 def section_range(heads: list[tuple[int, str]], name: str, n_lines: int):
@@ -1153,16 +1169,45 @@ def paren_spans(text: str) -> list[tuple[int, int]]:
     return spans
 
 
-def term_candidates(lines: list[str], body_start: int, rows: list[dict]) -> tuple[list[dict], dict]:
-    """용어 표기 후보: 첫 등장에 한국어가 없음, 번역어 단독 사용, 용어집에 없는 영어 낱말."""
-    segs = []  # (줄 번호, 정리한 줄, 표 행인가)
-    in_fence = False
+
+def literal_candidates(lines: list[str]) -> list[dict]:
+    """직역투 낱말 후보(style-guide §5). 제목도 본다. Mermaid 밖의 코드 블록과 링크 주소는 뺀다."""
+    found: dict[str, list[int]] = {}
+    fence = None
     for i, ln in enumerate(lines):
         s = ln.lstrip()
         if s.startswith("```") or s.startswith("~~~"):
-            in_fence = not in_fence
+            fence = None if fence is not None else (s[3:].strip().split() or [""])[0].lower()
             continue
-        if in_fence or i < body_start or not s or s.startswith("#") or TAG_LINE_RE.match(s.strip()):
+        if fence is not None and fence != "mermaid":
+            continue
+        text = re.sub(r"\]\([^)]*\)", "]", ln)
+        for rx, name, _ in LITERAL_KO:
+            for _m in re.finditer(rx, text):
+                found.setdefault(name, []).append(i + 1)
+    out = []
+    for rx, name, better in LITERAL_KO:
+        where = found.get(name)
+        if where:
+            more = f" 외 {len(where) - 1}곳" if len(where) > 1 else ""
+            out.append({"line": where[0], "msg": f"직역투 낱말 '{name}'{more} — 개발 문서에서 흔히 쓰는 말({better})이나 영어를 쓴다(style-guide §5)"})
+    return out
+
+def term_candidates(lines: list[str], body_start: int, rows: list[dict]) -> tuple[list[dict], dict]:
+    """용어 표기 후보: 첫 등장에 한국어가 없음, 괄호 한국어를 다시 닮, 번역어 단독 사용, 용어집에 없는 영어 낱말.
+    Mermaid 블록 안의 글도 본문처럼 센다(그림 노드가 첫 등장일 수 있다). 다른 코드 블록은 뺀다."""
+    segs = []  # (줄 번호, 정리한 줄, 표 행인가)
+    fence = None  # 열린 코드 블록의 언어
+    for i, ln in enumerate(lines):
+        s = ln.lstrip()
+        if s.startswith("```") or s.startswith("~~~"):
+            fence = None if fence is not None else (s[3:].strip().split() or [""])[0].lower()
+            continue
+        if fence is not None and fence != "mermaid":
+            continue
+        if fence == "mermaid" and re.match(r"(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram|subgraph|end\b|%%)", s):
+            continue
+        if i < body_start or not s or (fence is None and (s.startswith("#") or TAG_LINE_RE.match(s.strip()))):
             continue
         segs.append((i + 1, clean_for_terms(ln), s.startswith("|")))
     out: list[dict] = []
@@ -1174,36 +1219,55 @@ def term_candidates(lines: list[str], body_start: int, rows: list[dict]) -> tupl
             variants.append((len(v), v, k))
     variants.sort(reverse=True)
     masked = [list(t) for _, t, _ in segs]
-    first: dict[int, tuple[int, int, int, int]] = {}  # 행 → (seg, start, end)
+    occ: dict[int, list[tuple[int, int, int]]] = {}  # 행 → [(seg, start, end)]
     for _, v, k in variants:
         rx = term_pattern(v)
         for si in range(len(segs)):
             text = "".join(masked[si])
             for m in rx.finditer(text):
-                cur = first.get(k)
-                if cur is None or (si, m.start()) < (cur[0], cur[1]):
-                    first[k] = (si, m.start(), m.end())
+                occ.setdefault(k, []).append((si, m.start(), m.end()))
                 for p in range(m.start(), m.end()):
                     masked[si][p] = "\0"
-    for k, (si, start, end) in first.items():
+
+    def gloss_group(text: str, start: int, end: int) -> str | None:
+        """용어 바로 뒤의 괄호, 또는 용어를 감싼 가장 안쪽 괄호."""
+        if end < len(text) and text[end] == "(":
+            close = next((c for o, c in paren_spans(text) if o == end), len(text))
+            return text[end:close + 1]
+        enclosing = [(o, c) for o, c in paren_spans(text) if o < start and end <= c]
+        if enclosing:
+            o, c = max(enclosing)
+            return text[o:c + 1]
+        return None
+
+    for k, places in occ.items():
         r = rows[k]
         kos = split_variants(r["한국어"])
         if not kos:
             continue
+        places.sort()
+        si, start, end = places[0]
         text = segs[si][1]
-        group = None
-        if end < len(text) and text[end] == "(":
-            close = next((c for o, c in paren_spans(text) if o == end), len(text))
-            group = text[end:close + 1]
-        else:
-            enclosing = [(o, c) for o, c in paren_spans(text) if o < start and end <= c]
-            if enclosing:
-                o, c = max(enclosing)
-                group = text[o:c + 1]
-        if group is None or not any(ko in group for ko in kos):
+        # 같은 줄(표 행)에서 용어를 다시 쓰며 한국어를 단 것도 첫 등장의 풀이로 친다.
+        groups = [gloss_group(text, st, en) for sj, st, en in places if sj == si]
+        if not any(g and any(ko in g for ko in kos) for g in groups):
             found = text[start:end]
             also = f" — 표기는 '{r['표기']}'" if found.casefold() != r["표기"].casefold() else ""
             out.append({"line": segs[si][0], "msg": f"'{found}'의 첫 등장에 한국어 '{r['한국어']}'가 없다{also}"})
+        # 괄호 한국어를 다시 단 곳: 첫 등장 뒤, 표 밖에서 용어 바로 뒤 괄호에 한국어가 또 있다.
+        again = []
+        for sj, st, en in places[1:]:
+            if sj == si:
+                continue
+            t = segs[sj][1]
+            if segs[sj][2] or not (en < len(t) and t[en] == "("):
+                continue
+            g = gloss_group(t, st, en)
+            if g and any(ko in g for ko in kos):
+                again.append(segs[sj][0])
+        if again:
+            more = f" 외 {len(again) - 1}곳" if len(again) > 1 else ""
+            out.append({"line": again[0], "msg": f"'{r['표기']}'의 괄호 한국어를 첫 등장({segs[si][0]}행) 뒤에 다시 달았다{more} — 그다음부터는 영어만 쓴다(style-guide §5)"})
 
     # 2) 번역어 단독 사용: 괄호 밖·표 밖에서 한국어만 쓴 곳.
     kos = []
@@ -1415,11 +1479,11 @@ def lint_chapter(ch: Chapter, chapters: dict[str, Chapter], src: Path, stage: Pa
                 warn(k, "더 읽을거리 항목은 [@키]로 인용한다")
 
     if len(text) > READ_LIMIT_CHARS:
-        warn(1, f"{len(text):,}자 — 40분 안에 읽기 어려울 수 있다(작업 절차 §2의 5)")
+        warn(1, f"{len(text):,}자 — 경고선 {READ_LIMIT_CHARS:,}자를 넘는다. 40분 안에 읽기 어려울 수 있으니 줄일 곳을 본다(작업 절차 §2의 5)")
 
     body_start = (meta_i + 1) if meta_i is not None else 0
     cands, unknown = term_candidates(lines, body_start, glossary_entries(delta))
-    res["candidates"] = cands
+    res["candidates"] = cands + literal_candidates(lines)
     units = sentence_units(text)
     res["stats"] = {
         "chars": len(text), "sentences": len(units), "chapter_hash": chapter_hash(units),

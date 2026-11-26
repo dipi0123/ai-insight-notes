@@ -24,4 +24,4 @@
 7. 진행 기록을 고친다: 장마다 단계(통합), 통과한 장 해시, 문장 수, 보류한 장과 이유, 다음 미확인 번호.
 
 ## 돌려줄 것
-`{"status", "merged": ["N.M", …], "held": [{"chapter": "N.M", "reason": "…"}], "check_errors": 0, "snapshot": "build/harness/snapshots/merge-…"}`
+`{"status", "merged": ["N.M", …], "held": [{"chapter": "N.M", "reason": "…"}], "check_errors": 0, "snapshot": "build/harness/snapshots/merge-…"}` — `status`는 [공통 규칙 8](../README.md#모든-카드-공통)의 네 값 중 하나다.

@@ -86,6 +86,7 @@
 | machine learning | ML | 머신러닝 | 분야 | 동작 규칙을 사람이 짜 넣지 않고 데이터에서 배우게 하는 AI의 방법 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md) |
 | mask | — | 마스크 | 과제 | 사진에서 한 물체나 한 class에 속한 픽셀을 표시한 것. segmentation이 출력한다 | [1.2](../part01-big-picture/01-02-naming-axes.md), 6.7 |
 | masked language modeling | — | 마스크 언어 모델링 | 학습신호 | 입력 token의 일부를 가리고 문맥만으로 가린 token을 맞히게 하는 pre-training 목표. BERT가 쓴다 | [1.5](../part01-big-picture/01-05-landmark-models.md), 8.2 |
+| ML lifecycle | machine learning lifecycle | ML 수명 주기 | 학습과정 | 문제 정의·데이터 수집·labeling·학습·평가·배포·모니터링으로 이어지고, 문제가 보이면 앞 단계로 돌아가는 모델 개발의 전체 흐름 | [1.3](../part01-big-picture/01-03-model-lifecycle.md) |
 | MLLM | multimodal large language model | 멀티모달 대규모 언어 모델 | 분야 | LLM이 글 밖의 modality, 특히 이미지를 받도록 넓힌 모델. 이미지와 글을 받아 글을 내는 모델을 이렇게 부르는 문헌이 있다 | [1.2](../part01-big-picture/01-02-naming-axes.md), 11.2 |
 | modality | — | 모달리티 | 분야 | 글·이미지·음성·영상 같은 데이터의 종류 | [1.2](../part01-big-picture/01-02-naming-axes.md), 11.7 |
 | model card | — | 모델 카드 | 규모·활용 | 학습한 모델을 공개할 때 함께 내놓는 짧은 설명 문서. 평가 결과와 생각한 쓰임 같은 정보를 담는다 | [1.2](../part01-big-picture/01-02-naming-axes.md) |
@@ -94,7 +95,7 @@
 | natural language processing | NLP | 자연어 처리 | 분야 | 사람의 언어로 쓴 글을 다루는 AI 분야 | [1.2](../part01-big-picture/01-02-naming-axes.md) |
 | neural network | — | 신경망 | 구조 | 단순한 계산 layer를 여러 겹 이어 붙인 모델. 뇌의 신경세포에서 이름을 따왔지만 뇌를 흉내 낸 모형은 아니다 | [1.1](../part01-big-picture/01-01-ai-ml-dl.md), [1.2](../part01-big-picture/01-02-naming-axes.md), 4.2 |
 | next-token prediction | — | 다음 토큰 예측 | 학습신호 | 앞의 token들을 보고 다음 token을 맞히는 학습 목표. language model pre-training의 기본 방식이다 | [1.4](../part01-big-picture/01-04-training-methods-map.md), 8.2 |
-| noise | — | 잡음 | 데이터 | 데이터에 섞인 무작위 값. diffusion model은 noise를 더하고 걷어 내며 배운다 | [1.2](../part01-big-picture/01-02-naming-axes.md), 11.5 |
+| noise | — | 잡음 | 데이터 | 데이터에 섞인 무작위 값. diffusion model은 noise를 더하고 제거하며 배운다 | [1.2](../part01-big-picture/01-02-naming-axes.md), 11.5 |
 | object detection | — | 객체 검출 | 과제 | 사진 속 물체마다 위치(bounding box)·class·confidence score를 출력하는 task | [1.2](../part01-big-picture/01-02-naming-axes.md), 6.5 |
 | offline inference | static inference | 오프라인 추론 | 시스템 | 미리 한꺼번에 예측을 계산해 저장해 두고, 요청이 오면 저장한 결과를 꺼내 주는 방식 | [1.3](../part01-big-picture/01-03-model-lifecycle.md), 13.2 |
 | offline learning | — | 오프라인 학습 | 학습과정 | 미리 모아 둔 데이터로만 학습하는 방식 | [1.4](../part01-big-picture/01-04-training-methods-map.md) |

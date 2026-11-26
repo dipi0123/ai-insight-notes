@@ -26,4 +26,4 @@
 판정: `일치`·`불일치`·`미확인`. 불일치와 미확인에는 지적을 단다. 지적의 근거는 출처의 위치와 닻이다.
 
 ## 돌려줄 것
-`{"status", "file": "build/harness/N.M/checks/rN-source.json", "blocking": <수>}`
+`{"status", "file": "build/harness/N.M/checks/rN-source.json", "blocking": <수>}` — `status`는 [공통 규칙 8](../README.md#모든-카드-공통)의 네 값 중 하나다.

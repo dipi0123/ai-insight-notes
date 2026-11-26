@@ -26,6 +26,7 @@ WORK = REPO / "build" / "harness" / "selftest"
 IGNORE = shutil.ignore_patterns(".git", ".venv", "build", "node_modules", "__pycache__", ".DS_Store")
 CH13 = "book/part01-big-picture/01-03-model-lifecycle.md"
 CH15 = "book/part01-big-picture/01-05-landmark-models.md"
+CH21 = "book/part02-math-and-tools/02-01-vectors-matrices-tensors.md"
 GLOSSARY = "book/appendix/glossary.md"
 REFERENCES = "book/appendix/references.md"
 OQ = "editorial/open-questions.md"
@@ -104,7 +105,7 @@ def lint_cases(s: Suite) -> None:
     stage = s.path("build/harness/1.3/stage") / CH13
     write(stage, s.path(CH13).read_text(encoding="utf-8"))
     lint = ["tools/book.py", "lint", "1.3"]
-    s.expect("lint: 1.3 사본은 오류 0", lint, 0, "오류 0건", "build/harness/1.3/stage")
+    s.expect("lint: 1.3 사본은 오류 0", lint, 0, "오류 0건", "build/harness/1.3/stage", absent=("첫 등장에 한국어",))  # 표 행 안의 풀이도 센다
     cases = [
         ("제목", rep("# 1.3 ", "# 1.3 틀린 "), 1, "첫 줄이"),
         ("메타 줄", rep("**이 장의 질문** ", "**이 장의 질문** 바뀐 "), 1, "메타 줄이 curriculum과 다르다"),
@@ -120,12 +121,22 @@ def lint_cases(s: Suite) -> None:
         ("링크 대상", rep("(01-01-ai-ml-dl.md", "(01-01-missing.md"), 1, "링크 대상"),
         ("앵커", rep("## 정리\n", "[1.1](01-01-ai-ml-dl.md#없는-절)\n\n## 정리\n"), 1, "앵커가 없다"),
         ("시점 표현", rep("## 정리\n", "최근 모델은 크다.\n\n## 정리\n"), 0, "경고", "'최근'"),
-        ("그림 설명", lambda t: "\n".join(ln for ln in t.splitlines() if not ln.startswith("그림: 모델의 한살이")) + "\n", 0, "그림: …"),
+        ("그림 설명", lambda t: "\n".join(ln for ln in t.splitlines() if not ln.startswith("그림: ML lifecycle")) + "\n", 0, "그림: …"),
         ("더 읽을거리 인용", lambda t: t.rstrip("\n") + "\n- 아무 문헌\n", 0, "[@키]로 인용"),
+        ("분량 경고선", rep("## 정리\n", "가" * 3000 + "\n\n## 정리\n"), 0, "경고선 13,500자"),
+        ("괄호 한국어 되풀이", rep("배포 뒤에 생기는 distribution shift다.", "배포 뒤에 생기는 distribution shift(분포 변화)다."), 0,
+         "'distribution shift'의 괄호 한국어를 첫 등장"),
+        ("직역투 낱말", rep("## 정리\n", "학습은 되풀이를 견준다. noise를 걷어 낸다.\n\n## 정리\n"), 0,
+         "직역투 낱말 '되풀이'", "직역투 낱말 '견주다'", "직역투 낱말 '걷어 내다'"),
+        ("Mermaid 안의 첫 등장", rep("## 1. ML lifecycle 한눈에\n",
+         "```mermaid\nflowchart TB\n  A[\"distribution\"] --> B[\"끝\"]\n```\n\n그림: 시험.\n\n## 1. ML lifecycle 한눈에\n"), 0,
+         "'distribution'의 첫 등장에 한국어"),
     ]
     for name, fn, code, *has in cases:
         with patched(stage, fn):
             s.expect(f"lint: {name}", lint, code, *has)
+    with patched(stage, rep("## 정리\n", "입력과 짝지은 데이터로 판단한다.\n\n## 정리\n")):
+        s.expect("lint: 직역투 아님(짝지은·판단)", lint, 0, "오류 0건", absent=("직역투",))
     # 변경분의 새 참고문헌 키는 인용으로 인정한다.
     delta = s.path("build/harness/1.3/delta.json")
     write(delta, json.dumps({"chapter": "1.3", "references_add": [
@@ -186,8 +197,8 @@ def check_cases(s: Suite) -> None:
 def fake_chapter(s: Suite) -> str:
     book = load("book_copy", s.path("tools/book.py"))
     chapters = book.load_chapters()
-    meta = book.expected_meta(chapters["1.5"], chapters)
-    return f"""# 1.5 대표 모델 지도
+    meta = book.expected_meta(chapters["2.1"], chapters)
+    return f"""# 2.1 vector·matrix·tensor
 
 {meta}
 
@@ -226,23 +237,23 @@ def fake_chapter(s: Suite) -> str:
 
 def merge_cases(s: Suite) -> None:
     h = s.path("build/harness")
-    stage = h / "1.5/stage"
-    chap = stage / CH15
+    stage = h / "2.1/stage"
+    chap = stage / CH21
     write(chap, fake_chapter(s))
     gl = s.path(GLOSSARY)
     vit = "| ViT | Vision Transformer | — | 구조 | 이미지를 patch로 잘라 token처럼 늘어놓고 Transformer에 넣는 구조 | [1.2](../part01-big-picture/01-02-naming-axes.md), 6.3 |"
-    gl.write_text(rep(vit, vit.replace("), 6.3 |", "), 1.5, 6.3 |"))(gl.read_text(encoding="utf-8")), encoding="utf-8")
-    s.expect("check: 링크 없는 1.5 언급은 통과", ["tools/book.py", "check"], 0, "오류 0건")
+    gl.write_text(rep(vit, vit.replace("), 6.3 |", "), 2.1, 6.3 |"))(gl.read_text(encoding="utf-8")), encoding="utf-8")
+    s.expect("check: 링크 없는 2.1 언급은 통과", ["tools/book.py", "check"], 0, "오류 0건")
     good = {
-        "chapter": "1.5", "status": "초고 · Claude",
-        "stage_files": {CH15: sha(chap)},
+        "chapter": "2.1", "status": "초고 · Claude",
+        "stage_files": {CH21: sha(chap)},
         "glossary_add": [{"표기": "zeta test", "풀이": "—", "한국어": "제타 시험", "분류": "평가",
-                          "정의": "수용 시험용 행", "본장": ["1.5"]}],
-        "glossary_link": [{"표기": "weight", "장": "1.5"}],
+                          "정의": "수용 시험용 행", "본장": ["2.1"]}],
+        "glossary_link": [{"표기": "weight", "장": "2.1"}],
         "references_add": ["- **@Aaa2001** · A. 「Test Title」. arXiv, 2001. https://arxiv.org/abs/0101.00001"],
-        "open_questions_add": [{"확인할 것": "수용 시험 항목", "관련 장": "1.5", "확인 방법": "시험"}],
+        "open_questions_add": [{"확인할 것": "수용 시험 항목", "관련 장": "2.1", "확인 방법": "시험"}],
     }
-    dpath = h / "1.5/delta.json"
+    dpath = h / "2.1/delta.json"
     base = h / "batch-01-1/base.json"
     s.expect("hashes", ["tools/book.py", "hashes", "--out", str(base.relative_to(s.root))], 0)
     merge = ["tools/book.py", "merge", str(dpath.relative_to(s.root))]
@@ -253,7 +264,7 @@ def merge_cases(s: Suite) -> None:
             extra()
         before = s.hashes()
         s.expect(f"merge 거부: {name}", merge + list(args), 1, *has)
-        s.check(f"merge 거부 뒤 그대로: {name}", s.hashes() == before and not s.path(CH15).exists(), "공유 파일이나 book/이 바뀌었다")
+        s.check(f"merge 거부 뒤 그대로: {name}", s.hashes() == before and not s.path(CH21).exists(), "공유 파일이나 book/이 바뀌었다")
 
     bad("상태 검토완료", {**good, "status": "검토완료 · Claude / GPT"}, "초고 · 집필AI")
     bad("상태 없음", {k: v for k, v in good.items() if k != "status"}, "status('초고 · 집필AI')가 필요하다")
@@ -261,14 +272,13 @@ def merge_cases(s: Suite) -> None:
     bad("용어집 충돌", {**good, "glossary_add": [{**good["glossary_add"][0], "표기": "weight"}]}, "다른 내용으로 있다")
     bad("같은 문헌", {**good, "references_add": ["- **@Bbb2015** · B. 「X」. arXiv, 2015. https://arxiv.org/abs/1503.02531"]}, "같은 문헌")
     bad("참고문헌 형식", {**good, "references_add": ["- **@Ccc2001** · C. Title. arXiv, 2001. https://x.org/a"]}, "「」로 감싼다")
-    other = "book/part02-math-and-tools/02-01-vectors-matrices-tensors.md"
+    other = "book/part02-math-and-tools/02-02-derivatives-gradients.md"
     write(stage / other, "x\n")
     bad("남의 장 파일", {**good, "stage_files": {**good["stage_files"], other: sha(stage / other)}}, "놓을 수 있는 파일이 아니다")
     (stage / other).unlink()
-    shutil.rmtree(stage / "book/part02-math-and-tools")
-    write(stage / "book/figures/01-05-x.svg", "<svg/>")
+    write(stage / "book/figures/02-01-x.svg", "<svg/>")
     bad("목록에 없는 stage 파일", good, "stage_files에 없다")
-    (stage / "book/figures/01-05-x.svg").unlink()
+    (stage / "book/figures/02-01-x.svg").unlink()
     shutil.rmtree(stage / "book/figures")
     orig = chap.read_text(encoding="utf-8")
     write(chap, orig + "\n덧붙임.\n")
@@ -283,21 +293,21 @@ def merge_cases(s: Suite) -> None:
 
     write(dpath, json.dumps(good, ensure_ascii=False))
     s.expect("merge --dry-run은 쓰지 않는다", merge + ["--dry-run"], 0, "아무것도 쓰지 않았다")
-    s.check("dry-run 뒤 book/에 없다", not s.path(CH15).exists())
-    s.expect("merge 정상", merge + ["--base", str(base.relative_to(s.root)), "--oq-floor", "7"], 0,
-             "용어집 +1행", "참고문헌 +1개", "OQ-008", "curriculum 1.5: 계획 → 초고 · Claude")
+    s.check("dry-run 뒤 book/에 없다", not s.path(CH21).exists())
+    s.expect("merge 정상", merge + ["--base", str(base.relative_to(s.root)), "--oq-floor", "9"], 0,
+             "용어집 +1행", "참고문헌 +1개", "OQ-010", "curriculum 2.1: 계획 → 초고 · Claude")
     gtext = gl.read_text(encoding="utf-8")
-    link15 = "[1.5](../part01-big-picture/01-05-landmark-models.md)"
-    s.check("merge: 장 파일을 놓았다", s.path(CH15).read_text(encoding="utf-8") == chap.read_text(encoding="utf-8"))
-    s.check("merge: 새 용어 행", f"| zeta test | — | 제타 시험 | 평가 | 수용 시험용 행 | {link15} |" in gtext)
-    s.check("merge: glossary_link", f"[1.4](../part01-big-picture/01-04-training-methods-map.md), {link15}, 4.2 |" in gtext)
-    s.check("merge: 링크 없는 언급을 링크로 올림", f"[1.2](../part01-big-picture/01-02-naming-axes.md), {link15}, 6.3 |" in gtext)
+    link21 = "[2.1](../part02-math-and-tools/02-01-vectors-matrices-tensors.md)"
+    s.check("merge: 장 파일을 놓았다", s.path(CH21).read_text(encoding="utf-8") == chap.read_text(encoding="utf-8"))
+    s.check("merge: 새 용어 행", f"| zeta test | — | 제타 시험 | 평가 | 수용 시험용 행 | {link21} |" in gtext)
+    s.check("merge: glossary_link", f"[1.4](../part01-big-picture/01-04-training-methods-map.md), {link21}, 4.2 |" in gtext)
+    s.check("merge: 링크 없는 언급을 링크로 올림", f"[1.2](../part01-big-picture/01-02-naming-axes.md), {link21}, 6.3 |" in gtext)
     rtext = s.path(REFERENCES).read_text(encoding="utf-8")
     s.check("merge: 참고문헌 키 순서", rtext.index("@Aaa2001") < rtext.index("@Amershi2019"))
-    s.check("merge: 미확인 번호", "| OQ-008 | 수용 시험 항목 | 1.5 | 시험 |" in s.path(OQ).read_text(encoding="utf-8"))
-    s.check("merge: curriculum 상태 칸만", "| `book/part01-big-picture/01-05-landmark-models.md` | 초고 · Claude |" in s.path(CURRICULUM).read_text(encoding="utf-8"))
+    s.check("merge: 미확인 번호", "| OQ-010 | 수용 시험 항목 | 2.1 | 시험 |" in s.path(OQ).read_text(encoding="utf-8"))
+    s.check("merge: curriculum 상태 칸만", "| `book/part02-math-and-tools/02-01-vectors-matrices-tensors.md` | 초고 · Claude |" in s.path(CURRICULUM).read_text(encoding="utf-8"))
     snaps = sorted((h / "snapshots").glob("merge-*/manifest.json"))
-    s.check("merge: 스냅숏", bool(snaps) and CH15 in json.loads(snaps[-1].read_text(encoding="utf-8"))["files"])
+    s.check("merge: 스냅숏", bool(snaps) and CH21 in json.loads(snaps[-1].read_text(encoding="utf-8"))["files"])
     s.expect("merge 다시 돌려도 바뀌지 않음", merge, 0, "바꿀 것이 없다")
     s.expect("merge 뒤 toc", ["tools/book.py", "toc"], 0)
     s.expect("merge 뒤 check 오류 0", ["tools/book.py", "check"], 0, "오류 0건")
@@ -347,34 +357,34 @@ def fetch_and_ledger_cases(s: Suite) -> None:
     stray.unlink()
 
     L = ["tools/harness/ledger.py"]
-    led = s.path("build/harness/1.5/ledger.json")
-    data = {"chapter": "1.5", "sources": {"Hinton2015": {"source_id": "hinton2015-test", "scope": "전문"}},
+    led = s.path("build/harness/2.1/ledger.json")
+    data = {"chapter": "2.1", "sources": {"Hinton2015": {"source_id": "hinton2015-test", "scope": "전문"}},
             "facts": [{"id": "f1", "claim": "distillation이라는 이름", "key": "Hinton2015", "loc": "1쪽",
                        "anchor": "which we call distillation"}], "gaps": []}
     write(led, json.dumps(data, ensure_ascii=False))
-    s.expect("ledger facts 정상", L + ["facts", "1.5"], 0, "오류 0건")
+    s.expect("ledger facts 정상", L + ["facts", "2.1"], 0, "오류 0건")
     data["sources"]["Hinton2015"]["parts"] = {"hinton2015-part": "해당 절만"}
     data["facts"][0]["source_id"] = "hinton2015-part"
     write(led, json.dumps(data, ensure_ascii=False))
-    s.expect("ledger facts: 같은 문헌의 다른 부분(parts)", L + ["facts", "1.5"], 0, "오류 0건")
+    s.expect("ledger facts: 같은 문헌의 다른 부분(parts)", L + ["facts", "2.1"], 0, "오류 0건")
     data["facts"][0]["source_id"] = "hinton2015-other"
     write(led, json.dumps(data, ensure_ascii=False))
-    s.expect("ledger facts: parts에 없는 source_id", L + ["facts", "1.5"], 1, "source_id·parts에 없다")
+    s.expect("ledger facts: parts에 없는 source_id", L + ["facts", "2.1"], 1, "source_id·parts에 없다")
     del data["facts"][0]["source_id"]
     del data["sources"]["Hinton2015"]["parts"]
     data["facts"][0]["anchor"] = "which we name distillation"
     write(led, json.dumps(data, ensure_ascii=False))
-    s.expect("ledger facts: 없는 닻", L + ["facts", "1.5"], 1, "출처 본문에 없다")
+    s.expect("ledger facts: 없는 닻", L + ["facts", "2.1"], 1, "출처 본문에 없다")
     data["facts"][0]["anchor"] = "which we call distillation"
     write(led, json.dumps(data, ensure_ascii=False))
 
-    out = s.expect("ledger sync", L + ["sync", "1.5", "--writer", "Claude"], 0, "새로")
-    s.expect("ledger validate: 갈래 없음", L + ["validate", "1.5"], 1, "갈래가 없거나")
-    rc, sent = s.run("tools/book.py", "sentences", "1.5", "--json", "build/harness/1.5/sentences.json")
-    units = json.loads(s.path("build/harness/1.5/sentences.json").read_text(encoding="utf-8"))["units"]
+    out = s.expect("ledger sync", L + ["sync", "2.1", "--writer", "Claude"], 0, "새로")
+    s.expect("ledger validate: 갈래 없음", L + ["validate", "2.1"], 1, "갈래가 없거나")
+    rc, sent = s.run("tools/book.py", "sentences", "2.1", "--json", "build/harness/2.1/sentences.json")
+    units = json.loads(s.path("build/harness/2.1/sentences.json").read_text(encoding="utf-8"))["units"]
     ids = [u["id"] for u in units]
     s.check("sentences: 같은 문장은 -2", any(i.endswith("-2") for i in ids), str(ids))
-    calc = s.path("build/harness/1.5/runs/calc-1.txt")
+    calc = s.path("build/harness/2.1/runs/calc-1.txt")
     write(calc, "2 + 3 = 5\n")
     led_data = json.loads(led.read_text(encoding="utf-8"))
     for u in units:
@@ -382,33 +392,33 @@ def fetch_and_ledger_cases(s: Suite) -> None:
         if "[@Hinton2015]" in u["text"]:
             e.update(kind="출처", refs=[{"key": "Hinton2015", "loc": "1쪽", "anchor": "which we call distillation"}])
         elif "2 더하기 3" in u["text"]:
-            e.update(kind="계산", path="build/harness/1.5/runs/calc-1.txt")
+            e.update(kind="계산", path="build/harness/2.1/runs/calc-1.txt")
         elif u["kind"] in ("목록", "문단"):
             e.update(kind="설명")
         else:
             e.update(kind="연결")
     write(led, json.dumps(led_data, ensure_ascii=False))
-    dl = s.path("build/harness/1.5/delta.json")
-    s.check("ledger 시험 준비: 1.5 변경분", dl.is_file())
-    s.expect("ledger validate: 인용하지 않는 references_add", L + ["validate", "1.5"], 1, "@Aaa2001를 이 장이 인용하지 않는다")
+    dl = s.path("build/harness/2.1/delta.json")
+    s.check("ledger 시험 준비: 2.1 변경분", dl.is_file())
+    s.expect("ledger validate: 인용하지 않는 references_add", L + ["validate", "2.1"], 1, "@Aaa2001를 이 장이 인용하지 않는다")
     dd = json.loads(dl.read_text(encoding="utf-8"))
     dd["references_add"] = []
     write(dl, json.dumps(dd, ensure_ascii=False))
     ent = json.loads(led.read_text(encoding="utf-8"))
     ent["sources"]["Hinton2015"]["entry"] = "- **@Other2015** · X. 「Y」. arXiv, 2015. https://arxiv.org/abs/1503.02531"
     write(led, json.dumps(ent, ensure_ascii=False))
-    s.expect("ledger validate: entry의 키가 다름", L + ["validate", "1.5"], 1, "entry는 참고문헌 형식")
+    s.expect("ledger validate: entry의 키가 다름", L + ["validate", "2.1"], 1, "entry는 참고문헌 형식")
     write(led, json.dumps(led_data, ensure_ascii=False))
-    s.expect("ledger validate 정상", L + ["validate", "1.5"], 0, "오류 0건")
+    s.expect("ledger validate 정상", L + ["validate", "2.1"], 0, "오류 0건")
     cited = next(u["id"] for u in units if "[@Hinton2015]" in u["text"] and u["kind"] == "목록")
     broken = json.loads(led.read_text(encoding="utf-8"))
     broken["sentences"][cited]["refs"] = []
     write(led, json.dumps(broken, ensure_ascii=False))
-    s.expect("ledger validate: 인용에 근거 없음", L + ["validate", "1.5"], 1, "근거에 @Hinton2015가 없다")
+    s.expect("ledger validate: 인용에 근거 없음", L + ["validate", "2.1"], 1, "근거에 @Hinton2015가 없다")
     write(led, json.dumps(led_data, ensure_ascii=False))
-    s.expect("ledger validate --final: 판정 없음", L + ["validate", "1.5", "--final"], 1, "판정이")
+    s.expect("ledger validate --final: 판정 없음", L + ["validate", "2.1", "--final"], 1, "판정이")
     h = json.loads(led.read_text(encoding="utf-8"))["chapter_hash"]
-    checks = s.path("build/harness/1.5/checks")
+    checks = s.path("build/harness/2.1/checks")
     source_ids = {sid: "일치" for sid, e in led_data["sentences"].items() if e["kind"] == "출처"}
     write(checks / "r1-source.json", json.dumps({"lens": "출처 대조", "chapter_hash": h,
           "verdicts": source_ids, "findings": []}, ensure_ascii=False))
@@ -419,24 +429,24 @@ def fetch_and_ledger_cases(s: Suite) -> None:
     calc_ids = {sid: "일치" for sid, e in led_data["sentences"].items() if e["kind"] == "계산"}
     write(checks / "r1-calc.json", json.dumps({"lens": "검산·실행", "chapter_hash": h, "verdicts": calc_ids,
           "findings": []}, ensure_ascii=False))
-    V = L + ["verdicts", "1.5", "build/harness/1.5/checks/r1-source.json", "build/harness/1.5/checks/r1-explain.json",
-             "build/harness/1.5/checks/r1-calc.json"]
+    V = L + ["verdicts", "2.1", "build/harness/2.1/checks/r1-source.json", "build/harness/2.1/checks/r1-explain.json",
+             "build/harness/2.1/checks/r1-calc.json"]
     s.expect("ledger verdicts: 열린 지적은 불일치", V, 0, "일치가 아닌 문장 1개")
-    write(s.path("build/harness/1.5/judge-r1.json"), json.dumps({"decisions": [{"finding": "설명/F1", "decision": "기각"}]},
+    write(s.path("build/harness/2.1/judge-r1.json"), json.dumps({"decisions": [{"finding": "설명/F1", "decision": "기각"}]},
                                                                ensure_ascii=False))
-    s.expect("ledger verdicts: 기각되면 일치", V + ["--judge", "build/harness/1.5/judge-r1.json"], 0, "일치가 아닌 문장 0개")
-    write(s.path("build/harness/1.5/judge-r1.json"), json.dumps({"round": 1, "decisions": [{"finding": "설명/F1", "decision": "채택"}]},
+    s.expect("ledger verdicts: 기각되면 일치", V + ["--judge", "build/harness/2.1/judge-r1.json"], 0, "일치가 아닌 문장 0개")
+    write(s.path("build/harness/2.1/judge-r1.json"), json.dumps({"round": 1, "decisions": [{"finding": "설명/F1", "decision": "채택"}]},
                                                                ensure_ascii=False))
-    s.expect("ledger verdicts: 채택된 차단은 불일치", V + ["--judge", "build/harness/1.5/judge-r1.json"], 0, "일치가 아닌 문장 1개")
+    s.expect("ledger verdicts: 채택된 차단은 불일치", V + ["--judge", "build/harness/2.1/judge-r1.json"], 0, "일치가 아닌 문장 1개")
     write(checks / "r2-explain.json", json.dumps({"lens": "설명", "round": 2, "chapter_hash": h, "verdicts": {cited: "일치"},
           "findings": [{"id": "F1", "sentence": cited, "severity": "권고", "claim": "다듬기", "evidence": {"type": "규칙"}}]},
           ensure_ascii=False))
-    write(s.path("build/harness/1.5/judge-r2.json"), json.dumps({"round": 2, "decisions": [{"finding": "설명/F1", "decision": "채택"}]},
+    write(s.path("build/harness/2.1/judge-r2.json"), json.dumps({"round": 2, "decisions": [{"finding": "설명/F1", "decision": "채택"}]},
                                                                ensure_ascii=False))
     s.expect("ledger verdicts: 늦은 회차가 이기고 권고는 판정을 바꾸지 않는다",
-             V + ["build/harness/1.5/checks/r2-explain.json", "--judge", "build/harness/1.5/judge-r1.json",
-                  "build/harness/1.5/judge-r2.json"], 0, "일치가 아닌 문장 0개")
-    s.expect("ledger validate --final 정상", L + ["validate", "1.5", "--final"], 0, "오류 0건")
+             V + ["build/harness/2.1/checks/r2-explain.json", "--judge", "build/harness/2.1/judge-r1.json",
+                  "build/harness/2.1/judge-r2.json"], 0, "일치가 아닌 문장 0개")
+    s.expect("ledger validate --final 정상", L + ["validate", "2.1", "--final"], 0, "오류 0건")
     link = next(u["id"] for u in units if led_data["sentences"][u["id"]]["kind"] == "설명")
     as_link = json.loads(led.read_text(encoding="utf-8"))
     as_link["sentences"][link]["kind"] = "연결"
@@ -444,13 +454,13 @@ def fetch_and_ledger_cases(s: Suite) -> None:
     write(checks / "r2-explain.json", json.dumps({"lens": "설명", "round": 2, "chapter_hash": h, "verdicts": {cited: "일치"},
           "findings": [{"id": "F2", "sentence": link, "severity": "차단", "claim": "틀린 그림", "evidence": {"type": "규칙"}}]},
           ensure_ascii=False))
-    write(s.path("build/harness/1.5/judge-r2.json"), json.dumps({"round": 2, "decisions": [{"finding": "설명/F2", "decision": "채택"}]},
+    write(s.path("build/harness/2.1/judge-r2.json"), json.dumps({"round": 2, "decisions": [{"finding": "설명/F2", "decision": "채택"}]},
                                                                ensure_ascii=False))
-    V2 = V + ["build/harness/1.5/checks/r2-explain.json", "--judge", "build/harness/1.5/judge-r1.json",
-              "build/harness/1.5/judge-r2.json"]
+    V2 = V + ["build/harness/2.1/checks/r2-explain.json", "--judge", "build/harness/2.1/judge-r1.json",
+              "build/harness/2.1/judge-r2.json"]
     s.expect("ledger verdicts: 연결 문장의 채택된 차단도 불일치", V2, 0, "일치가 아닌 문장 1개")
-    s.expect("ledger validate --final: 연결 문장의 열린 차단", L + ["validate", "1.5", "--final"], 1, "판정이 '불일치'")
-    write(s.path("build/harness/1.5/judge-r2.json"), json.dumps({"round": 2, "decisions": [{"finding": "설명/F2", "decision": "기각"}]},
+    s.expect("ledger validate --final: 연결 문장의 열린 차단", L + ["validate", "2.1", "--final"], 1, "판정이 '불일치'")
+    write(s.path("build/harness/2.1/judge-r2.json"), json.dumps({"round": 2, "decisions": [{"finding": "설명/F2", "decision": "기각"}]},
                                                                ensure_ascii=False))
     s.expect("ledger verdicts: 연결 문장의 지적이 기각되면 판정 칸을 비운다", V2, 0, "일치가 아닌 문장 0개")
     s.check("verdicts: 연결 문장의 판정 칸", json.loads(led.read_text(encoding="utf-8"))["sentences"][link]["verdict"] == "")
@@ -458,20 +468,20 @@ def fetch_and_ledger_cases(s: Suite) -> None:
     back["sentences"][link]["kind"] = "설명"
     write(led, json.dumps(back, ensure_ascii=False))
     s.expect("ledger verdicts: 다시 설명 문장", V2, 0, "일치가 아닌 문장 0개")
-    s.expect("ledger validate --final 정상", L + ["validate", "1.5", "--final"], 0, "오류 0건")
-    s.expect("ledger export", L + ["export", "1.5"], 0, "workbench/evidence/1.5.md")
-    ev = s.path("workbench/evidence/1.5.md").read_text(encoding="utf-8")
+    s.expect("ledger validate --final 정상", L + ["validate", "2.1", "--final"], 0, "오류 0건")
+    s.expect("ledger export", L + ["export", "2.1"], 0, "workbench/evidence/2.1.md")
+    ev = s.path("workbench/evidence/2.1.md").read_text(encoding="utf-8")
     s.check("export: 출처 표와 닻", "| @Hinton2015 | https://example.org/hinton |" in ev and "which we call distillation" in ev)
     s.expect("export 뒤 check 오류 0", ["tools/book.py", "check"], 0, "오류 0건")
 
     txt = fetch.SOURCES / "hinton2015-test/text.txt"
     orig = txt.read_text(encoding="utf-8")
     txt.write_text(orig + "forged\n", encoding="utf-8")
-    s.expect("ledger validate: 바뀐 출처 본문", L + ["validate", "1.5"], 1, "본문 텍스트가 기록과 다르다")
+    s.expect("ledger validate: 바뀐 출처 본문", L + ["validate", "2.1"], 1, "본문 텍스트가 기록과 다르다")
     txt.write_text(orig, encoding="utf-8")
-    chap = s.path("build/harness/1.5/stage") / CH15
+    chap = s.path("build/harness/2.1/stage") / CH21
     with patched(chap, rep("시험용 문장이다. 2 더하기", "고친 문장이다. 2 더하기")):
-        s.expect("ledger validate: 바뀐 문장", L + ["validate", "1.5"], 1, "대장에 없다", "장에 없는 문장")
+        s.expect("ledger validate: 바뀐 문장", L + ["validate", "2.1"], 1, "대장에 없다", "장에 없는 문장")
 
 
 def main(argv: list[str]) -> int:

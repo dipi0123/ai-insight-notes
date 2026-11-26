@@ -1,6 +1,6 @@
 # 1.6 AI 산업의 기술 층위
 
-> **수준** L1 · **선수** [1.3 모델의 한살이: 데이터에서 서비스까지](01-03-model-lifecycle.md) · **이 장의 질문** 반도체·프레임워크·foundation model·serving·응용은 어떻게 층을 이루나? open-weight model과 API 모델은 무엇이 다른가?
+> **수준** L1 · **선수** [1.3 ML lifecycle: 데이터에서 서비스까지](01-03-model-lifecycle.md) · **이 장의 질문** 반도체·프레임워크·foundation model·serving·응용은 어떻게 층을 이루나? open-weight model과 API 모델은 무엇이 다른가?
 
 ## 한눈에
 
@@ -13,7 +13,7 @@
 
 소프트웨어 개발자에게 층은 익숙한 생각이다. 웹 서비스는 하드웨어 위에 운영체제와 드라이버, 그 위에 런타임과 라이브러리, 맨 위에 서비스와 앱이 쌓여 있다. 각 층은 아래 층의 세부를 감추고 위 층에 쓰기 쉬운 기능을 내놓는다.
 
-AI 제품도 이렇게 쌓여 있다. [1.3장 §4](01-03-model-lifecycle.md#4-모델-코드는-시스템의-작은-부분이다)에서 본 대로, 실제 서비스에서 모델을 학습하고 돌리는 코드는 작은 부분이다. 모델 하나를 서비스로 내려면 아래에는 계산할 칩과 칩을 부릴 소프트웨어가, 위에는 요청을 받아 모델을 돌려 주는 체계와 사용자가 만나는 제품이 있어야 한다.
+AI 제품도 이렇게 쌓여 있다. [1.3장 §4](01-03-model-lifecycle.md#4-모델-코드는-시스템의-작은-부분이다)에서 본 대로, 실제 서비스에서 모델을 학습하고 돌리는 코드는 작은 부분이다. 모델 하나를 서비스로 내려면 아래에는 계산할 칩과 칩을 다루는 소프트웨어가, 위에는 요청을 받아 모델을 돌려 주는 체계와 사용자가 만나는 제품이 있어야 한다.
 
 deep learning(딥러닝)은 neural network(신경망)의 크기가 중요해서 고성능 하드웨어와 소프트웨어 기반이 필요하다 [@Goodfellow2016]. foundation model은 [1.2장 §2.6](01-02-naming-axes.md#26-규모와-활용-얼마나-크고-어떻게-쓰나)에서 본 대로 넓은 데이터로 대규모 학습해 여러 task(과제)에 맞춰 고쳐 쓸 수 있는 모델이다 [@Bommasani2021]. 이 이름을 붙인 보고서도 foundation model은 점점 중요해지지만 AI 시스템의 한 구성 요소일 뿐이라고 적는다 [@Bommasani2021].
 
@@ -23,7 +23,7 @@ deep learning(딥러닝)은 neural network(신경망)의 크기가 중요해서 
 
 ```mermaid
 flowchart TB
-  A["응용: 챗봇, 코드 도우미"] --> S["serving: inference server, 클라우드 API"]
+  A["응용: 챗봇, 코딩 어시스턴트"] --> S["serving: inference server(추론 서버), 클라우드 API"]
   S --> F["foundation model: 학습된 weight"]
   F --> W["프레임워크: PyTorch, JAX, TensorFlow"]
   W --> C["반도체: CPU, graphics processing unit(GPU, 그래픽 처리 장치), tensor processing unit(TPU, 텐서 처리 장치)"]
@@ -33,17 +33,17 @@ flowchart TB
 
 | 층 | 하는 일 | 예 | 자세히 |
 |---|---|---|---|
-| 응용 | 모델의 출력을 사용자가 쓰는 기능으로 만든다 | 범용 챗봇, 프로그래밍 도우미 | §7, 13.3, 13.4 |
+| 응용 | 모델의 출력을 사용자가 쓰는 기능으로 만든다 | 범용 챗봇, 코딩 어시스턴트 | §7, 13.3, 13.4 |
 | serving | 학습한 모델이 inference(추론)로 예측을 내놓게 한다. 요청이 올 때마다 돌리기도 하고, 미리 한꺼번에 계산해 두기도 한다 | vLLM, OpenAI API | §6, 13.2 |
 | foundation model | 넓은 데이터로 학습한 모델을 내놓고, 여러 task에 맞춰 고쳐 쓰게 한다 | BERT, GPT-3 | §5, 9.1 |
 | 프레임워크 | 숫자 배열 계산과 미분을 대신하고, 같은 코드를 여러 칩에서 돌린다 | PyTorch, JAX, TensorFlow | §4, 2.5 |
 | 반도체 | 많은 계산을 동시에 한다 | CPU, graphics processing unit(GPU, 그래픽 처리 장치), tensor processing unit(TPU, 텐서 처리 장치) | §3, 2.6, 4.8 |
 
-> **표준과 관례** 이 다섯 층은 산업을 훑어보려고 이 책이 고른 정리 방식이다. 이 장의 층은 neural network의 layer(층)가 아니라 기술 스택의 단계를 가리킨다. 층의 수와 이름을 정한 표준 분류로 쓰지 않는다. 같은 생태계를 다르게 자르는 정리도 있다. foundation model 보고서는 생태계를 데이터 생성, 데이터 정리(보고서의 단계 이름은 data curation), 학습, adaptation(적응), 배포의 단계 순서로 본다 [@Bommasani2021]. 이것은 층이라기보다 [1.3장](01-03-model-lifecycle.md#1-한살이를-한눈에)의 한살이에 가까운 정리다.
+> **표준과 관례** 이 다섯 층은 산업을 훑어보려고 이 책이 고른 정리 방식이다. 이 장의 층은 neural network의 layer(층)가 아니라 기술 스택의 단계를 가리킨다. 층의 수와 이름을 정한 표준 분류로 쓰지 않는다. 같은 생태계를 다르게 자르는 정리도 있다. foundation model 보고서는 생태계를 데이터 생성, 데이터 정리(보고서의 단계 이름은 data curation), 학습, adaptation(적응), 배포의 단계 순서로 본다 [@Bommasani2021]. 이것은 층이라기보다 [1.3장](01-03-model-lifecycle.md#1-ml-lifecycle-한눈에)에서 본 개발 단계에 가까운 정리다.
 
 ## 3. 반도체: GPU와 accelerator
 
-[1.1장 §4](01-01-ai-ml-dl.md#4-deep-learning은-어떻게-핵심-기술이-되었나)에서 deep learning을 키운 자원으로 데이터와 계산을 보았다. [1.3장 §3](01-03-model-lifecycle.md#3-학습과-inference)에서는 학습이 forward pass(순전파)와 backpropagation(역전파)을 수없이 되풀이하고, inference는 forward pass만 한다고 했다. 이 계산을 맨 아래 층이 맡는다.
+[1.1장 §4](01-01-ai-ml-dl.md#4-deep-learning은-어떻게-핵심-기술이-되었나)에서 deep learning을 키운 자원으로 데이터와 계산을 보았다. [1.3장 §3](01-03-model-lifecycle.md#3-학습과-inference)에서는 학습이 forward pass(순전파)와 backpropagation(역전파)을 수없이 반복하고, inference는 forward pass만 한다고 했다. 이 계산을 맨 아래 층이 맡는다.
 
 예전에는 neural network를 기계 한 대의 CPU로 학습했지만, 2016년 교과서 시점에 이미 대개 GPU나 여러 기계의 CPU를 썼다 [@Goodfellow2016]. GPU는 원래 그래픽 응용을 위해 개발된 하드웨어다 [@Goodfellow2016]. 화면을 그리려면 수많은 꼭짓점에 대해 행렬 곱셈과 나눗셈을 동시에 해야 해서, GPU는 많은 계산을 나란히 하도록 설계됐다 [@Goodfellow2016].
 
@@ -51,9 +51,9 @@ neural network의 계산도 이 설계에 잘 맞는다. 학습 알고리즘에�
 
 이처럼 특정 종류의 계산을 범용 CPU보다 빠르게 하도록 쓰는 하드웨어를 accelerator(가속기)라고 한다. PyTorch 논문은 GPU를 hardware accelerator의 예로 든다 [@Paszke2019]. 학습이나 inference를 빠르게 하는 특수 하드웨어는 neural network 연구 초기부터 연구됐다 [@Goodfellow2016].
 
-Google의 TPU가 그런 칩의 한 예다. 2017년 논문이 다룬 첫 TPU는 2015년부터 Google 데이터센터에 배치된 맞춤 칩으로, neural network의 inference를 가속하도록 설계됐다 [@Jouppi2017]. Google은 inference용으로는 이 칩을 만들기로 했고, 학습용으로는 시판 GPU를 샀다 [@Jouppi2017]. 첫 TPU의 중심은 곱하고 더하는 작은 계산 단위 65,536개를 나란히 둔 행렬 곱셈 장치다 [@Jouppi2017]. 논문이 잰 데이터센터 inference 작업 여섯 개에서, 첫 TPU는 같은 데이터센터에 배치된 당시의 K80 GPU와 Haswell CPU보다 약 15~30배 빨랐다 [@Jouppi2017]. 이 장은 첫 TPU만 다루고 뒤의 판은 다루지 않는다.
+Google의 TPU가 그런 칩의 한 예다. 2017년 논문이 다룬 첫 TPU는 2015년부터 Google 데이터센터에 배치된 맞춤 칩으로, neural network의 inference를 가속하도록 설계됐다 [@Jouppi2017]. Google은 inference용으로는 이 칩을 만들기로 했고, 학습용으로는 시판 GPU를 샀다 [@Jouppi2017]. 첫 TPU의 중심은 곱하고 더하는 작은 계산 단위 65,536개를 나란히 둔 행렬 곱셈 장치다 [@Jouppi2017]. 논문이 잰 데이터센터 inference 작업 여섯 개에서, 첫 TPU는 같은 데이터센터에 배치된 당시의 K80 GPU와 Haswell CPU보다 약 15~30배 빨랐다 [@Jouppi2017]. 이 장은 첫 TPU만 다루고 이후 버전은 다루지 않는다.
 
-칩의 메모리는 돌릴 수 있는 모델의 크기도 묶는다. foundation model은 흔히 accelerator 하나의 주 메모리에 다 들어가지 않을 만큼 크다(2021년 보고서 기준) [@Bommasani2021]. 메모리를 계산하는 법은 4.8장과 14.1장에서 본다.
+칩의 메모리는 돌릴 수 있는 모델의 크기도 제한한다. foundation model은 흔히 accelerator 하나의 주 메모리에 다 들어가지 않을 만큼 크다(2021년 보고서 기준) [@Bommasani2021]. 메모리를 계산하는 법은 4.8장과 14.1장에서 본다.
 
 ## 4. 프레임워크: PyTorch·JAX·TensorFlow
 
@@ -77,21 +77,21 @@ TensorFlow는 계산을 그래프로 적고, 그 조각을 여러 기계에 나�
 
 [1.5장](01-05-landmark-models.md#5-여덟-모델을-한-지도에)에서는 여덟 대표 모델을 1.2장의 여섯 축에 놓아 보았다. 그 가운데 BERT는 task마다 fine-tuning하는 출발점이고, CLIP의 text encoder(인코더)는 Stable Diffusion v1의 부품이며, SAM 논문은 segmentation(분할)을 위한 foundation model을 목표로 삼았다.
 
-이 층이 산업의 가운데에 서는 까닭은 여러 응용이 소수의 모델에 기대기 때문이다. 2021년 보고서 시점에 최고 수준의 natural language processing(NLP, 자연어 처리) 모델은 거의 모두 BERT 같은 소수의 foundation model 가운데 하나에서 adapt한 것이었다 [@Bommasani2021]. 보고서는 이것을 강력한 지렛대로 보면서도, foundation model의 결함이 거기서 adapt한 모든 모델에 물려지므로 주의가 필요하다고 적는다 [@Bommasani2021]. 아래 층의 모델 하나가 좋아지면 위의 응용이 함께 좋아지고, 그 모델에 결함이 있으면 위의 응용으로 함께 번진다.
+이 층이 산업의 가운데에 서는 까닭은 여러 응용이 소수의 모델에 기대기 때문이다. 2021년 보고서 시점에 최고 수준의 natural language processing(NLP, 자연어 처리) 모델은 거의 모두 BERT 같은 소수의 foundation model 가운데 하나에서 adapt한 것이었다 [@Bommasani2021]. 보고서는 이것을 강력한 레버리지로 보면서도, foundation model의 결함이 거기서 adapt한 모든 모델에 그대로 이어지므로 주의가 필요하다고 적는다 [@Bommasani2021]. 아래 층의 모델 하나가 좋아지면 위의 응용이 함께 좋아지고, 그 모델에 결함이 있으면 위의 응용으로 함께 번진다.
 
-큰 foundation model을 새로 학습하는 데는 큰 계산이 든다. parameter(파라미터) 1,750억 개의 GPT-3는 pre-training(사전학습, [1.4장 §2.2](01-04-training-methods-map.md#22-단계-모델-한살이의-어디에서-하나))에 수천 petaflop/s-day의 계산을 썼고, parameter 15억 개의 GPT-2는 수십 petaflop/s-day를 썼다 [@Brown2020]. 1 petaflop/s-day는 1초에 1,000조 번 계산하는 속도로 하루(86,400초) 동안 한 계산이므로, 1,000조에 86,400을 곱한 8,640경 번이다.
+큰 foundation model을 새로 학습하는 데는 큰 계산이 든다. parameter(파라미터) 1,750억 개의 GPT-3는 pre-training(사전학습, [1.4장 §2.2](01-04-training-methods-map.md#22-단계-모델-개발의-어디에서-하나))에 수천 petaflop/s-day의 계산을 썼고, parameter 15억 개의 GPT-2는 수십 petaflop/s-day를 썼다 [@Brown2020]. 1 petaflop/s-day는 1초에 1,000조 번 계산하는 속도로 하루(86,400초) 동안 한 계산이므로, 1,000조에 86,400을 곱한 8,640경 번이다.
 
 ## 6. serving: 모델을 부를 수 있게
 
 [1.3장 §2.6](01-03-model-lifecycle.md#26-배포-inference를-서비스로)에서 serving을 학습한 모델이 online inference(온라인 추론)나 offline inference(오프라인 추론)로 예측을 내놓게 만드는 일이라고 했다. 이 층은 그 일을 맡는 소프트웨어와 서비스다. inference 응용은 사용자를 직접 마주하는 경우가 많아서, 대개 처리량보다 응답 시간을 중시한다 [@Jouppi2017].
 
-weight를 칩의 메모리에 올려 두고 들어오는 요청마다 inference를 돌려 결과를 돌려주는 서버 소프트웨어를 inference server(추론 서버)라고 한다. [1.2장 §2.6](01-02-naming-axes.md#26-규모와-활용-얼마나-크고-어떻게-쓰나)에서 본 large language model(LLM, 대규모 언어 모델), 곧 parameter가 아주 많은 language model(언어 모델)을 높은 처리량으로 돌리려면 충분히 많은 요청을 한 번에 묶어 처리해야 한다 [@Kwon2023]. vLLM은 이런 일을 하는 LLM serving 시스템이고, 소스 코드가 공개돼 있다 [@Kwon2023]. vLLM 논문에 따르면 parameter 130억 개의 LLM을 NVIDIA A100 40GB GPU에서 돌릴 때 메모리의 약 65%가 weight에 쓰인다 [@Kwon2023].
+weight를 칩의 메모리에 올려 두고 들어오는 요청마다 inference를 돌려 결과를 돌려주는 서버 소프트웨어를 inference server라고 한다. [1.2장 §2.6](01-02-naming-axes.md#26-규모와-활용-얼마나-크고-어떻게-쓰나)에서 본 large language model(LLM, 대규모 언어 모델), 곧 parameter가 아주 많은 language model(언어 모델)을 높은 처리량으로 돌리려면 충분히 많은 요청을 한 번에 묶어 처리해야 한다 [@Kwon2023]. vLLM은 이런 일을 하는 LLM serving 시스템이고, 소스 코드가 공개돼 있다 [@Kwon2023]. vLLM 논문에 따르면 parameter 130억 개의 LLM을 NVIDIA A100 40GB GPU에서 돌릴 때 메모리의 약 65%가 weight에 쓰인다 [@Kwon2023].
 
 클라우드 API도 이 층이다. 여러 클라우드 회사가 LLM 응용을 hosted service로 내놓으려 경쟁하지만, 이를 돌리려면 GPU 같은 accelerator가 많이 필요해 비용이 매우 크다(2023년 논문 기준) [@Kwon2023]. OpenAI는 2020년 6월 자사 모델에 접근하는 API를 공개했고, 그 API는 GPT-3 계열의 weight를 쓴 모델을 돌렸다 [@OpenAI2020]. 이때 serving은 개발사가 맡고, 사용자는 요청을 보내 답을 받는다. serving을 빠르게 하는 방법은 13.2장에서 본다.
 
 ## 7. 응용: 층 맨 위
 
-LLM은 프로그래밍 도우미와 범용 챗봇 같은 새 응용을 가능하게 했다 [@Kwon2023]. 문서를 찾아 prompt(프롬프트)에 넣어 답하게 하는 구조와, 모델이 도구를 불러 여러 단계를 수행하는 구조는 13.3장과 13.4장에서 본다.
+LLM은 코딩 어시스턴트와 범용 챗봇 같은 새 응용을 가능하게 했다 [@Kwon2023]. 문서를 찾아 prompt(프롬프트)에 넣어 답하게 하는 구조와, 모델이 도구를 불러 여러 단계를 수행하는 구조는 13.3장과 13.4장에서 본다.
 
 응용은 아래 층 전부에 기댄다. 대화형 서비스에 질문 하나를 보내면 그 요청은 다음 길을 지난다.
 
@@ -131,7 +131,7 @@ weight를 받으면 fine-tuning 같은 여러 adaptation 방법으로 모델을 
 
 weight를 받았다고 누구나 돌릴 수 있지는 않다. 모델이 크면 개인 하드웨어로 돌리기 어려워 실제로 쓸 수 있는 사람이 제한된다 [@Solaiman2023]. weight가 공개돼도 필요한 전문성과 계산 비용 같은 장벽은 남는다 [@Kapoor2024]. weight의 공개는 되돌릴 수 없다 [@Kapoor2024]. OpenAI는 API로 내면 접근을 조정할 수 있지만, 공개한 모델은 해로운 쓰임이 드러나도 그럴 수 없다고 설명했다 [@OpenAI2020].
 
-공개는 둘 중 하나가 아니라 여러 단계로 볼 수도 있다. Solaiman은 생성 AI 시스템의 공개 방식을 완전 비공개, 단계적 공개, 호스팅 접근, 클라우드·API 접근, 내려받기 접근, 완전 공개의 여섯 단계로 나누고, 이를 하나의 연속된 기울기 위의 선택지로 본다 [@Solaiman2023]. 내려받기 접근과 완전 공개의 주된 차이는 학습 데이터 같은 구성 요소를 내놓느냐다 [@Solaiman2023]. Kapoor 외의 정의로도 open foundation model은 weight만 공개하면 되고 코드와 데이터를 함께 낼 필요는 없으며, 사용 제한을 둘 수 있다 [@Kapoor2024]. 예를 들어 Llama 3 라이선스는 월간 활성 사용자가 7억 명을 넘는 제품에는 Meta에 따로 라이선스를 요청하게 하고, 금지된 쓰임의 목록을 따르게 한다 [@Meta2024]. 라이선스 조항을 읽는 법은 13.5장에서 본다.
+공개는 둘 중 하나가 아니라 여러 단계로 볼 수도 있다. Solaiman은 생성 AI 시스템의 공개 방식을 완전 비공개, 단계적 공개, 호스팅 접근, 클라우드·API 접근, 내려받기 접근, 완전 공개의 여섯 단계로 나누고, 이를 하나의 연속된 스펙트럼 위의 선택지로 본다 [@Solaiman2023]. 내려받기 접근과 완전 공개의 주된 차이는 학습 데이터 같은 구성 요소를 내놓느냐다 [@Solaiman2023]. Kapoor 외의 정의로도 open foundation model은 weight만 공개하면 되고 코드와 데이터를 함께 낼 필요는 없으며, 사용 제한을 둘 수 있다 [@Kapoor2024]. 예를 들어 Llama 3 라이선스는 월간 활성 사용자가 7억 명을 넘는 제품에는 Meta에 따로 라이선스를 요청하게 하고, 금지된 쓰임의 목록을 따르게 한다 [@Meta2024]. 라이선스 조항을 읽는 법은 13.5장에서 본다.
 
 그래서 「weight를 공개했다」와 「오픈소스다」는 같은 말이 아니다. Open Source Initiative(OSI)의 Open Source AI Definition 1.0은 open source AI(오픈소스 AI)를 사용·연구·수정·공유의 자유를 주는 조건과 방식으로 제공되는 AI 시스템으로 정의한다 [@OSI2024]. 이 자유를 누리려면 시스템을 고치기에 알맞은 형태에 접근할 수 있어야 하고, machine learning(머신러닝) 시스템에서 그 형태는 다음 세 가지를 모두 포함해야 한다 [@OSI2024].
 
@@ -147,7 +147,7 @@ OSI의 설명 글은 open weights에는 학습 코드와 학습 데이터에 관
 
 ## 헷갈리기 쉬운 점
 
-| 헷갈리는 짝 | 차이 |
+| 헷갈리는 개념 | 차이 |
 |---|---|
 | GPU와 accelerator | accelerator는 특정 계산을 빠르게 하는 하드웨어를 두루 부르는 말이고, GPU와 TPU는 그 예다. GPU는 원래 그래픽용으로 개발됐고 첫 TPU는 neural network inference용으로 설계됐다 [@Goodfellow2016; @Jouppi2017] |
 | 프레임워크와 모델 | 프레임워크는 계산과 미분을 대신하는 라이브러리다. 모델은 그 위에서 정의하고 학습한 구조와 weight다. PyTorch는 모델이 아니다 |
@@ -184,5 +184,5 @@ OSI의 설명 글은 open weights에는 학습 코드와 학습 데이터에 관
 
 - [@Bommasani2021] foundation model의 adaptation과 그 기회·위험
 - [@Solaiman2023] 생성 AI 모델을 공개하는 여러 단계
-- [@Jouppi2017] inference용으로 설계한 첫 TPU를 당시의 CPU·GPU와 견준 논문
+- [@Jouppi2017] inference용으로 설계한 첫 TPU를 당시의 CPU·GPU와 비교한 논문
 - [@Paszke2019] PyTorch의 설계와 구현

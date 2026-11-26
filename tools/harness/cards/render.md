@@ -20,4 +20,4 @@
 지적마다 장, 위치(절·그림 번호), 무엇이 어떻게 보이는지, 화면 폭을 적는다.
 
 ## 돌려줄 것
-`{"status", "file": "build/harness/batch-NN-K/render.md", "issues": <수>, "browser_checked": true}`
+`{"status", "file": "build/harness/batch-NN-K/render.md", "issues": <수>, "browser_checked": true}` — `status`는 [공통 규칙 8](../README.md#모든-카드-공통)의 네 값 중 하나다.

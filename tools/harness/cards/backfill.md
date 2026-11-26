@@ -37,4 +37,4 @@
 9. `python3 -I tools/harness/ledger.py validate N.M`. 오류는 `gaps`에 적은 문장의 「근거가 없다」만 남아야 한다. 그 밖의 오류는 고친다.
 
 ## 돌려줄 것
-`{"status", "sentences": <수>, "kinds": {"출처": <수>, …}, "sources": ["키(source_id, scope)", …], "gaps": ["…"], "validate_errors": <수>}`
+`{"status", "sentences": <수>, "kinds": {"출처": <수>, …}, "sources": ["키(source_id, scope)", …], "gaps": ["…"], "validate_errors": <수>}` — `status`는 [공통 규칙 8](../README.md#모든-카드-공통)의 네 값 중 하나다.

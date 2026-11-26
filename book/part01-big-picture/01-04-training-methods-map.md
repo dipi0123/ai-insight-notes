@@ -1,10 +1,10 @@
 # 1.4 학습 방법 지도: pre-training에서 reinforcement learning까지
 
-> **수준** L1 · **선수** [1.3 모델의 한살이: 데이터에서 서비스까지](01-03-model-lifecycle.md) · **이 장의 질문** 학습 방법의 이름은 어떤 기준으로 나뉘나? pre-training·fine-tuning·SFT·RLHF·distillation은 각각 학습의 어느 단계에서 무엇을 정답으로 삼나? reinforcement learning과 preference learning은 어떤 관계인가? 대화형 AI는 어떤 학습 단계를 거쳐 만들어지나?
+> **수준** L1 · **선수** [1.3 ML lifecycle: 데이터에서 서비스까지](01-03-model-lifecycle.md) · **이 장의 질문** 학습 방법의 이름은 어떤 기준으로 나뉘나? pre-training·fine-tuning·SFT·RLHF·distillation은 각각 학습의 어느 단계에서 무엇을 정답으로 삼나? reinforcement learning과 preference learning은 어떤 관계인가? 대화형 AI는 어떤 학습 단계를 거쳐 만들어지나?
 
 ## 한눈에
 
-- 학습 방법의 이름은 한 가지 기준으로 나눈 목록이 아니다. 「정답 신호가 어떤 형태로 오나」「모델 한살이의 어느 단계인가」「어느 weight(가중치)를 바꾸나」「신호를 누가 만드나」「데이터가 어떻게 들어오나」라는 서로 다른 축에 붙은 이름이다.
+- 학습 방법의 이름은 한 가지 기준으로 나눈 목록이 아니다. 「정답 신호가 어떤 형태로 오나」「모델 개발의 어느 단계인가」「어느 weight(가중치)를 바꾸나」「신호를 누가 만드나」「데이터가 어떻게 들어오나」라는 서로 다른 축에 붙은 이름이다.
 - 그래서 학습 한 번에 이름이 여러 개 붙는다. supervised fine-tuning(SFT, 지도 파인튜닝)은 신호로 보면 supervised learning(지도 학습)이고, 단계로 보면 post-training(사후학습)이다.
 - 대화형 language model(언어 모델)은 보통 pre-training(사전학습) → SFT → preference(선호)나 reward(보상)로 다듬기의 순서로 만든다. 단계의 수와 이름은 개발사마다 다르다.
 - reinforcement learning(강화 학습)과 preference learning(선호 학습)은 같은 신호 축에 있는 서로 다른 신호의 이름이다. reinforcement learning은 모델이 고른 답 하나에 대한 점수인 reward를 받고, preference learning은 두 답의 비교를 받는다. 둘은 reinforcement learning from human feedback(RLHF)에서 만난다. language model의 post-training에서는 preference로 다듬는 방법들이 reinforcement learning을 쓰든 쓰지 않든 SFT 다음의 같은 자리에서 같은 목표를 푼다. 그래서 둘이 한데 묶여 불린다.
@@ -30,9 +30,9 @@
 | reinforcement learning(RL, 강화 학습) | 정답을 보여 주지 않는다. 모델이 action(행동), 곧 답을 내면 그 결과에 점수인 reward만 준다 | 10부 |
 | preference learning(선호 학습) | 두 결과 중 어느 쪽이 나은지 비교한 데이터로 배운다 | 10.4, 10.5 |
 
-[1.2장](01-02-naming-axes.md)의 contrastive learning(대조 학습)은 이 표에 따로 두지 않았다. 맞는 짝과 틀린 짝을 가려 배우는 이 방식을 self-supervised learning의 한 기법으로 드는 문헌이 있다 [@Bommasani2021].
+[1.2장](01-02-naming-axes.md)의 contrastive learning(대조 학습)은 이 표에 따로 두지 않았다. 맞는 쌍과 틀린 쌍을 가려 배우는 이 방식을 self-supervised learning의 한 기법으로 드는 문헌이 있다 [@Bommasani2021].
 
-### 2.2 단계: 모델 한살이의 어디에서 하나
+### 2.2 단계: 모델 개발의 어디에서 하나
 
 | 이름 | 하는 일 | 자세히 |
 |---|---|---|
@@ -69,7 +69,7 @@ environment는 reinforcement learning에서 모델이 action을 하는 바깥 �
 | 이름 | 방식 | 자세히 |
 |---|---|---|
 | offline learning(오프라인 학습) | 미리 모아 둔 데이터로 학습한다 | — |
-| online learning(온라인 학습) | offline learning과 짝을 이루는 이름이다. 학습 데이터가 다 모이기 전에 모델을 쓰기 시작하고, 쓰는 동안 새로 들어오는 데이터로 모델을 자주 또는 계속 고친다. language model의 post-training에서는 학습 중인 모델이 방금 만든 답에 피드백을 받으며 배우는 방식을 online이라고 부른다. 예: RLHF의 reinforcement learning 단계 | 10부(RLHF의 online 뜻) |
+| online learning(온라인 학습) | offline learning과 대비되는 이름이다. 학습 데이터가 다 모이기 전에 모델을 쓰기 시작하고, 쓰는 동안 새로 들어오는 데이터로 모델을 자주 또는 계속 고친다. language model의 post-training에서는 학습 중인 모델이 방금 만든 답에 피드백을 받으며 배우는 방식을 online이라고 부른다. 예: RLHF의 reinforcement learning 단계 | 10부(RLHF의 online 뜻) |
 | continual learning(연속 학습) | task나 데이터가 바뀌어 가는 동안 이어서 배운다. 앞서 배운 것을 잊는 문제가 따라온다 | 3.10, 9.5 |
 | federated learning(연합 학습) | 데이터를 한곳에 모으지 않고 여러 기기에서 학습한 결과만 모은다 | 3.10 |
 | active learning(능동 학습) | 모델이 label이 가장 도움이 될 데이터를 골라 label을 요청한다 | 3.10 |
@@ -106,7 +106,7 @@ flowchart LR
 그림: 대화형 language model 학습의 일반적인 단계. 점선으로 그린 마지막 단계는 모델에 따라 더하기도 하고, 넣는 자리와 횟수도 다르다.
 
 1. **pre-training.** 인터넷 글처럼 큰 텍스트에서 다음 token을 맞히며 언어와 지식을 배운다. 이 단계만 거친 모델은 다음 token을 잇도록 배웠을 뿐, 지시를 따르도록 배우지는 않았다. 실제로 pre-training만 한 GPT-3는 코드 요약 같은 task를 할 수는 있었지만, 더 공들인 prompt가 필요했고 보통은 지시를 따르지 않았다 [@Ouyang2022].
-2. **SFT.** SFT는 입력과 바라는 출력을 짝지은 데이터로 하는 supervised fine-tuning이다 [@DeepSeekAI2025]. 대화형 language model의 post-training에서는 이 짝이 흔히 「지시 → 좋은 답」 쌍이다 [@Zhao2023]. 이 쌍을 보여 주고 따라 하게 해서, 대화 형식과 지시를 따르는 법을 배운다. [1.2장](01-02-naming-axes.md)에서 본 instruction tuning은 이렇게 지시와 답의 짝으로 하는 SFT를 부르는 이름이다. RLHF처럼 사람의 preference에 맞추는 다음 단계는 instruction tuning과 나눠 부르기도 하고, 이 책도 둘을 나눈다 [@Zhao2023].
+2. **SFT.** SFT는 입력과 바라는 출력을 짝지은 데이터로 하는 supervised fine-tuning이다 [@DeepSeekAI2025]. 대화형 language model의 post-training에서는 이 쌍이 흔히 「지시 → 좋은 답」 쌍이다 [@Zhao2023]. 이 쌍을 보여 주고 따라 하게 해서, 대화 형식과 지시를 따르는 법을 배운다. [1.2장](01-02-naming-axes.md)에서 본 instruction tuning은 이렇게 지시와 답의 쌍으로 하는 SFT를 부르는 이름이다. RLHF처럼 사람의 preference에 맞추는 다음 단계는 instruction tuning과 나눠 부르기도 하고, 이 책도 둘을 나눈다 [@Zhao2023].
 3. **preference로 다듬기.** 좋은 답을 직접 써 보이기보다 두 답 중 나은 쪽을 고르기가 쉬운 경우가 많다. 이 비교 데이터로 모델을 더 낫게 다듬는다.
 4. **verifiable reward로 reinforcement learning.** 정답을 확인할 수 있는 문제(수학 답, 코드 테스트)를 풀게 하고, 맞으면 reward를 준다. 이 단계를 넣는 자리와 횟수는 모델마다 다르다. 데이터·코드·학습 방법까지 모두 공개한 language model 계열인 Tülu 3는 preference로 다듬은 다음 마지막 단계로 둔다 [@Lambert2024]. [1.3장](01-03-model-lifecycle.md)에서 본 reasoning model(추론 모델)의 하나인 DeepSeek-R1은 SFT와 reinforcement learning을 번갈아 두 번씩 한다 [@DeepSeekAI2025].
 
@@ -125,7 +125,7 @@ reinforcement learning이라는 이름은 신호와 함께 배우는 방식까�
 | reinforcement learning을 씀 | 게임 점수로 배우는 reinforcement learning, verifier의 판정을 reward로 배우는 reinforcement learning | RLHF |
 | reinforcement learning을 쓰지 않음 | supervised learning, self-supervised learning | DPO, 항목끼리 비교한 데이터로 순위 매기기를 배우는 학습 |
 
-둘이 만난 갈래를 preference-based reinforcement learning(PbRL, 선호 기반 강화 학습)이라고 한다. 숫자 reward 대신 비교를 신호로 받아 reinforcement learning 문제를 푼다 [@Wirth2017]. RLHF는 이 갈래의 방법이다. 사람이 두 결과 중 나은 쪽을 고르고, 그 비교로 「얼마나 좋은 답인가」를 점수로 매기는 reward model을 학습한다. 그다음 그 점수를 reward로 삼아 reinforcement learning을 한다 [@Christiano2017]. InstructGPT는 이 방법을 language model에 적용했다 [@Ouyang2022]. 이때 출발점인 SFT 모델에서 멀어질수록 더 큰 벌점을 준다. reward model의 점수만 지나치게 쫓지 않게 하려는 것이다 [@Ouyang2022].
+둘이 만나는 분야를 preference-based reinforcement learning(PbRL, 선호 기반 강화 학습)이라고 한다. 숫자 reward 대신 비교를 신호로 받아 reinforcement learning 문제를 푼다 [@Wirth2017]. RLHF는 이 분야의 방법이다. 사람이 두 결과 중 나은 쪽을 고르고, 그 비교로 「얼마나 좋은 답인가」를 점수로 매기는 reward model을 학습한다. 그다음 그 점수를 reward로 삼아 reinforcement learning을 한다 [@Christiano2017]. InstructGPT는 이 방법을 language model에 적용했다 [@Ouyang2022]. 이때 출발점인 SFT 모델에서 멀어질수록 더 큰 벌점을 준다. reward model의 점수만 지나치게 쫓지 않게 하려는 것이다 [@Ouyang2022].
 
 그 뒤 DPO는 RLHF와 같은 목표를 다른 방법으로 푼다 [@Rafailov2023]. reward model과 reinforcement learning 과정 없이, preference pair(선호 쌍)에서 바로 모델을 최적화한다. DPO는 reinforcement learning이 아니지만 RLHF와 같은 자리에서 같은 일을 한다.
 
@@ -138,7 +138,7 @@ reinforcement learning이라는 이름은 신호와 함께 배우는 방식까�
 그래서 language model 논문에서는 SFT 다음 단계를 통틀어 reinforcement learning이라고 부르기도 하고 [@DeepSeekAI2025], 사람의 preference에 맞추는 일을 통틀어 preference learning이라고 부르기도 한다(「표준과 관례」). verifiable reward로 하는 reinforcement learning은 같은 post-training 안에 있어도 preference를 쓰지 않고, 정답을 확인할 수 있는 문제를 다룬다.
 
 > **표준과 관례**
-> - supervised·unsupervised·self-supervised·reinforcement learning과 preference learning은 학계에서 공통으로 쓰는 학습의 이름이다. 다만 supervised와 unsupervised조차 엄밀하게 정의된 용어가 아니어서 경계가 흐리다 [@Goodfellow2016]. self-supervised learning을 unsupervised learning의 한 갈래로 분류하는 문헌도 있다.
+> - supervised·unsupervised·self-supervised·reinforcement learning과 preference learning은 학계에서 공통으로 쓰는 학습의 이름이다. 다만 supervised와 unsupervised조차 엄밀하게 정의된 용어가 아니어서 경계가 흐리다 [@Goodfellow2016]. self-supervised learning을 unsupervised learning의 한 종류로 분류하는 문헌도 있다.
 > - language model 논문에서는 preference learning이 pre-training 뒤 사람의 preference에 맞추는 단계 전체를 가리키기도 한다. 이때는 사람이 쓴 demonstration으로 하는 SFT도 preference learning의 한 방법으로 든다 [@Rafailov2023]. 이 책은 preference learning을 비교라는 신호의 이름으로 쓴다.
 > - DPO는 특정 논문이 붙인 방법 이름이다 [@Rafailov2023]. RLHF는 사람의 피드백으로 reward를 만들어 reinforcement learning을 하는 방법들을 묶어 부르는 이름으로, 여러 논문에 걸쳐 쓰인다.
 > - post-training은 업계의 관례 용어라 무엇까지 포함하는지가 개발사마다 다르다.
@@ -147,9 +147,9 @@ reinforcement learning이라는 이름은 신호와 함께 배우는 방식까�
 
 ## 헷갈리기 쉬운 점
 
-| 헷갈리는 짝 | 차이 |
+| 헷갈리는 개념 | 차이 |
 |---|---|
-| fine-tuning과 SFT | SFT는 fine-tuning의 한 종류로, 입력과 바라는 출력의 짝으로 하는 supervised fine-tuning이다. 이 책이 쓰는 좁은 뜻의 fine-tuning과 학습 방식이 같다. language model의 post-training에서는 그 짝이 흔히 「지시 → 좋은 답」 쌍이다 |
+| fine-tuning과 SFT | SFT는 fine-tuning의 한 종류로, 입력과 바라는 출력의 쌍으로 하는 supervised fine-tuning이다. 이 책이 쓰는 좁은 뜻의 fine-tuning과 학습 방식이 같다. language model의 post-training에서는 그 쌍이 흔히 「지시 → 좋은 답」 쌍이다 |
 | self-supervised learning과 unsupervised learning | self-supervised learning은 데이터에서 만든 정답과 비교해 loss(손실)를 계산한다. unsupervised learning에는 비교할 정답이 없다 |
 | reinforcement learning과 preference learning | reinforcement learning은 고른 답 하나에 대한 점수(reward)로, preference learning은 두 답의 비교로 배운다. RLHF는 둘을 함께 쓴다 |
 | pre-training과 continual pre-training | 학습 방식(next-token prediction 등)은 같다. 데이터의 범위와 출발점이 다르다 |

@@ -26,4 +26,4 @@
 점검 렌즈가 놓친 문제를 새로 지적하지 않는다. 눈에 띄면 `note`로만 남긴다.
 
 ## 돌려줄 것
-`{"status", "file": "build/harness/N.M/judge-rN.json", "accepted_blocking": <수>, "unresolved": <미확인 수>}`
+`{"status", "file": "build/harness/N.M/judge-rN.json", "accepted_blocking": <수>, "unresolved": <미확인 수>}` — `status`는 [공통 규칙 8](../README.md#모든-카드-공통)의 네 값 중 하나다.
