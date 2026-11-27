@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" font-family="system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">컬러 이미지를 channel 세 장으로 나누기</title>
+  <desc id="d">왼쪽은 높이 2, 너비 2인 컬러 이미지로, 픽셀마다 red·green·blue 세 값을 가진다. PIL·NumPy는 이것을 (H, W, C) = (2, 2, 3)으로 담는다. 화살표를 따라 오른쪽으로 가면 같은 숫자를 channel마다 2×2 배열 하나로 모은 세 개가 된다. PyTorch는 이것을 (C, H, W) = (3, 2, 2)로 담는다. red 배열은 왼쪽 위와 오른쪽 아래가 255, green 배열은 오른쪽 위와 오른쪽 아래가 255, blue 배열은 왼쪽 아래와 오른쪽 아래가 255이고 나머지는 0이다.</desc>
+  <rect width="760" height="300" fill="#ffffff"/>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b7280"/></marker></defs>
+  <rect x="60" y="80" width="70" height="70" fill="rgb(255,0,0)" stroke="#1f2937" stroke-width="1.2"/>
+  <text x="95.0" y="119.0" font-size="11" fill="#ffffff" text-anchor="middle">255,0,0</text>
+  <rect x="130" y="80" width="70" height="70" fill="rgb(0,255,0)" stroke="#1f2937" stroke-width="1.2"/>
+  <text x="165.0" y="119.0" font-size="11" fill="#1f2937" text-anchor="middle">0,255,0</text>
+  <rect x="60" y="150" width="70" height="70" fill="rgb(0,0,255)" stroke="#1f2937" stroke-width="1.2"/>
+  <text x="95.0" y="189.0" font-size="11" fill="#ffffff" text-anchor="middle">0,0,255</text>
+  <rect x="130" y="150" width="70" height="70" fill="rgb(255,255,255)" stroke="#1f2937" stroke-width="1.2"/>
+  <text x="165.0" y="189.0" font-size="11" fill="#1f2937" text-anchor="middle">255,255,255</text>
+  <text x="130" y="45" font-size="14" font-weight="700" fill="#1f2937" text-anchor="middle">컬러 이미지</text>
+  <text x="130" y="250" font-size="13" fill="#374151" text-anchor="middle" font-family="ui-monospace, Menlo, monospace">(H, W, C) = (2, 2, 3)</text>
+  <text x="130" y="270" font-size="12" fill="#6b7280" text-anchor="middle">픽셀마다 숫자 3개</text>
+  <line x1="230" y1="150" x2="300" y2="150" stroke="#6b7280" stroke-width="1.4" marker-end="url(#a)"/>
+  <rect x="320" y="100" width="50" height="50" fill="#b91c1c" stroke="#b91c1c" stroke-width="1.2"/>
+  <text x="345.0" y="130.0" font-size="13" fill="#ffffff" text-anchor="middle">255</text>
+  <rect x="370" y="100" width="50" height="50" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.2"/>
+  <text x="395.0" y="130.0" font-size="13" fill="#374151" text-anchor="middle">0</text>
+  <rect x="320" y="150" width="50" height="50" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.2"/>
+  <text x="345.0" y="180.0" font-size="13" fill="#374151" text-anchor="middle">0</text>
+  <rect x="370" y="150" width="50" height="50" fill="#b91c1c" stroke="#b91c1c" stroke-width="1.2"/>
+  <text x="395.0" y="180.0" font-size="13" fill="#ffffff" text-anchor="middle">255</text>
+  <text x="370" y="85" font-size="13" font-weight="700" fill="#b91c1c" text-anchor="middle">red channel</text>
+  <rect x="460" y="100" width="50" height="50" fill="#dcfce7" stroke="#15803d" stroke-width="1.2"/>
+  <text x="485.0" y="130.0" font-size="13" fill="#374151" text-anchor="middle">0</text>
+  <rect x="510" y="100" width="50" height="50" fill="#15803d" stroke="#15803d" stroke-width="1.2"/>
+  <text x="535.0" y="130.0" font-size="13" fill="#ffffff" text-anchor="middle">255</text>
+  <rect x="460" y="150" width="50" height="50" fill="#dcfce7" stroke="#15803d" stroke-width="1.2"/>
+  <text x="485.0" y="180.0" font-size="13" fill="#374151" text-anchor="middle">0</text>
+  <rect x="510" y="150" width="50" height="50" fill="#15803d" stroke="#15803d" stroke-width="1.2"/>
+  <text x="535.0" y="180.0" font-size="13" fill="#ffffff" text-anchor="middle">255</text>
+  <text x="510" y="85" font-size="13" font-weight="700" fill="#15803d" text-anchor="middle">green channel</text>
+  <rect x="600" y="100" width="50" height="50" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.2"/>
+  <text x="625.0" y="130.0" font-size="13" fill="#374151" text-anchor="middle">0</text>
+  <rect x="650" y="100" width="50" height="50" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.2"/>
+  <text x="675.0" y="130.0" font-size="13" fill="#374151" text-anchor="middle">0</text>
+  <rect x="600" y="150" width="50" height="50" fill="#1d4ed8" stroke="#1d4ed8" stroke-width="1.2"/>
+  <text x="625.0" y="180.0" font-size="13" fill="#ffffff" text-anchor="middle">255</text>
+  <rect x="650" y="150" width="50" height="50" fill="#1d4ed8" stroke="#1d4ed8" stroke-width="1.2"/>
+  <text x="675.0" y="180.0" font-size="13" fill="#ffffff" text-anchor="middle">255</text>
+  <text x="650" y="85" font-size="13" font-weight="700" fill="#1d4ed8" text-anchor="middle">blue channel</text>
+  <text x="530" y="45" font-size="14" font-weight="700" fill="#1f2937" text-anchor="middle">channel마다 (H, W) 배열 하나</text>
+  <text x="530" y="250" font-size="13" fill="#374151" text-anchor="middle" font-family="ui-monospace, Menlo, monospace">(C, H, W) = (3, 2, 2)</text>
+  <text x="530" y="270" font-size="12" fill="#6b7280" text-anchor="middle">PyTorch가 받는 순서. 여러 장을 묶으면 (B, C, H, W)</text>
+</svg>

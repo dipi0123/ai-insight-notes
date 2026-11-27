@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" font-family="system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">categorical distribution과 normal distribution</title>
+  <desc id="d">왼쪽 그림은 class 세 개의 categorical distribution 막대그래프로 cat 0.7, dog 0.2, bird 0.1이고 막대 높이가 확률이며 합은 1이다. 오른쪽 그림은 평균 0, standard deviation 1인 standard normal distribution의 종 모양 곡선이다. 봉우리는 평균 μ에 있고, μ에서 σ만큼 떨어진 두 점이 표시되어 있다. 확률은 곡선 아래 넓이다.</desc>
+  <rect width="640" height="330" fill="#ffffff"/>
+  <line x1="40" y1="250" x2="290" y2="250" stroke="#4b5563" stroke-width="1.5"/>
+  <rect x="60" y="83.8" width="56" height="166.2" fill="#93c5fd" stroke="#4b5563" stroke-width="1"/>
+  <text x="88" y="75.8" font-size="17" fill="#1f2937" text-anchor="middle" font-family="ui-monospace, Menlo, monospace">0.7</text>
+  <text x="88" y="274" font-size="17" fill="#1f2937" text-anchor="middle">cat</text>
+  <rect x="140" y="202.5" width="56" height="47.5" fill="#93c5fd" stroke="#4b5563" stroke-width="1"/>
+  <text x="168" y="194.5" font-size="17" fill="#1f2937" text-anchor="middle" font-family="ui-monospace, Menlo, monospace">0.2</text>
+  <text x="168" y="274" font-size="17" fill="#1f2937" text-anchor="middle">dog</text>
+  <rect x="220" y="226.2" width="56" height="23.8" fill="#93c5fd" stroke="#4b5563" stroke-width="1"/>
+  <text x="248" y="218.2" font-size="17" fill="#1f2937" text-anchor="middle" font-family="ui-monospace, Menlo, monospace">0.1</text>
+  <text x="248" y="274" font-size="17" fill="#1f2937" text-anchor="middle">bird</text>
+  <text x="165" y="30" font-size="18" font-weight="700" fill="#1f2937" text-anchor="middle">categorical: 막대 높이가 확률</text>
+  <text x="165" y="306" font-size="16" fill="#374151" text-anchor="middle">0.7 + 0.2 + 0.1 = 1</text>
+  <line x1="340" y1="250" x2="620" y2="250" stroke="#4b5563" stroke-width="1.5"/>
+  <path d="M 340.0 249.6 L 342.0 249.6 L 344.0 249.5 L 346.0 249.4 L 348.0 249.3 L 350.0 249.1 L 352.0 249.0 L 354.0 248.8 L 356.0 248.6 L 358.0 248.4 L 360.0 248.1 L 362.0 247.8 L 364.0 247.5 L 366.0 247.1 L 368.0 246.7 L 370.0 246.2 L 372.0 245.6 L 374.0 245.0 L 376.0 244.3 L 378.0 243.5 L 380.0 242.6 L 382.0 241.6 L 384.0 240.5 L 386.0 239.4 L 388.0 238.0 L 390.0 236.6 L 392.0 235.0 L 394.0 233.3 L 396.0 231.4 L 398.0 229.4 L 400.0 227.2 L 402.0 224.8 L 404.0 222.3 L 406.0 219.6 L 408.0 216.7 L 410.0 213.6 L 412.0 210.3 L 414.0 206.8 L 416.0 203.2 L 418.0 199.3 L 420.0 195.3 L 422.0 191.1 L 424.0 186.8 L 426.0 182.3 L 428.0 177.6 L 430.0 172.9 L 432.0 168.0 L 434.0 163.0 L 436.0 158.0 L 438.0 152.9 L 440.0 147.8 L 442.0 142.7 L 444.0 137.7 L 446.0 132.6 L 448.0 127.7 L 450.0 122.9 L 452.0 118.2 L 454.0 113.6 L 456.0 109.3 L 458.0 105.2 L 460.0 101.4 L 462.0 97.8 L 464.0 94.5 L 466.0 91.6 L 468.0 89.0 L 470.0 86.7 L 472.0 84.9 L 474.0 83.4 L 476.0 82.4 L 478.0 81.8 L 480.0 81.6 L 482.0 81.8 L 484.0 82.4 L 486.0 83.4 L 488.0 84.9 L 490.0 86.7 L 492.0 89.0 L 494.0 91.6 L 496.0 94.5 L 498.0 97.8 L 500.0 101.4 L 502.0 105.2 L 504.0 109.3 L 506.0 113.6 L 508.0 118.2 L 510.0 122.9 L 512.0 127.7 L 514.0 132.6 L 516.0 137.7 L 518.0 142.7 L 520.0 147.8 L 522.0 152.9 L 524.0 158.0 L 526.0 163.0 L 528.0 168.0 L 530.0 172.9 L 532.0 177.6 L 534.0 182.3 L 536.0 186.8 L 538.0 191.1 L 540.0 195.3 L 542.0 199.3 L 544.0 203.2 L 546.0 206.8 L 548.0 210.3 L 550.0 213.6 L 552.0 216.7 L 554.0 219.6 L 556.0 222.3 L 558.0 224.8 L 560.0 227.2 L 562.0 229.4 L 564.0 231.4 L 566.0 233.3 L 568.0 235.0 L 570.0 236.6 L 572.0 238.0 L 574.0 239.4 L 576.0 240.5 L 578.0 241.6 L 580.0 242.6 L 582.0 243.5 L 584.0 244.3 L 586.0 245.0 L 588.0 245.6 L 590.0 246.2 L 592.0 246.7 L 594.0 247.1 L 596.0 247.5 L 598.0 247.8 L 600.0 248.1 L 602.0 248.4 L 604.0 248.6 L 606.0 248.8 L 608.0 249.0 L 610.0 249.1 L 612.0 249.3 L 614.0 249.4 L 616.0 249.5 L 618.0 249.6 L 620.0 249.6" fill="none" stroke="#1d4ed8" stroke-width="2.5"/>
+  <line x1="480.0" y1="81.57555555555555" x2="480.0" y2="250" stroke="#b45309" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <line x1="440.0" y1="250" x2="440.0" y2="256" stroke="#4b5563" stroke-width="1.5"/>
+  <text x="440.0" y="274" font-size="17" fill="#1f2937" text-anchor="middle">μ−σ</text>
+  <line x1="480.0" y1="250" x2="480.0" y2="256" stroke="#4b5563" stroke-width="1.5"/>
+  <text x="480.0" y="274" font-size="17" fill="#b45309" text-anchor="middle">μ</text>
+  <line x1="520.0" y1="250" x2="520.0" y2="256" stroke="#4b5563" stroke-width="1.5"/>
+  <text x="520.0" y="274" font-size="17" fill="#1f2937" text-anchor="middle">μ+σ</text>
+  <text x="480" y="30" font-size="18" font-weight="700" fill="#1f2937" text-anchor="middle">normal: 넓이가 확률</text>
+  <text x="480" y="306" font-size="16" fill="#374151" text-anchor="middle">곡선 아래 전체 넓이 = 1</text>
+</svg>

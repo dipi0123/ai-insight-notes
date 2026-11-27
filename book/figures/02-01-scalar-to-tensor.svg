@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 270" font-family="system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">scalar에서 tensor까지: axis 수가 하나씩 늘어난다</title>
+  <desc id="d">왼쪽부터 네 개의 숫자 배열이 놓여 있다. scalar는 칸 하나로 axis가 0개이고 shape는 빈 괄호다. vector는 칸 세 개를 한 줄로 늘어놓아 axis가 1개이고 shape는 (3,)이다. matrix는 2행 3열 배열로 axis가 2개이고 shape는 (2, 3)이다. tensor는 3행 4열 배열 두 개를 겹쳐 쌓은 모양으로 axis가 3개이고 shape는 (2, 3, 4)이다.</desc>
+  <rect width="760" height="270" fill="#ffffff"/>
+  <rect x="62" y="95" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <text x="75.0" y="113.0" font-size="13" fill="#1f2937" text-anchor="middle">3</text>
+  <rect x="160" y="95" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <text x="173.0" y="113.0" font-size="13" fill="#1f2937" text-anchor="middle">1</text>
+  <rect x="186" y="95" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <text x="199.0" y="113.0" font-size="13" fill="#1f2937" text-anchor="middle">2</text>
+  <rect x="212" y="95" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <text x="225.0" y="113.0" font-size="13" fill="#1f2937" text-anchor="middle">3</text>
+  <rect x="310" y="82" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <text x="323.0" y="100.0" font-size="13" fill="#1f2937" text-anchor="middle">1</text>
+  <rect x="336" y="82" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <text x="349.0" y="100.0" font-size="13" fill="#1f2937" text-anchor="middle">2</text>
+  <rect x="362" y="82" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <text x="375.0" y="100.0" font-size="13" fill="#1f2937" text-anchor="middle">3</text>
+  <rect x="310" y="108" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <text x="323.0" y="126.0" font-size="13" fill="#1f2937" text-anchor="middle">4</text>
+  <rect x="336" y="108" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <text x="349.0" y="126.0" font-size="13" fill="#1f2937" text-anchor="middle">5</text>
+  <rect x="362" y="108" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <text x="375.0" y="126.0" font-size="13" fill="#1f2937" text-anchor="middle">6</text>
+  <rect x="536" y="66" width="26" height="26" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="562" y="66" width="26" height="26" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="588" y="66" width="26" height="26" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="614" y="66" width="26" height="26" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="536" y="92" width="26" height="26" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="562" y="92" width="26" height="26" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="588" y="92" width="26" height="26" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="614" y="92" width="26" height="26" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="536" y="118" width="26" height="26" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="562" y="118" width="26" height="26" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="588" y="118" width="26" height="26" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="614" y="118" width="26" height="26" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="520" y="82" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="546" y="82" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="572" y="82" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="598" y="82" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="520" y="108" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="546" y="108" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="572" y="108" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="598" y="108" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="520" y="134" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="546" y="134" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="572" y="134" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <rect x="598" y="134" width="26" height="26" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.2"/>
+  <text x="75" y="40" font-size="15" font-weight="700" fill="#1f2937" text-anchor="middle">scalar</text>
+  <text x="75" y="190" font-size="13" fill="#374151" text-anchor="middle">axis 0개</text>
+  <text x="75" y="212" font-size="13" fill="#374151" text-anchor="middle" font-family="ui-monospace, Menlo, monospace">shape ()</text>
+  <text x="199" y="40" font-size="15" font-weight="700" fill="#1f2937" text-anchor="middle">vector</text>
+  <text x="199" y="190" font-size="13" fill="#374151" text-anchor="middle">axis 1개</text>
+  <text x="199" y="212" font-size="13" fill="#374151" text-anchor="middle" font-family="ui-monospace, Menlo, monospace">shape (3,)</text>
+  <text x="349" y="40" font-size="15" font-weight="700" fill="#1f2937" text-anchor="middle">matrix</text>
+  <text x="349" y="190" font-size="13" fill="#374151" text-anchor="middle">axis 2개</text>
+  <text x="349" y="212" font-size="13" fill="#374151" text-anchor="middle" font-family="ui-monospace, Menlo, monospace">shape (2, 3)</text>
+  <text x="580" y="40" font-size="15" font-weight="700" fill="#1f2937" text-anchor="middle">tensor</text>
+  <text x="580" y="190" font-size="13" fill="#374151" text-anchor="middle">axis 3개</text>
+  <text x="580" y="212" font-size="13" fill="#374151" text-anchor="middle" font-family="ui-monospace, Menlo, monospace">shape (2, 3, 4)</text>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b7280"/></marker></defs>
+  <line x1="100" y1="108" x2="150" y2="108" stroke="#6b7280" stroke-width="1.4" marker-end="url(#a)"/>
+  <line x1="250" y1="108" x2="300" y2="108" stroke="#6b7280" stroke-width="1.4" marker-end="url(#a)"/>
+  <line x1="400" y1="108" x2="500" y2="108" stroke="#6b7280" stroke-width="1.4" marker-end="url(#a)"/>
+  <text x="380" y="250" font-size="12" fill="#6b7280" text-anchor="middle">오른쪽으로 갈수록 숫자를 늘어놓는 방향(axis)이 하나씩 늘어난다</text>
+</svg>

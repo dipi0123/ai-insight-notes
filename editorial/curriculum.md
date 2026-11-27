@@ -30,12 +30,12 @@
 ## 2부. 수학과 도구의 최소한
 | 장 | 제목 | 수준 | 선수 | 이 장의 질문 | 파일 | 상태 |
 |---|---|---|---|---|---|---|
-| 2.1 | vector·matrix·tensor | L2 | 1.1 | 사진과 문장은 어떻게 숫자 배열이 되나? 텐서의 shape는 어떻게 읽나? | `book/part02-math-and-tools/02-01-vectors-matrices-tensors.md` | 계획 |
-| 2.2 | derivative와 gradient | L2 | 2.1 | 기울기는 무엇을 알려 주나? 연쇄 법칙은 왜 학습의 핵심인가? | `book/part02-math-and-tools/02-02-derivatives-gradients.md` | 계획 |
-| 2.3 | probability와 statistics | L2 | 2.1 | 확률분포·기댓값·분산은 무엇인가? softmax 출력은 확률인가? | `book/part02-math-and-tools/02-03-probability-statistics.md` | 계획 |
-| 2.4 | information theory: entropy와 cross-entropy | L2 | 2.3 | 엔트로피·교차 엔트로피·KL 발산은 무엇을 재나? 분류 손실에 왜 쓰나? | `book/part02-math-and-tools/02-04-information-theory.md` | 계획 |
-| 2.5 | PyTorch로 계산하기: tensor·autograd·GPU | L2 | 2.1, 2.2 | 다른 언어를 쓰던 개발자가 알아야 할 Python·NumPy 관례는? 텐서 연산과 자동 미분(autograd)은 코드로 어떻게 쓰나? 계산을 GPU로 어떻게 옮기나? | `book/part02-math-and-tools/02-05-pytorch-basics.md` | 계획 |
-| 2.6 | 개발 환경: GPU·클라우드·Hugging Face | L2 | 2.5 | 학습에 필요한 GPU는 어떻게 고르고 빌리나? Hugging Face의 모델·데이터셋·라이브러리는 무엇을 대신해 주나? | `book/part02-math-and-tools/02-06-dev-environment.md` | 계획 |
+| 2.1 | vector·matrix·tensor | L2 | 1.1 | 사진과 문장은 어떻게 숫자 배열이 되나? tensor의 shape는 어떻게 읽나? | `book/part02-math-and-tools/02-01-vectors-matrices-tensors.md` | 초고 · Claude |
+| 2.2 | derivative와 gradient | L2 | 2.1 | gradient는 무엇을 알려 주나? chain rule은 왜 학습의 핵심인가? | `book/part02-math-and-tools/02-02-derivatives-gradients.md` | 초고 · Claude |
+| 2.3 | probability와 statistics | L2 | 2.1, 2.2 | probability distribution·expectation·variance는 무엇인가? softmax 출력은 확률인가? | `book/part02-math-and-tools/02-03-probability-statistics.md` | 초고 · Claude |
+| 2.4 | information theory: entropy와 cross-entropy | L2 | 2.3 | entropy·cross-entropy·KL divergence는 무엇을 재나? 분류 loss에 왜 쓰나? | `book/part02-math-and-tools/02-04-information-theory.md` | 초고 · Claude |
+| 2.5 | PyTorch로 계산하기: tensor·autograd·GPU | L2 | 2.1, 2.2 | 다른 언어를 쓰던 개발자가 알아야 할 Python·NumPy 관례는? tensor 연산과 autograd는 코드로 어떻게 쓰나? 계산을 GPU로 어떻게 옮기나? | `book/part02-math-and-tools/02-05-pytorch-basics.md` | 초고 · Claude |
+| 2.6 | 개발 환경: GPU·클라우드·Hugging Face | L2 | 2.3, 2.5 | 학습에 필요한 GPU는 어떻게 고르고 빌리나? Hugging Face의 모델·dataset·라이브러리는 무엇을 대신해 주나? | `book/part02-math-and-tools/02-06-dev-environment.md` | 초고 · Claude |
 
 ## 3부. machine learning의 기본 틀과 평가
 | 장 | 제목 | 수준 | 선수 | 이 장의 질문 | 파일 | 상태 |

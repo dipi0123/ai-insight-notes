@@ -6,6 +6,7 @@
 
 - **@Abadi2016** · Martín Abadi 외. 「TensorFlow: A System for Large-Scale Machine Learning」. arXiv, 2016. https://arxiv.org/abs/1605.08695
 - **@Amershi2019** · Saleema Amershi 외. 「Software Engineering for Machine Learning: A Case Study」. ICSE-SEIP, 2019. https://doi.org/10.1109/ICSE-SEIP.2019.00042
+- **@Bishop2006** · Christopher M. Bishop. 「Pattern Recognition and Machine Learning」. Springer, 2006. https://www.microsoft.com/en-us/research/wp-content/uploads/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf
 - **@Bommasani2021** · Rishi Bommasani 외. 「On the Opportunities and Risks of Foundation Models」. Stanford CRFM 보고서(arXiv), 2021. https://arxiv.org/abs/2108.07258
 - **@Bordes2024** · Florian Bordes 외. 「An Introduction to Vision-Language Modeling」. arXiv, 2024. https://arxiv.org/abs/2405.17247
 - **@Bradbury2018** · James Bradbury 외. 「JAX: composable transformations of Python+NumPy programs」. GitHub 저장소, 2018. https://github.com/jax-ml/jax
@@ -14,18 +15,26 @@
 - **@Christiano2017** · Paul Christiano 외. 「Deep Reinforcement Learning from Human Preferences」. NeurIPS, 2017. https://arxiv.org/abs/1706.03741
 - **@CompVis2022** · CompVis. 「Stable Diffusion v1-4 모델 카드」. Hugging Face, 2022. https://huggingface.co/CompVis/stable-diffusion-v1-4
 - **@DeepSeekAI2025** · DeepSeek-AI 외. 「DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning」. Nature 645, 2025. https://arxiv.org/abs/2501.12948
+- **@Deisenroth2020** · Marc Peter Deisenroth, A. Aldo Faisal, Cheng Soon Ong. 「Mathematics for Machine Learning」. Cambridge University Press, 2020. https://mml-book.com
 - **@Devlin2019** · Jacob Devlin 외. 「BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding」. NAACL, 2019. https://arxiv.org/abs/1810.04805
 - **@Dosovitskiy2021** · Alexey Dosovitskiy 외. 「An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale」. ICLR, 2021. https://arxiv.org/abs/2010.11929
 - **@Gama2014** · João Gama 외. 「A Survey on Concept Drift Adaptation」. ACM Computing Surveys 46(4), 2014. https://doi.org/10.1145/2523813
 - **@Goodfellow2014** · Ian J. Goodfellow 외. 「Generative Adversarial Nets」. arXiv, 2014. https://arxiv.org/abs/1406.2661
 - **@Goodfellow2016** · Ian Goodfellow, Yoshua Bengio, Aaron Courville. 「Deep Learning」. MIT Press, 2016. https://www.deeplearningbook.org/
 - **@Google2026** · Google for Developers. 「Machine Learning Glossary」. 웹 문서, 2026년 11월 확인. https://developers.google.com/machine-learning/glossary
+- **@Guo2017** · Chuan Guo, Geoff Pleiss, Yu Sun, Kilian Q. Weinberger. 「On Calibration of Modern Neural Networks」. ICML(PMLR 70), 2017. https://proceedings.mlr.press/v70/guo17a/guo17a.pdf
 - **@He2016** · Kaiming He 외. 「Deep Residual Learning for Image Recognition」. CVPR, 2016. https://arxiv.org/abs/1512.03385
 - **@Hinton2015** · Geoffrey Hinton, Oriol Vinyals, Jeff Dean. 「Distilling the Knowledge in a Neural Network」. NIPS Deep Learning and Representation Learning Workshop, 2015. https://arxiv.org/abs/1503.02531
 - **@Ho2020** · Jonathan Ho, Ajay Jain, Pieter Abbeel. 「Denoising Diffusion Probabilistic Models」. NeurIPS, 2020. https://arxiv.org/abs/2006.11239
 - **@Hu2021** · Edward Hu 외. 「LoRA: Low-Rank Adaptation of Large Language Models」. arXiv, 2021. https://arxiv.org/abs/2106.09685
+- **@HuggingFace2025** · Hugging Face. 「SmolLM2-135M 모델 카드」. Hugging Face, 2025. https://huggingface.co/HuggingFaceTB/SmolLM2-135M
 - **@HuggingFace2026** · Hugging Face. 「Tasks」. 웹 문서, 2026년 11월 확인. https://huggingface.co/tasks
 - **@HuggingFace2026b** · Hugging Face. 「PEFT Integration」(TRL 문서). 웹 문서, 2026년 11월 확인. https://huggingface.co/docs/trl/peft_integration
+- **@HuggingFace2026c** · Hugging Face. 「Hub documentation」(Repositories, The Model Hub, Model Cards, Dataset Cards, Licenses, Pickle Scanning). 웹 문서, 2026년 11월 확인. https://huggingface.co/docs/hub/repositories
+- **@HuggingFace2026d** · Hugging Face. 「huggingface_hub documentation」(Download files from the Hub, Manage cache, HfApi). 웹 문서, 2026년 11월 확인. https://huggingface.co/docs/huggingface_hub/guides/download
+- **@HuggingFace2026e** · Hugging Face. 「Transformers documentation」(Transformers, Loading models, Customizing models, GPU memory usage, Mixed precision training). 웹 문서, 2026년 11월 확인. https://huggingface.co/docs/transformers/models
+- **@HuggingFace2026f** · Hugging Face. 「Datasets documentation」(Datasets, Load a dataset from the Hub, Load, Cache management). 웹 문서, 2026년 11월 확인. https://huggingface.co/docs/datasets/load_hub
+- **@HuggingFace2026g** · Hugging Face. 「Safetensors」(Safetensors 문서와 v0.8.0 README). 웹 문서, 2026년 11월 확인. https://huggingface.co/docs/safetensors/index
 - **@Jouppi2017** · Norman P. Jouppi 외. 「In-Datacenter Performance Analysis of a Tensor Processing Unit」. ISCA, 2017. https://arxiv.org/abs/1704.04760
 - **@Kapoor2024** · Sayash Kapoor 외. 「On the Societal Impact of Open Foundation Models」. arXiv, 2024. https://arxiv.org/abs/2403.07918
 - **@Kingma2013** · Diederik P. Kingma, Max Welling. 「Auto-Encoding Variational Bayes」. arXiv, 2013. https://arxiv.org/abs/1312.6114
@@ -33,12 +42,16 @@
 - **@Kirillov2023** · Alexander Kirillov 외. 「Segment Anything」. ICCV, 2023. https://arxiv.org/abs/2304.02643
 - **@Kwon2023** · Woosuk Kwon 외. 「Efficient Memory Management for Large Language Model Serving with PagedAttention」. SOSP, 2023. https://arxiv.org/abs/2309.06180
 - **@Lambert2024** · Nathan Lambert 외. 「Tülu 3: Pushing Frontiers in Open Language Model Post-Training」. arXiv, 2024. https://arxiv.org/abs/2411.15124
+- **@LeCun2024** · Yann LeCun, Corinna Cortes, Christopher J. C. Burges. 「MNIST 데이터셋 카드(ylecun/mnist)」. Hugging Face, 2024. https://huggingface.co/datasets/ylecun/mnist
+- **@Lhoest2021** · Quentin Lhoest 외. 「Datasets: A Community Library for Natural Language Processing」. EMNLP System Demonstrations, 2021. https://aclanthology.org/2021.emnlp-demo.21
 - **@McCarthy1955** · John McCarthy, Marvin L. Minsky, Nathaniel Rochester, Claude E. Shannon. 「A Proposal for the Dartmouth Summer Research Project on Artificial Intelligence」. 1955년 제안서, AI Magazine 27(4)에 2006년 재수록. https://doi.org/10.1609/aimag.v27i4.1904 (원문 PDF: http://jmc.stanford.edu/articles/dartmouth/dartmouth.pdf)
 - **@Meta2024** · Meta. 「Meta-Llama-3-8B-Instruct 모델 카드」. Hugging Face, 2024. https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct
 - **@Meta2026** · Meta. 「segment-anything」 GitHub 저장소 README. 웹 문서, 2026년 11월 확인. https://github.com/facebookresearch/segment-anything
+- **@Microsoft2026** · Microsoft. 「Azure Virtual Machines·Azure Machine Learning documentation」(About Azure Spot Virtual Machines, States and billing status, Sizes overview, N-series GPU driver setup for Linux, What is an Azure Machine Learning compute instance?). 웹 문서, 2026년 11월 확인. https://learn.microsoft.com/en-us/azure/virtual-machines/spot-vms
 - **@Mitchell1997** · Tom M. Mitchell. 「Machine Learning」. McGraw Hill, 1997. http://www.cs.cmu.edu/~tom/mlbook.html
 - **@Mitchell2019** · Margaret Mitchell 외. 「Model Cards for Model Reporting」. Conference on Fairness, Accountability, and Transparency (FAT*), 2019. https://arxiv.org/abs/1810.03993
 - **@Northcutt2021** · Curtis G. Northcutt, Anish Athalye, Jonas Mueller. 「Pervasive Label Errors in Test Sets Destabilize Machine Learning Benchmarks」. NeurIPS Datasets and Benchmarks Track, 2021. https://arxiv.org/abs/2103.14749
+- **@NumPy2026** · NumPy Developers. 「NumPy User Guide and Reference」(NumPy v2.5 Manual: Broadcasting, quickstart, numpy.matmul·reshape·transpose·mean·linalg.matrix_rank·random.Generator.choice·random.default_rng, Copies and views, What is NumPy?, Glossary). 웹 문서, 2026년 11월 확인. https://numpy.org/doc/stable/user/basics.broadcasting.html
 - **@OpenAI2020** · OpenAI. 「OpenAI API」. 웹 문서, 2020. https://openai.com/index/openai-api/
 - **@OpenAI2022** · OpenAI. 「Introducing ChatGPT」. 웹 문서, 2022. https://openai.com/index/chatgpt/
 - **@OpenAI2022b** · OpenAI. 「whisper」 GitHub 저장소 README·LICENSE. GitHub, 2022. https://github.com/openai/whisper
@@ -49,6 +62,8 @@
 - **@Paszke2019** · Adam Paszke 외. 「PyTorch: An Imperative Style, High-Performance Deep Learning Library」. NeurIPS, 2019. https://arxiv.org/abs/1912.01703
 - **@Patterson2022** · David Patterson 외. 「The Carbon Footprint of Machine Learning Training Will Plateau, Then Shrink」. IEEE Computer 55(7), 2022. https://doi.org/10.1109/MC.2022.3148714
 - **@Peebles2023** · William Peebles, Saining Xie. 「Scalable Diffusion Models with Transformers」. ICCV, 2023. https://arxiv.org/abs/2212.09748
+- **@PyTorch2026** · PyTorch Contributors. 「PyTorch 2.11 documentation」(torch.nn.Linear, torch.nn.Conv2d, torch.nn.Embedding, torch.Tensor, torch.autograd.backward, torch.nn.BCELoss, Tensor Attributes, torch.from_numpy, torch.no_grad, torch.manual_seed, torch.accelerator, torch.mps, Autograd mechanics, CUDA semantics, MPS backend, Reproducibility, Broadcasting semantics, Numerical accuracy, 튜토리얼 Tensors·A Gentle Introduction to torch.autograd. MPS backend의 float64 절은 2.15 문서). 웹 문서, 2026년 11월 확인. https://docs.pytorch.org/docs/2.11/generated/torch.nn.Linear.html
+- **@PyTorch2026b** · PyTorch Foundation. 「Start Locally」·「Previous PyTorch Versions」와 torch.amp(PyTorch 2.11 문서). 웹 문서, 2026년 11월 확인. https://pytorch.org/get-started/locally/
 - **@Radford2018** · Alec Radford 외. 「Improving Language Understanding by Generative Pre-Training」. OpenAI 사전 인쇄본, 2018. https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf
 - **@Radford2021** · Alec Radford 외. 「Learning Transferable Visual Models From Natural Language Supervision」. ICML, 2021. https://arxiv.org/abs/2103.00020
 - **@Radford2023** · Alec Radford 외. 「Robust Speech Recognition via Large-Scale Weak Supervision」. ICML, 2023. https://arxiv.org/abs/2212.04356
@@ -62,8 +77,10 @@
 - **@Solaiman2023** · Irene Solaiman. 「The Gradient of Generative AI Release: Methods and Considerations」. arXiv, 2023. https://arxiv.org/abs/2302.04844
 - **@Sun2026** · Yuanyuan Sun 외. 「Defining AI Models and AI Systems: A Framework to Resolve the Boundary Problem」. arXiv, 2026. https://arxiv.org/abs/2603.10023
 - **@Sutton2018** · Richard S. Sutton, Andrew G. Barto. 「Reinforcement Learning: An Introduction」(2판). MIT Press, 2018. http://incompleteideas.net/book/the-book-2nd.html
+- **@Torchvision2026** · Torch Contributors. 「Transforming images, videos, boxes and more」(Torchvision 0.29 문서). 웹 문서, 2026년 11월 확인. https://docs.pytorch.org/vision/stable/transforms.html
 - **@Vaswani2017** · Ashish Vaswani 외. 「Attention Is All You Need」. NeurIPS, 2017. https://arxiv.org/abs/1706.03762
 - **@Wirth2017** · Christian Wirth, Riad Akrour, Gerhard Neumann, Johannes Fürnkranz. 「A Survey of Preference-Based Reinforcement Learning Methods」. Journal of Machine Learning Research 18, 2017. https://jmlr.org/papers/volume18/16-634/16-634.pdf
+- **@Wolf2020** · Thomas Wolf 외. 「Transformers: State-of-the-Art Natural Language Processing」. EMNLP System Demonstrations, 2020. https://aclanthology.org/2020.emnlp-demos.6
 - **@Yosinski2014** · Jason Yosinski, Jeff Clune, Yoshua Bengio, Hod Lipson. 「How transferable are features in deep neural networks?」. NeurIPS, 2014. https://arxiv.org/abs/1411.1792
 - **@Zhao2023** · Wayne Xin Zhao 외. 「A Survey of Large Language Models」. arXiv, 2023. https://arxiv.org/abs/2303.18223
 - **@Zinkevich2025** · Martin Zinkevich. 「Rules of Machine Learning: Best Practices for ML Engineering」. Google for Developers 웹 문서, 2025년 8월 갱신, 2026년 11월 확인. https://developers.google.com/machine-learning/guides/rules-of-ml

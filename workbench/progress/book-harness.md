@@ -11,6 +11,8 @@
 - 시범 운영 2(1.1~1.4 소급 자체 점검)를 마쳤다. 묶음 `batch-01-1`에서 1.1·1.3·1.4를, 보류했던 1.2는 사용자 결정대로 묶음 `batch-01-2`에서 한 번 더 고쳐 통합했다. 네 장 모두 상태는 `초고 · Claude`다(자체 점검은 교차 검토가 아니다).
 - 시범 운영 3(1.5·1.6을 구성부터 부 리뷰까지)을 진행 중이다. 1부 구성안(`build/harness/part-01/plan.md`)을 사용자가 승인했고(결정 D1~D4), 1.5를 묶음 `batch-01-3`으로 혼자 먼저 써서 통합했다. 사용자가 1.5를 L1 이론 기준 장으로 승인했다. 1.6은 `batch-01-4`에서 보류됐다가 사용자 결정대로 `batch-01-5`에서 다시 돌려 통합했다. 1부 부 리뷰와 읽기 안내(`build/harness/part-01/review/`)를 마쳤고, 지적을 사용자 결정대로 모두 반영해 다시 통합했다(`batch-01-6`: 1.5, `batch-01-7`: 1.1·1.3·1.4·1.6). 사용자 요청으로 커밋하고 push했다(`156ce4f`). 시범 운영 측정값은 아래 「시범 운영 측정값」에 있다.
 - 「운영에서 고칠 것」 반영과 직역투 정리는 사용자 요청으로 커밋하고 push했다(아래 두 항목).
+- ED-21(분량 대신 학습 가치)과 그 기준의 1부 정리는 커밋하고 push했다(`12fce0b`).
+- 2부를 시작했다. 2부 전 준비(표기 규칙·코드 환경 `book/code/.venv`)와 2부 구성안(`build/harness/part-02/plan.md` r2, 묶음 [2.1] → [2.2, 2.3] → [2.5] → [2.4, 2.6])을 사용자가 권고대로 승인했다. 2.1을 묶음 `batch-02-1`로 써서 통합했다. 사용자가 2.1을 L2 수학 기준 장으로 승인했다. 묶음 `batch-02-2`(2.2·2.3), `batch-02-3`(2.5), `batch-02-4`(2.4·2.6)를 통합해 2부 여섯 장이 모두 초고다. 2부 부 리뷰(`build/harness/part-02/review/`)를 마쳤다: 차단 3(2.5 「0차원 tensor」가 2.1의 「차원」 약속과 어긋남, 2.6 mixed precision의 weight 메모리가 같은 장 안에서 반대로 적힘, KL divergence가 언제나 비대칭인 것처럼 단정), 권고 41. 에이전트 5개, 하위 에이전트 토큰 약 129만, 9분. 사용자가 권장안대로 차단과 권고를 모두 반영하기로 정했고, 묶음 `batch-02-5`로 여섯 장을 고쳐 다시 통합했다. 사용자가 2.5를 코드 기준 장으로 승인했다. 2.1 이후 변경은 커밋하지 않았다.
 
 ## 준비 단계에서 바꾼 파일
 | 파일 | 내용 |
@@ -95,6 +97,12 @@ git 밖 보관함(`build/harness/sources/`)에는 도구 점검과 시범 운영
 
 ## 끝난 일
 근거 커밋: 이 파일을 처음 올린 커밋(`git log --diff-filter=A --oneline -- workbench/progress/book-harness.md`).
+- 2부 부 리뷰 반영(batch-02-5): 사용자가 권장안대로 정했다. 오케스트레이터가 사용자 승인으로 공유 파일을 먼저 고쳤다: curriculum 2.3 선수 2.1·2.2, 2.6 선수 2.3·2.5, 2부 「이 장의 질문」을 용어집 표기로(장 메타 줄도), 용어집 기존 행 13개(KL divergence 「달라질 수 있어」, logit, CUDA·model card·automatic differentiation 본 장 칸, loss·independence 다른 이름, channel, token, device, ECE·reliability diagram의 accuracy, autograd 한국어 —)와 새 행 10개(accuracy, activation, gradient descent, learning rate, mixed precision, optimizer, sigmoid, temperature, tokenizer, view). 장마다 수정 → 렌즈 셋 → 판정(에이전트 50개, 하위 에이전트 토큰 약 596만, 18분). 수정이 새 문장을 만들어 2.3·2.4·2.5·2.6에서 차단이 1~3개 나왔고, 2.4(조건부 정답 distribution의 entropy와 조건부 KL을 정의하지 않음)와 2.5(정리의 「65504를 넘으면 inf」, 실제 경계는 65520)는 한 회차씩 더 돌렸다(2.4는 두 번, 에이전트 15개, 토큰 약 159만). 2.5의 matmul_timing.py WARMUP을 3에서 20으로 늘렸다. 모두 일치가 아닌 문장 0으로 통합했다(merge 스냅숏 `merge-20261126-231525`, check 오류 0, strict 빌드 경고 0). 렌더 확인(`build/harness/batch-02-5/render.md`): 375px에서 2.3 §4.4의 inline 수식 하나를 통합 뒤 손으로 display로 옮겼다. 미리 보기 서버는 8765를 다른 프로세스가 쓰고 있어 `.claude/launch.json`을 8766으로 옮겼다. 사용자 승인으로 @PyTorch2026 괄호에 「Numerical accuracy」를 더했다(2.5 §6.2가 인용). 고치지 않은 권고: 2.5 float32 비트 나눔(1-8-23)은 받은 출처에 없어 쓰지 않았다.
+- 2부의 2.4·2.6(batch-02-4): 오케스트레이터가 사용자 승인으로 책 환경에 Hugging Face 패키지를 설치하고(35개, transformers 5.24.1·datasets 5.2.0·huggingface_hub 2.4.0·safetensors 0.8.0·tokenizers 0.23.3을 requirements.txt에 고정) 두 장을 나란히 돌렸다. 2.6 조사가 고른 모델 HuggingFaceTB/SmolLM2-135M@93efa2f097d5(Apache-2.0, 약 272MB)와 데이터셋 ylecun/mnist@77f3279092a1(MIT, test split)을 집필 패스가 기본 캐시로 받았다(합 약 291MB). 채택된 차단: 2.4 11개 → 4개 → 0개(3회차), 2.6 5개 → 0개(2회차). 2.4는 문장 297개·24,228자, 2.6은 문장 343개·28,156자. 통합했다(merge 스냅숏 `build/harness/snapshots/merge-20261126-221743/`, check 오류 0·경고 0). 용어집 +20행·본 장 칸 3행, 참고문헌 +11개(Hugging Face 문서 6·Wolf2020·Lhoest2021·Microsoft2026·PyTorch2026b·LeCun2024), 미확인 OQ-016(driver·CUDA 호환, 허용 목록 밖 docs.nvidia.com만 받친다). 렌더 확인(`build/harness/batch-02-4/render.md`): 375px에서 잘리던 2.4의 inline 수식 넷을 통합 뒤 손으로 display로 옮겼다(근거 대장 문장과 글이 조금 어긋난다). 에이전트 27개, 하위 에이전트 토큰 약 446만, 약 39분. 사용자가 권고대로 정해 반영했다: 용어집 accelerator 본 장 칸에서 2.6을 뺌, 2.3 두 곳(→ 2.4 §3·§5)과 1.6 §2 표(2.5·2.6)를 링크로 바꿈, @PyTorch2026 괄호에 torch.nn.BCELoss를 더함. Pillow는 지금 넣지 않고 이미지를 푸는 장(4.11·6.1)에서 설치를 사용자에게 확인받는다.
+- 2부의 2.5(batch-02-3, 코드 기준 장 후보): 조사(사실 90개) → 집필(본문 코드 블록 18개, 시간 재기 스크립트 `book/code/part02/02-05-pytorch-basics/matmul_timing.py`, 모두 책 환경 CPU·MPS에서 실행) → 렌즈 셋·판정 2회차(수정 1번). 채택된 차단 5개 → 0개. 문장 383개, 37,021자. 통합했다(merge 스냅숏 `build/harness/snapshots/merge-20261126-211950/`, check 오류 0·경고 0). 용어집 +12행·본 장 칸 1행(deep learning framework), 참고문헌 새 키 없음, 미확인 OQ-014(torch.accelerator의 release status)·OQ-015(MPS 비동기 실행의 문서 근거). 렌더 확인(`build/harness/batch-02-3/render.md`): 차단 0·권고 0. 에이전트 11개, 하위 에이전트 토큰 약 196만, 약 39분. 시간 측정 결과: 64·256 크기에서 CPU가 빨랐고 1024에서 MPS가 2.38~2.48배, 4096에서 4.21~4.37배(세 번). 사용자가 모두 승인해 반영했다: @PyTorch2026·@NumPy2026 괄호 문서 목록 확장(MPS float64 절은 2.15 문서라고 밝힘), 1.6 §4·2.1 머리·2.2(§3.2·§5.3 두 곳·§6·헷갈리기 쉬운 점)의 「2.5장」을 2.5 절 링크로 바꿈(하네스 밖 손 수정이라 그 장들의 근거 대장 문장과 글이 조금 어긋난다). autograd와 automatic differentiation은 두 행으로 둔다(기능 이름과 일반 개념).
+- 2부의 2.2·2.3(batch-02-2): 두 장을 한 워크플로에서 나란히 조사 → 집필 → 렌즈 셋·판정 3회차(수정 2번)로 돌렸다. 채택된 차단: 2.2 5개 → 1개 → 0개, 2.3 7개 → 1개 → 0개. 2.2는 사실 39개·문장 304개·22,327자, 2.3은 사실 94개·문장 465개·36,383자. 통합했다(merge 스냅숏 `build/harness/snapshots/merge-20261126-203227/`, check 오류 0·경고 0). 용어집 +41행·본 장 칸 2행, 참고문헌 +3개(Deisenroth2020·Bishop2006·Guo2017), 미확인 OQ-011~OQ-013(log x의 derivative 출처, derivative의 한국어 번역어, forward difference 이름의 출처). 렌더 확인(`build/harness/batch-02-2/render.md`): 375px에서 잘리던 inline 수식 둘을 통합 뒤 손으로 display 수식으로 옮겼다(문장 글이 조금 바뀌어 근거 대장의 두 문장과 어긋난다. 다음에 그 장을 하네스로 돌릴 때 맞춘다). 권고 1(2.3 가로 Mermaid가 375px에서 작다). 에이전트 32개, 하위 에이전트 토큰 약 498만, 약 42분. 사용자가 네 가지를 모두 승인해 반영했다: 참고문헌 @PyTorch2026 괄호에 torch.autograd.backward, @NumPy2026 괄호에 numpy.random.Generator.choice, 용어집 probability distribution 정의에 continuous의 밀도·적분, derivative의 한국어 「도함수」 확정(OQ-012 지움).
+- 2부의 2.1(batch-02-1): 조사(사실 65개) → 집필(코드 블록 11개, 모두 책 환경에서 실행) → 렌즈 셋·판정 4회차(수정 3번: 두 번 뒤 차단 1개(Goodfellow 한정어 누락)가 남아 사용자가 한 번 더 허용). 일치가 아닌 문장 7개 → 1개 → 1개 → 0개. 문장 342개, 27,590자. 통합했다(merge 스냅숏 `build/harness/snapshots/merge-20261126-171102/`, check 오류 0·경고 0). 용어집 +26행, 참고문헌 +3개(NumPy2026·PyTorch2026·Torchvision2026), 미확인 OQ-010(tensor의 수학·물리 정의). 렌더 확인(`build/harness/batch-02-1/render.md`): strict 빌드 경고 0, 차단 0, 권고 1(375px에서 SVG 글자가 작다). 에이전트 약 21개. 판정이 넘긴 것: rank 번역어 「계수」가 1.1의 coefficient(계수)와 겹친다(판정은 기각), 「tensor rank = axis 수」 용법은 출처(tensorflow.org)가 허용 목록 밖이라 뺐다, 1.6 §3 → 2.1 §4.5 링크는 사용자 승인으로 더했다(1.6 §3에 문장 하나. 하네스 밖에서 손으로 고쳤으므로 1.6 대장에는 이 문장이 없다. 다음에 1.6을 하네스로 돌릴 때 대장에 들어간다).
+- 2부 전 준비: 코드 환경 설치(uv, Python 3.14.6, numpy 2.5.5, torch 2.11.0, MPS 사용 가능). check·lint가 숨은 폴더(`book/code/.venv`)를 건너뛰게 했고(`visible_rglob`), 수용 시험의 가짜 장을 2.1에서 4.1로 옮겼다(108개 통과). 2부 구성 → 반론 → 사용자 결정(권고대로) → 구성안 r2.
 - 시범 운영 3의 부 리뷰: 렌즈 넷(흐름·수준, 중복·모순, 약속 이행, 용어집 대조)과 읽기 안내(`build/harness/part-01/review/`). 차단 1(SFT 정의가 1.2와 1.4·용어집·1.5에서 어긋남), 권고 23. 에이전트 5개, 토큰 약 94만. 사용자 결정: SFT는 넓은 뜻(입력과 바라는 출력의 짝으로 하는 supervised fine-tuning, 지시·답 짝이면 instruction tuning), 권고 모두 반영, curriculum 1.6의 「이 장의 질문」을 용어집 표기(foundation model·serving·open-weight model)로. 사용자 승인으로 용어집 기존 행을 바꿨다: SFT·prompt 정의, reasoning model·distribution 본 장 칸에 1.3, residual connection(shortcut connection)·open-weight model(open weights)의 다른 이름, diffusion model·text-to-image·speech recognition model 행에서 1.5 링크 삭제. 반영: 1.1·1.3·1.4·1.5·1.6 수정 → 렌즈 셋 → 판정(에이전트 25개, 토큰 약 270만, 8분). 1.5만 차단 1(괄호 한국어를 되풀이)이 남아 한 번 더 고쳤다(에이전트 5개, 토큰 약 54만). 모두 일치가 아닌 문장 0으로 다시 통합했다(merge 스냅숏 `merge-20261126-125011`, `merge-20261126-125401`, check 오류 0, strict 빌드 경고 0). 1.2는 고칠 곳이 없었다. 부 리뷰를 다시 돌리지는 않았다(차단 지적의 문장은 렌즈 셋과 판정이 다시 봤다).
 - 시범 운영 3의 1.6(batch-01-4·batch-01-5): 조사 → 집필 → 렌즈 셋·판정 4회차(수정 3번: batch-01-4에서 2번, 보류 뒤 batch-01-5에서 1번). 일치가 아닌 문장 7개 → 1개 → 1개 → 0개. 사실 114개, 문장 192개, 13,878자. 통합했다(merge 스냅숏 `build/harness/snapshots/merge-20261126-122952/`, check 오류 0). 용어집 +8행·본 장 칸 1행(foundation model), 참고문헌 +14개(OSI2024 포함), 미확인 OQ-009(Abadi2016·Kapoor2024의 학회 게재. OSDI 확인에는 허용 목록 밖 usenix.org가 필요하다). 렌더 확인(`build/harness/batch-01-5/render.md`): 차단 0·권고 0. 비용: 에이전트 21개, 하위 에이전트 토큰 약 252만, 약 35분.
 - 시범 운영 3의 1.5(batch-01-3): 조사 → 집필 → 렌즈 셋·판정 3회차(수정 2번). 일치가 아닌 문장 5개 → 1개 → 0개. 사실 118개, 문장 192개, 14,475자(구성안 어림 12,500자와 경고선 13,500자를 넘는다). 통합했다(merge 스냅숏 `build/harness/snapshots/merge-20261126-110206/`, check 오류 0). 용어집 +10행·본 장 칸 3행, 참고문헌 +12개, 미확인 OQ-008. 렌더 확인(`build/harness/batch-01-3/render.md`): strict 빌드 경고 0, 1280px·375px에서 차단 0, 권고 1(375px에서 SVG 글자가 작다). 비용: 에이전트 16개, 하위 에이전트 토큰 약 228만, 약 45분.
@@ -128,6 +136,12 @@ git 밖 보관함(`build/harness/sources/`)에는 도구 점검과 시범 운영
 | 1.3 | 통합(batch-01-7, 자체 점검 4회차) | 28d79df04b03 | 195 | lint 오류 0, 후보 2. 근거 대장 `workbench/evidence/1.3.md` |
 | 1.4 | 통합(batch-01-7, 자체 점검 4회차) | 756c7327a577 | 163 | lint 오류 0, 후보 0. 근거 대장 `workbench/evidence/1.4.md` |
 | 1.5 | 통합(batch-01-6, 자체 점검 5회차) | b906cfca4553 | 205 | lint 오류 0, 후보 0. L1 이론 기준 장(사용자 승인). 부 리뷰 반영 뒤 15,558자로 늘었다(읽기 40분 경계). 근거 대장 `workbench/evidence/1.5.md` |
+| 2.1 | 통합(batch-02-5 부 리뷰 반영, 자체 점검 5회차) | 7d5813ecc644 | 342 | lint 오류 0, 후보 1(오탐). 근거 대장 `workbench/evidence/2.1.md` |
+| 2.4 | 통합(batch-02-5 부 리뷰 반영, 자체 점검 7회차) | f67d75e8b008 | 309 | lint 오류 0, 후보 0. 통합 뒤 inline 수식 넷을 display로(부 리뷰 반영 전). 근거 대장 `workbench/evidence/2.4.md` |
+| 2.6 | 통합(batch-02-5 부 리뷰 반영, 자체 점검 4회차) | 737b969d31b5 | 346 | lint 오류 0, 후보 1. 근거 대장 `workbench/evidence/2.6.md` |
+| 2.5 | 통합(batch-02-5 부 리뷰 반영, 자체 점검 5회차) | 168f51905851 | 406 | lint 오류 0, 후보 0. 코드 기준 장(사용자 승인). 근거 대장 `workbench/evidence/2.5.md` |
+| 2.2 | 통합(batch-02-5 부 리뷰 반영, 자체 점검 4회차) | b42a12c93c29 | 306 | lint 오류 0, 후보 2. 근거 대장 `workbench/evidence/2.2.md` |
+| 2.3 | 통합(batch-02-5 부 리뷰 반영, 자체 점검 5회차) | dd90c18f1322 | 474 | lint 오류 0, 후보 4. 통합 뒤 §4.3과 §4.4의 inline 수식 하나씩을 display로 옮겼다. 근거 대장 `workbench/evidence/2.3.md` |
 | 1.6 | 통합(batch-01-7, 자체 점검 5회차) | 3d942f01a0f6 | 193 | lint 오류 0, 후보 0. batch-01-4에서 두 번 고친 뒤 차단 1개(그림의 GPU·TPU 첫 등장에 한국어 없음)가 남아 보류했다가 다시 돌렸다. 근거 대장 `workbench/evidence/1.6.md` |
 
 ## 남은 확인거리(통합 때 나온 것)
@@ -138,14 +152,16 @@ git 밖 보관함(`build/harness/sources/`)에는 도구 점검과 시범 운영
 
 ## 기준 장
 - L1 이론 장: 1.5(사용자 승인, 교정 없음).
+- L2 수학 장: 2.1(사용자 승인, 교정 없음).
+- 코드 장: 2.5(사용자 승인, 교정 없음).
 - 남은 유형의 설계안 후보: 2.2·2.4, 3.2, 4.3·5.5, 9.4, 14.2, 14.3.
 
 ## 다음 미확인 번호
-OQ-010. merge에는 `--oq-floor 9`.
+OQ-017. merge에는 `--oq-floor 16`.
 
 ## 다음 단계
 1. push는 사용자가 따로 요청할 때 한다.
 2. 시범 운영 마무리: 선택으로 1부 여섯 장을 ED-21 기준(되풀이·보탬 없는 문장·빈약한 설명)으로 다시 본다. 선택: 두 장을 다른 모델로 대조(설계안 11절 4).
-3. 2부 전: 책 설계도 1판(`editorial/blueprint.md`, 승인 필요), style-guide §6·§7 보강(설계안 9절 7), 일반 서술로 쓰는 한국어 낱말의 허용 목록(9절 8. 지금 `tools/book.py`의 `EVERYDAY_KO`는 임시).
-4. 3부 전: 코드 계약(9절 9). 시스템 Python은 3.14이고 torch·numpy가 없다.
+3. 2부 전 준비는 정했다(사용자 승인): 책 설계도는 따로 만들지 않는다. style-guide §6에 기호·shape·log·장 참조 표기, §7에 인용 키 연도 기준, §5에 `EVERYDAY_KO` 허용 목록, 용어집 머리에 「본 장」 기준. 코드 계약을 2부 전으로 앞당겨 `book/code/requirements.txt`를 numpy==2.5.5·torch==2.11.0으로 고정하고 `book/code/.venv`(uv, Python 3.14)를 쓴다. @Kingma2013은 학회 판(ICLR 2014)을 출처로 확인하지 못해 그대로 두었다.
+4. 다음: 2부 부 리뷰 반영을 마쳤다 → 사용자 접점(커밋 요청) → 3부 구성안.
 5. 하네스를 다 쓰면 결론만 정본으로 옮기고 이 파일과 설계안을 지운다(§9).

@@ -68,12 +68,12 @@
 
 ### 2부. 수학과 도구의 최소한
 
-- 2.1 vector·matrix·tensor · L2
-- 2.2 derivative와 gradient · L2
-- 2.3 probability와 statistics · L2
-- 2.4 information theory: entropy와 cross-entropy · L2
-- 2.5 PyTorch로 계산하기: tensor·autograd·GPU · L2
-- 2.6 개발 환경: GPU·클라우드·Hugging Face · L2
+- [2.1 vector·matrix·tensor](part02-math-and-tools/02-01-vectors-matrices-tensors.md) · L2
+- [2.2 derivative와 gradient](part02-math-and-tools/02-02-derivatives-gradients.md) · L2
+- [2.3 probability와 statistics](part02-math-and-tools/02-03-probability-statistics.md) · L2
+- [2.4 information theory: entropy와 cross-entropy](part02-math-and-tools/02-04-information-theory.md) · L2
+- [2.5 PyTorch로 계산하기: tensor·autograd·GPU](part02-math-and-tools/02-05-pytorch-basics.md) · L2
+- [2.6 개발 환경: GPU·클라우드·Hugging Face](part02-math-and-tools/02-06-dev-environment.md) · L2
 
 ### 3부. machine learning의 기본 틀과 평가
 

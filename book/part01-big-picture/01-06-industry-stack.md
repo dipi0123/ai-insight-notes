@@ -36,8 +36,8 @@ flowchart TB
 | 응용 | 모델의 출력을 사용자가 쓰는 기능으로 만든다 | 범용 챗봇, 코딩 어시스턴트 | §7, 13.3, 13.4 |
 | serving | 학습한 모델이 inference(추론)로 예측을 내놓게 한다. 요청이 올 때마다 돌리기도 하고, 미리 한꺼번에 계산해 두기도 한다 | vLLM, OpenAI API | §6, 13.2 |
 | foundation model | 넓은 데이터로 학습한 모델을 내놓고, 여러 task(과제)에 맞춰 고쳐 쓰게 한다 | BERT, GPT-3 | §5, 9.1 |
-| 프레임워크 | 숫자 배열 계산과 미분을 대신하고, 같은 코드를 여러 칩에서 돌린다 | PyTorch, JAX, TensorFlow | §4, 2.5 |
-| 반도체 | 많은 계산을 동시에 한다 | CPU, graphics processing unit(GPU, 그래픽 처리 장치), tensor processing unit(TPU, 텐서 처리 장치) | §3, 2.6, 4.8 |
+| 프레임워크 | 숫자 배열 계산과 미분을 대신하고, 같은 코드를 여러 칩에서 돌린다 | PyTorch, JAX, TensorFlow | §4, [2.5](../part02-math-and-tools/02-05-pytorch-basics.md) |
+| 반도체 | 많은 계산을 동시에 한다 | CPU, graphics processing unit(GPU, 그래픽 처리 장치), tensor processing unit(TPU, 텐서 처리 장치) | §3, [2.6](../part02-math-and-tools/02-06-dev-environment.md#1-gpu를-고르는-기준), 4.8 |
 
 > **표준과 관례** 이 다섯 층은 산업을 훑어보려고 이 책이 고른 정리 방식이다. 이 장의 층은 neural network의 layer(층)가 아니라 기술 스택의 단계를 가리킨다. 층의 수와 이름을 정한 표준 분류로 쓰지 않는다. 같은 생태계를 다르게 자르는 정리도 있다. foundation model 보고서는 생태계를 데이터 생성, 데이터 정리(보고서의 단계 이름은 data curation), 학습, adaptation(적응), 배포의 단계 순서로 본다 [@Bommasani2021]. 이것은 층이라기보다 [1.3장](01-03-model-lifecycle.md#1-ml-lifecycle-한눈에)에서 본 개발 단계에 가까운 정리다.
 
@@ -47,7 +47,7 @@ flowchart TB
 
 예전에는 neural network를 기계 한 대의 CPU로 학습했지만, 2016년 교과서 시점에 이미 대개 GPU나 여러 기계의 CPU를 썼다 [@Goodfellow2016]. GPU는 원래 그래픽 응용을 위해 개발된 하드웨어다 [@Goodfellow2016]. 화면을 그리려면 수많은 꼭짓점에 대해 행렬 곱셈과 나눗셈을 동시에 해야 해서, GPU는 많은 계산을 나란히 하도록 설계됐다 [@Goodfellow2016].
 
-neural network도 행렬 곱셈을 아주 많이 한다. [1.1장 §1.3](01-01-ai-ml-dl.md#13-deep-learning-여러-layer로-쌓아-배우는-방법)에서 layer를 앞 layer의 결과를 받아 단순한 계산 하나를 하는 단위라고 했다. 그 계산의 첫 단계는 입력에 그 layer의 weight 행렬을 곱하는 일이다 [@Goodfellow2016]. 입력 숫자 3개를 받아 출력 2개를 내는 layer라면 weight는 3행 2열의 행렬, 곧 숫자 6개다. 입력 [1, 2, 3]에 weight 행렬 [[1, 0], [0, 1], [1, 1]]을 곱하면 출력은 [1×1 + 2×0 + 3×1, 1×0 + 2×1 + 3×1] = [4, 5]다. 실제 layer는 여기에 숫자를 더하고 간단한 함수를 한 번 거치지만 [@Goodfellow2016], 계산의 중심은 이런 곱하고 더하기다. layer가 쌓이고 입력과 출력의 수가 많아지면 이 곱하고 더하기가 아주 많이 반복된다.
+neural network도 행렬 곱셈을 아주 많이 한다. [1.1장 §1.3](01-01-ai-ml-dl.md#13-deep-learning-여러-layer로-쌓아-배우는-방법)에서 layer를 앞 layer의 결과를 받아 단순한 계산 하나를 하는 단위라고 했다. 그 계산의 첫 단계는 입력에 그 layer의 weight 행렬을 곱하는 일이다 [@Goodfellow2016]. 입력 숫자 3개를 받아 출력 2개를 내는 layer라면 weight는 3행 2열의 행렬, 곧 숫자 6개다. 입력 [1, 2, 3]에 weight 행렬 [[1, 0], [0, 1], [1, 1]]을 곱하면 출력은 [1×1 + 2×0 + 3×1, 1×0 + 2×1 + 3×1] = [4, 5]다. 실제 layer는 여기에 숫자를 더하고 간단한 함수를 한 번 거치지만 [@Goodfellow2016], 계산의 중심은 이런 곱하고 더하기다. layer가 쌓이고 입력과 출력의 수가 많아지면 이 곱하고 더하기가 아주 많이 반복된다. 이 계산을 matrix multiplication(행렬 곱)의 규칙으로 정리하고 곱셈 수를 세는 법은 [2.1장 §4.5](../part02-math-and-tools/02-01-vectors-matrices-tensors.md#45-matrix-multiplication과-shape-규칙)에서 본다.
 
 많은 계산을 나란히 하는 GPU의 설계는 neural network의 계산에 잘 맞는다. 학습 알고리즘에는 분기나 복잡한 제어가 많지 않다 [@Goodfellow2016]. 또 많은 계산 단위를 서로 기다리지 않고 따로 계산할 수 있어서, GPU가 여러 계산을 나란히 하는 데서 쉽게 이득을 본다 [@Goodfellow2016]. 메모리에서 값을 읽고 쓰는 속도(메모리 대역폭)가 높다는 점도 GPU가 CPU보다 나은 점의 하나다 [@Goodfellow2016].
 
@@ -71,7 +71,7 @@ TensorFlow는 계산을 그래프로 적고, 그 조각을 여러 기계에 나�
 
 > **핵심** 프레임워크가 칩의 차이를 감춘다. 연산을 라이브러리 호출로 적어 두면 같은 프로그램을 호출을 바꾸지 않고 CPU나 GPU에서 돌릴 수 있다 [@Goodfellow2016]. 위 층의 모델 코드가 칩에 덜 묶이는 까닭이다.
 
-이 책의 코드는 PyTorch로 쓴다. 쓰는 법은 2.5장에서 본다.
+이 책의 코드는 PyTorch로 쓴다. 쓰는 법은 [2.5장](../part02-math-and-tools/02-05-pytorch-basics.md)에서 본다.
 
 ## 5. foundation model: 가운데 층
 

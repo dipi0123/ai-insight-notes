@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 290" font-family="system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">matrix multiplication의 shape 규칙</title>
+  <desc id="d">왼쪽 matrix A는 m행 n열, 가운데 matrix B는 n행 p열이고, 결과 C는 m행 p열이다. A의 열 수 n과 B의 행 수 n이 같아야 곱할 수 있고, 이 안쪽 n은 결과에서 사라진다. A의 i행과 B의 j열을 강조해, 두 줄의 dot product가 C의 (i, j) 원소 하나가 된다는 것을 보인다. 아래 줄에는 예시로 (2, 3) 곱하기 (3, 2)는 (2, 2)이고 곱셈은 2·3·2 = 12번이라고 적혀 있다.</desc>
+  <rect width="760" height="290" fill="#ffffff"/>
+  <rect x="60" y="70" width="28" height="28" fill="#f3f4f6" stroke="#4b5563" stroke-width="1"/>
+  <rect x="88" y="70" width="28" height="28" fill="#f3f4f6" stroke="#4b5563" stroke-width="1"/>
+  <rect x="116" y="70" width="28" height="28" fill="#f3f4f6" stroke="#4b5563" stroke-width="1"/>
+  <rect x="60" y="98" width="28" height="28" fill="#fde68a" stroke="#4b5563" stroke-width="1"/>
+  <rect x="88" y="98" width="28" height="28" fill="#fde68a" stroke="#4b5563" stroke-width="1"/>
+  <rect x="116" y="98" width="28" height="28" fill="#fde68a" stroke="#4b5563" stroke-width="1"/>
+  <rect x="270" y="56" width="28" height="28" fill="#fde68a" stroke="#4b5563" stroke-width="1"/>
+  <rect x="298" y="56" width="28" height="28" fill="#f3f4f6" stroke="#4b5563" stroke-width="1"/>
+  <rect x="270" y="84" width="28" height="28" fill="#fde68a" stroke="#4b5563" stroke-width="1"/>
+  <rect x="298" y="84" width="28" height="28" fill="#f3f4f6" stroke="#4b5563" stroke-width="1"/>
+  <rect x="270" y="112" width="28" height="28" fill="#fde68a" stroke="#4b5563" stroke-width="1"/>
+  <rect x="298" y="112" width="28" height="28" fill="#f3f4f6" stroke="#4b5563" stroke-width="1"/>
+  <rect x="480" y="70" width="28" height="28" fill="#f3f4f6" stroke="#4b5563" stroke-width="1"/>
+  <rect x="508" y="70" width="28" height="28" fill="#f3f4f6" stroke="#4b5563" stroke-width="1"/>
+  <rect x="480" y="98" width="28" height="28" fill="#f59e0b" stroke="#4b5563" stroke-width="1"/>
+  <rect x="508" y="98" width="28" height="28" fill="#f3f4f6" stroke="#4b5563" stroke-width="1"/>
+  <text x="102" y="45" font-size="15" font-weight="700" fill="#1f2937" text-anchor="middle">A</text>
+  <text x="298" y="45" font-size="15" font-weight="700" fill="#1f2937" text-anchor="middle">B</text>
+  <text x="508" y="45" font-size="15" font-weight="700" fill="#1f2937" text-anchor="middle">C = AB</text>
+  <text x="210" y="105" font-size="22" fill="#1f2937" text-anchor="middle">×</text>
+  <text x="420" y="105" font-size="22" fill="#1f2937" text-anchor="middle">=</text>
+  <text x="102" y="165" font-size="14" fill="#1f2937" text-anchor="middle" font-family="ui-monospace, Menlo, monospace">(m, <tspan fill="#b45309" font-weight="700">n</tspan>)</text>
+  <text x="298" y="165" font-size="14" fill="#1f2937" text-anchor="middle" font-family="ui-monospace, Menlo, monospace">(<tspan fill="#b45309" font-weight="700">n</tspan>, p)</text>
+  <text x="508" y="165" font-size="14" fill="#1f2937" text-anchor="middle" font-family="ui-monospace, Menlo, monospace">(m, p)</text>
+  <path d="M 120 175 Q 200 205 280 175" fill="none" stroke="#b45309" stroke-width="1.4"/>
+  <text x="200" y="215" font-size="12" fill="#b45309" text-anchor="middle">안쪽 크기가 같아야 하고, 결과에서 사라진다</text>
+  <text x="620" y="95" font-size="12" fill="#374151">A의 i행과 B의 j열의</text>
+  <text x="620" y="113" font-size="12" fill="#374151">dot product가</text>
+  <text x="620" y="131" font-size="12" fill="#374151">C의 (i, j) 원소 하나</text>
+  <text x="380" y="258" font-size="13" fill="#374151" text-anchor="middle" font-family="ui-monospace, Menlo, monospace">예: (2, 3) × (3, 2) → (2, 2), 곱셈 2·3·2 = 12번</text>
+</svg>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">같은 logits와 그 softmax 결과</title>
+  <desc id="d">왼쪽은 class 세 개의 logit 2.0, 1.0, 0.1을 막대로 그린 것이다. 가운데 화살표에 softmax라고 적혀 있다. 오른쪽은 softmax 결과 0.659, 0.242, 0.099를 막대로 그린 것으로, 순서는 왼쪽과 같고 모두 양수이며 더하면 1이다.</desc>
+  <rect width="640" height="320" fill="#ffffff"/>
+  <text x="140" y="32" font-size="18" font-weight="700" fill="#1f2937" text-anchor="middle">logits</text>
+  <line x1="30" y1="250" x2="250" y2="250" stroke="#4b5563" stroke-width="1.5"/>
+  <rect x="44" y="80.0" width="52" height="170.0" fill="#e5e7eb" stroke="#4b5563" stroke-width="1"/>
+  <text x="70" y="72.0" font-size="17" fill="#1f2937" text-anchor="middle" font-family="ui-monospace, Menlo, monospace">2.0</text>
+  <text x="70" y="274" font-size="16" fill="#374151" text-anchor="middle">class 1</text>
+  <rect x="114" y="165.0" width="52" height="85.0" fill="#e5e7eb" stroke="#4b5563" stroke-width="1"/>
+  <text x="140" y="157.0" font-size="17" fill="#1f2937" text-anchor="middle" font-family="ui-monospace, Menlo, monospace">1.0</text>
+  <text x="140" y="274" font-size="16" fill="#374151" text-anchor="middle">class 2</text>
+  <rect x="184" y="241.5" width="52" height="8.5" fill="#e5e7eb" stroke="#4b5563" stroke-width="1"/>
+  <text x="210" y="233.5" font-size="17" fill="#1f2937" text-anchor="middle" font-family="ui-monospace, Menlo, monospace">0.1</text>
+  <text x="210" y="274" font-size="16" fill="#374151" text-anchor="middle">class 3</text>
+  <text x="500" y="32" font-size="18" font-weight="700" fill="#1f2937" text-anchor="middle">softmax 결과</text>
+  <line x1="390" y1="250" x2="610" y2="250" stroke="#4b5563" stroke-width="1.5"/>
+  <rect x="404" y="85.2" width="52" height="164.8" fill="#93c5fd" stroke="#4b5563" stroke-width="1"/>
+  <text x="430" y="77.2" font-size="17" fill="#1f2937" text-anchor="middle" font-family="ui-monospace, Menlo, monospace">0.659</text>
+  <text x="430" y="274" font-size="16" fill="#374151" text-anchor="middle">class 1</text>
+  <rect x="474" y="189.5" width="52" height="60.5" fill="#93c5fd" stroke="#4b5563" stroke-width="1"/>
+  <text x="500" y="181.5" font-size="17" fill="#1f2937" text-anchor="middle" font-family="ui-monospace, Menlo, monospace">0.242</text>
+  <text x="500" y="274" font-size="16" fill="#374151" text-anchor="middle">class 2</text>
+  <rect x="544" y="225.2" width="52" height="24.8" fill="#93c5fd" stroke="#4b5563" stroke-width="1"/>
+  <text x="570" y="217.2" font-size="17" fill="#1f2937" text-anchor="middle" font-family="ui-monospace, Menlo, monospace">0.099</text>
+  <text x="570" y="274" font-size="16" fill="#374151" text-anchor="middle">class 3</text>
+  <line x1="268" y1="150" x2="372" y2="150" stroke="#b45309" stroke-width="2.5"/>
+  <path d="M 372 150 L 360 143 L 360 157 Z" fill="#b45309"/>
+  <text x="320" y="138" font-size="17" font-weight="700" fill="#b45309" text-anchor="middle" font-family="ui-monospace, Menlo, monospace">softmax</text>
+  <text x="140" y="300" font-size="16" fill="#374151" text-anchor="middle">음수나 1보다 큰 수도 된다</text>
+  <text x="500" y="300" font-size="16" fill="#374151" text-anchor="middle">모두 양수, 합 = 1</text>
+</svg>

@@ -96,7 +96,7 @@ BOXES = ("핵심", "주의", "표준과 관례", "현업 사례")
 # 집필 규칙 §3: 시점을 가리키는 말. 「(2026년 기준)」처럼 기준 시점을 적은 줄은 경고하지 않는다.
 TIME_WORDS = re.compile(r"최근|요즘|새로 나온|최신")
 # 용어집 한국어 칸과 겹치지만 일반 서술로 흔히 쓰는 말. 「번역어 단독 사용」 후보에서 뺀다.
-# 임시 목록이다. 정식 허용 목록은 사용자 승인으로 style-guide §5에 둔다(설계안 9절 8).
+# 정식 허용 목록이다(style-guide §5). 새 말은 기술 용어가 아니라 일반 서술이라는 이유가 있을 때 더한다.
 EVERYDAY_KO = {"구조", "환경", "행동", "표현", "특징", "층", "음성", "손실", "정책", "클래스", "패치", "토큰", "잡음"}
 
 # 개발자 독자에게 직역투로 읽히는 낱말(style-guide §5). (정규식, 표시 이름, 흔히 쓰는 말). lint가 후보로 알리고 렌즈가 판정한다.
@@ -364,8 +364,13 @@ def expected_meta(ch: Chapter, chapters: dict[str, Chapter]) -> str | None:
     return f"> **수준** {ch.level} · **선수** {pre or '—'} · **이 장의 질문** {ch.question}"
 
 
+def visible_rglob(base: Path, pattern: str) -> list[Path]:
+    """base 아래를 훑되 숨은 폴더(예: book/code/.venv)는 건너뛴다."""
+    return sorted(p for p in base.rglob(pattern) if not any(s.startswith(".") for s in p.relative_to(base).parts[:-1]))
+
+
 def check_forbidden(rep: Report) -> None:
-    for path in sorted(BOOK.rglob("*.md")):
+    for path in visible_rglob(BOOK, "*.md"):
         for i, line in prose_lines(read(path)):
             for pattern, why in FORBIDDEN:
                 m = pattern.search(line)
@@ -459,7 +464,7 @@ def check_citations(rep: Report) -> None:
         if "http" not in line and "doi" not in line.lower():
             rep.error(loc, f"@{key}에 URL이나 DOI가 없다(ED-10)")
     used: set[str] = set()
-    for path in sorted(BOOK.rglob("*.md")):
+    for path in visible_rglob(BOOK, "*.md"):
         if path == REFERENCES:
             continue
         for i, line in prose_lines(read(path)):
@@ -482,7 +487,7 @@ def check_code(rep: Report) -> None:
     """book/code/의 Python 파일이 문법 오류 없이 컴파일되는지 본다(실행은 하지 않는다)."""
     if not CODE.exists():
         return
-    for path in sorted(CODE.rglob("*.py")):
+    for path in visible_rglob(CODE, "*.py"):
         if "__pycache__" in path.parts:
             continue
         try:
@@ -866,7 +871,7 @@ def cmd_site() -> int:
 
     if SITE_SRC.exists():
         shutil.rmtree(SITE_SRC)
-    for path in sorted(BOOK.rglob("*")):
+    for path in visible_rglob(BOOK, "*"):
         if path.is_dir() or path.name.startswith(".") or "__pycache__" in path.parts:
             continue
         if in_dir(path, CODE) and path.suffix != ".md":

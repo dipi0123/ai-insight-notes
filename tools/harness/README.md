@@ -65,7 +65,7 @@ build/harness/
 - `status`는 `초고 · 집필AI`만 된다. 검토완료·확정은 merge가 정하지 않는다(ED-08).
 - `glossary_add`의 표기가 이미 다른 내용으로 있으면 merge가 멈춘다. 용어집의 기존 표기·정의를 바꾸는 일은 사용자 확인 뒤에 한다.
 - 미확인 번호는 merge가 매긴다(파일과 git 이력에서 가장 큰 번호 + 1, `--oq-floor`로 하한).
-- `book/code/requirements.txt` 변경은 아직 merge가 다루지 않는다. 코드 장의 패키지는 3부 전에 정하는 코드 계약에서 정한다.
+- `book/code/requirements.txt`는 merge가 다루지 않는다. 버전은 고정돼 있고([book/code/README.md](../../book/code/README.md)), 패키지를 더하거나 버전을 바꿔야 하면 delta.json note에 「사용자 결정 필요: 패키지 …」로 적는다. 승인되면 통합 패스가 직접 고친다.
 
 ## 근거 대장 형식
 
@@ -192,7 +192,7 @@ build/harness/
 | 커밋 | 부 접점에서 사용자가 요청할 때 한다. 묶음 사이의 복구는 스냅숏으로 한다([작업 절차 §10.7](../../editorial/workflow.md#107-진행-기록과-커밋)). push는 언제나 따로 요청받는다 |
 | 내려받기 | [allowed-hosts.txt](allowed-hosts.txt)의 호스트와 그 하위 도메인만. `fetch.py`가 목록 밖 주소를 거부하고, 패스는 그 주소를 「사용자 결정 필요」로 돌려준다 |
 | 목록을 넓히는 기준 | 책의 목표는 학습이다. 공부에 필요한 내용이면 원문을 구해 남긴다(필요하면 목록을 넓힌다). 같은 내용을 여러 출처가 받치거나 필요 없는 중복이면 더 공신력 있는 출처 하나를 근거로 쓴다 |
-| 설치 | 1·2부는 설치하지 않는다(Python 표준 라이브러리와 `pdftotext`만). 코드 장에 필요한 패키지는 3부 전에 코드 계약에서 정하고, 설치는 `build/harness/` 아래 가상 환경에만 한다 |
+| 설치 | 책 코드는 `book/code/.venv`(git 제외)에서 돌린다. 패키지와 버전은 [book/code/requirements.txt](../../book/code/requirements.txt)에 고정돼 있고, 패스는 새로 설치하지 않는다. 더 필요하면 「사용자 결정 필요」로 돌려준다 |
 
 ## 회귀 시험
 

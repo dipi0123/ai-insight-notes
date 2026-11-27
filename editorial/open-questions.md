@@ -16,3 +16,9 @@
 | OQ-007 | 모델 이름 꼬리(Instruct·Base)와 크기 표기(8B)가 공개 모델 저장소의 관례이고 정해진 규칙은 없다는 것 | 1.2 | 여러 계열(Llama·Qwen·Gemma 등)의 모델 카드에서 꼬리와 크기 표기를 비교하고, 명명 규칙을 밝힌 문서가 있는지 본다 |
 | OQ-008 | Stable Diffusion v1 계열 autoencoder가 Rombach2022의 KL-reg.(VAE와 비슷한 정규화) 변형인지 VQ-reg. 변형인지. 확인되면 1.5장 §4.2에서 1.2장 §2.4의 VAE로 이을 수 있다 | 1.5 | CompVis/stable-diffusion 저장소의 v1 추론 설정 파일(first_stage_config)과 Rombach2022 §3.1을 대조한다 |
 | OQ-009 | @Abadi2016(OSDI 2016 게재로 알려짐)과 @Kapoor2024의 학회 게재 여부. 받은 문서에서 확인하지 못해 참고문헌을 arXiv로 적었다 | 1.6 | 학회 프로시딩 페이지(OSDI 2016은 usenix.org, 허용 목록 밖)에서 확인하고 참고문헌 항목의 학회 표기를 고친다 |
+| OQ-010 | 수학·물리에서 쓰는 tensor의 정의(다중선형 사상, 좌표 변환 규칙)와 deep learning에서 쓰는 tensor(axis 수가 정해지지 않은 숫자 배열)의 차이를 밝힌 출처 | 2.1 | 허용 목록 안의 선형대수 교과서·강의 노트에서 tensor 정의 절을 찾아 deep learning 용법과의 관계를 확인한다 |
+| OQ-011 | log x의 derivative 1/x를 받칠 교과서 위치. 받은 출처(Goodfellow 4·6·11장, Deisenroth 5장)에서 규칙으로 진술한 곳을 찾지 못해 2.2 미분 규칙 표에서 뺐다 | 2.2 | Deisenroth2020 5장 전체 또는 다른 교과서에서 log의 derivative를 진술한 쪽을 찾는다 |
+| OQ-013 | forward difference(전진 차분)라는 이름을 받칠 교과서 위치. 받은 출처(Goodfellow 11장, Deisenroth 5장)에는 이 이름이 없어 2.2 §5.1은 「이 장에서는 …라 부른다」로 썼다 | 2.2 | 수치 해석 교과서나 공식 문서에서 forward difference를 정의한 쪽을 찾는다 |
+| OQ-014 | PyTorch torch.accelerator API(is_available·current_accelerator·synchronize)의 release status. 2.11·2.15 문서 페이지에 Stable·Unstable 표시가 없다. 2.5는 안정성을 주장하지 않고 공식 Tensors 튜토리얼이 쓰는 방식으로만 썼다 | 2.5 | PyTorch 릴리스 노트(github.com/pytorch/pytorch/releases)에서 torch.accelerator가 도입·승격된 판과 상태를 확인한다 |
+| OQ-015 | MPS backend에서 연산이 비동기로 실행되는지(시간 재기에 torch.mps.synchronize가 필요한 까닭)를 직접 밝힌 PyTorch 문서. 2.5는 CUDA 문서의 비동기 설명과 장치별 동기화 함수까지만 썼다 | 2.5 | PyTorch MPS backend 노트·torch.mps 문서·소스 주석에서 비동기 실행 서술을 찾는다 |
+| OQ-016 | GPU driver 버전과 CUDA runtime(toolkit) 버전의 호환 규칙, PyTorch의 CUDA wheel이 CUDA runtime을 함께 담아 driver만 있으면 되는지 | 2.6 | NVIDIA CUDA Compatibility 문서(docs.nvidia.com/deploy/cuda-compatibility/). 허용 목록에 docs.nvidia.com을 더할지 사용자 결정이 먼저다 |
